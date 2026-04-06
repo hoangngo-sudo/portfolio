@@ -1,7 +1,6 @@
 "use client";
 
 import { useMemo, useRef, useState } from "react";
-import Image from "next/image";
 import { motion, useMotionValue } from "framer-motion";
 import type { Direction } from "@/types/config";
 import { ArcTooltip } from "@/components/ui/ArcTooltip";
@@ -78,10 +77,8 @@ export function Photo({
       tabIndex={0}
     >
       <div className="relative h-full w-full overflow-hidden rounded-lg shadow-sm shadow-slate-900/30">
-        <Image
-          className="rounded-lg object-cover"
-          fill
-          sizes="220px"
+        <img
+          className="rounded-lg object-cover absolute inset-0 h-full w-full"
           src={src}
           alt={alt}
           draggable={false}

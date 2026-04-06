@@ -9,7 +9,7 @@ import {
   wrap,
 } from "framer-motion";
 import type { PanInfo } from "framer-motion";
-import Image from "next/image";
+
 import { useEffect, useRef, useState } from "react";
 import type { MobilePhoto } from "@/types/config";
 
@@ -135,11 +135,9 @@ function StackImage({
       onDrag={isActive ? onDrag : undefined}
       onDragEnd={onDragEnd}
     >
-      <Image
-        className="h-full w-full select-none touch-none object-cover"
+      <img
+        className="absolute inset-0 h-full w-full select-none touch-none object-cover"
         src={src}
-        fill
-        sizes="(max-width: 640px) 55vw, 220px"
         alt=""
         onPointerDown={(e) => e.preventDefault()}
       />
