@@ -1,0 +1,30 @@
+"use client";
+
+import { useTheme } from "@/components/providers/ThemeProvider";
+
+export function ThemeToggle() {
+  const { theme, setTheme } = useTheme();
+
+  return (
+    <div className="flex items-center gap-1 rounded-full border border-chip-border bg-card-bg p-1">
+      <button
+        onClick={() => setTheme("black")}
+        aria-label="Black theme"
+        className={`h-7 w-7 rounded-full transition-all ${
+          theme === "black"
+            ? "bg-[#7c8594] shadow-[0_0_8px_rgba(124,133,148,0.6)]"
+            : "bg-[#7c8594]/30 hover:bg-[#7c8594]/50"
+        }`}
+      />
+      <button
+        onClick={() => setTheme("teal")}
+        aria-label="Teal theme"
+        className={`h-7 w-7 rounded-full transition-all ${
+          theme === "teal"
+            ? "bg-[#0d9488] shadow-[0_0_8px_#0d948880]"
+            : "bg-[#0d9488]/30 hover:bg-[#0d9488]/50"
+        }`}
+      />
+    </div>
+  );
+}

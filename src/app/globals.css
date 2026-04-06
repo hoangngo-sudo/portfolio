@@ -1,0 +1,81 @@
+@import "tailwindcss";
+
+:root {
+  --accent: #7c8594;
+  --accent-light: #9ba3b0;
+  --accent-pale: #f0f2f5;
+  --dark-bg: #0d0d11;
+  --dark-bg-alt: #191920;
+  --light-bg: #ffffff;
+  --light-bg-alt: #f7f8fa;
+
+  /* Derived tokens */
+  --text-primary: #e8ecf2;
+  --text-secondary: #c8d0dc;
+  --text-muted: #6b7280;
+  --ink-primary: #111827;
+  --ink-body: #1f2937;
+  --ink-muted: #4b5563;
+
+  --card-bg: color-mix(in srgb, var(--accent) 3%, transparent);
+  --card-border: color-mix(in srgb, var(--accent) 6%, transparent);
+  --card-hover: color-mix(in srgb, var(--accent) 5%, transparent);
+  --chip-border: color-mix(in srgb, var(--accent) 12%, transparent);
+  --chip-hover-bg: color-mix(in srgb, var(--accent) 6%, transparent);
+}
+
+/* Map CSS vars into Tailwind v4 theme */
+@theme inline {
+  --color-accent: var(--accent);
+  --color-accent-light: var(--accent-light);
+  --color-accent-pale: var(--accent-pale);
+  --color-dark-bg: var(--dark-bg);
+  --color-dark-bg-alt: var(--dark-bg-alt);
+  --color-light-bg: var(--light-bg);
+  --color-light-bg-alt: var(--light-bg-alt);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+  --color-ink-primary: var(--ink-primary);
+  --color-ink-body: var(--ink-body);
+  --color-ink-muted: var(--ink-muted);
+  --color-card-bg: var(--card-bg);
+  --color-card-border: var(--card-border);
+  --color-card-hover: var(--card-hover);
+  --color-chip-border: var(--chip-border);
+  --color-chip-hover-bg: var(--chip-hover-bg);
+  --font-heading: var(--font-geist-sans);
+  --font-body: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-pixel-square: var(--font-geist-pixel-square);
+  --font-pixel-grid: var(--font-geist-pixel-grid);
+  --font-pixel-circle: var(--font-geist-pixel-circle);
+  --font-pixel-triangle: var(--font-geist-pixel-triangle);
+  --font-pixel-line: var(--font-geist-pixel-line);
+}
+
+/* Base styles */
+body {
+  background: var(--light-bg);
+  color: var(--ink-body);
+  font-family: var(--font-body), sans-serif;
+}
+
+/* Smooth scroll for anchor navigation */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--light-bg-alt);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--accent);
+  border-radius: 4px;
+}
