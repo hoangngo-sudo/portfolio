@@ -50,7 +50,7 @@ export default function RootLayout({
           id="theme-init"
           strategy="beforeInteractive"
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var t=localStorage.getItem('portfolio-theme');if(t==='teal'){var s=document.documentElement.style;s.setProperty('--accent','#0d9488');s.setProperty('--accent-light','#14b8a6');s.setProperty('--accent-pale','#f0fdfa');s.setProperty('--dark-bg','#0f1a1a');s.setProperty('--dark-bg-alt','#162222');s.setProperty('--light-bg','#f8fdfb');s.setProperty('--light-bg-alt','#f0f7f6')}}catch(e){}})()`,
+            __html: `(function(){try{var themes={black:{accent:'#7c8594','accent-light':'#9ba3b0','accent-pale':'#f0f2f5','dark-bg':'#0d0d11','dark-bg-alt':'#191920','light-bg':'#ffffff','light-bg-alt':'#f7f8fa'},teal:{accent:'#0d9488','accent-light':'#14b8a6','accent-pale':'#f0fdfa','dark-bg':'#0f1a1a','dark-bg-alt':'#162222','light-bg':'#f8fdfb','light-bg-alt':'#f0f7f6'}};var t=localStorage.getItem('portfolio-theme')||'teal';var c=themes[t]||themes.teal;var s=document.documentElement.style;for(var k in c){s.setProperty('--'+k,c[k])}}catch(e){}})()`,
           }}
         />
         <Script

@@ -38,10 +38,10 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const stored = localStorage.getItem(STORAGE_KEY) as ThemeName | null;
-    if (stored && (stored === "black" || stored === "teal")) {
-      setThemeState(stored);
-      applyThemeToDOM(config.themes[stored]);
-    }
+    const resolved: ThemeName =
+      stored === "black" || stored === "teal" ? stored : config.themes.default;
+    setThemeState(resolved);
+    applyThemeToDOM(config.themes[resolved]);
   }, []);
 
   const setTheme = useCallback((next: ThemeName) => {
