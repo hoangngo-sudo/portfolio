@@ -133,7 +133,7 @@ const config: PortfolioConfig = {
             { name: "Docker" },
             { name: "VSCode" },
             { name: "Intellij" },
-            { name: "AI" },
+            { name: "Applied AI" },
           ],
         },
       ],
