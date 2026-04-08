@@ -5,6 +5,7 @@ import { Dialog } from "@base-ui/react/dialog";
 import { FiSearch } from "react-icons/fi";
 import { getSearchIndex, type SearchItem } from "@/lib/search";
 import { smoothScrollToId } from "@/lib/scroll";
+import { KeycapButton } from "@/components/ui/KeycapButton";
 
 export function SearchOverlay() {
   const [open, setOpen] = useState(false);
@@ -57,13 +58,17 @@ export function SearchOverlay() {
 
   return (
     <Dialog.Root open={open} onOpenChange={setOpen}>
-      <Dialog.Trigger className="inline-flex items-center gap-2 rounded-lg border border-chip-border bg-transparent px-4 py-2 text-sm font-medium text-current/80 transition-colors hover:bg-chip-hover-bg hover:text-current">
-        <FiSearch size={14} />
-        Search
-        <span className="ml-2 hidden text-[11px] text-text-muted sm:inline">
-          ⌘ K
-        </span>
-      </Dialog.Trigger>
+      <Dialog.Trigger
+        render={(props) => (
+          <KeycapButton {...props}>
+            <FiSearch size={14} />
+            Search
+            <span className="ml-2 hidden text-[11px] text-text-muted sm:inline">
+              ⌘ K
+            </span>
+          </KeycapButton>
+        )}
+      />
 
       <Dialog.Portal>
         <Dialog.Backdrop className="fixed inset-0 z-100 bg-black/60 backdrop-blur-sm" />

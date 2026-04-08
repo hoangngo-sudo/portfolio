@@ -79,3 +79,65 @@ html {
   background: var(--accent);
   border-radius: 4px;
 }
+
+/* Keycap button glow animation */
+@property --keycap-rotation {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@keyframes keycap-rotate {
+  to { --keycap-rotation: 360deg; }
+}
+
+.keycap-wrap {
+  --keycap-rad: 14px;
+  --keycap-pad: 10px;
+  --keycap-glow-rad: calc(var(--keycap-rad) + var(--keycap-pad));
+  display: inline-block;
+  position: relative;
+  border-radius: var(--keycap-glow-rad);
+  padding: var(--keycap-pad);
+  background: rgb(255 255 255 / 0.08);
+  isolation: isolate;
+}
+
+.keycap-wrap::before {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  border-radius: var(--keycap-glow-rad);
+  background: conic-gradient(from var(--keycap-rotation), purple, blue, green, yellow, orange, red);
+  filter: blur(18px);
+  z-index: -2;
+  animation: keycap-rotate 5s linear infinite;
+  transition: filter 0.3s ease;
+}
+
+.keycap-wrap:hover::before {
+  filter: blur(24px);
+}
+
+.keycap-wrap::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: calc(var(--keycap-glow-rad) + 1px);
+  background: linear-gradient(
+    to bottom,
+    rgb(255 255 255 / 0.4) 0%,
+    rgb(255 255 255 / 0.4) 2px,
+    rgb(100 100 100 / 0.1) 30%,
+    rgb(100 100 100 / 0.1) 70%,
+    rgb(255 255 255 / 0.4) 99%,
+    rgb(255 255 255 / 0.4) 100%
+  );
+  z-index: -1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .keycap-wrap::before {
+    animation-play-state: paused;
+  }
+}
