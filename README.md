@@ -28,12 +28,13 @@ flowchart TB
 ## Features
 
 - **Config-driven** Edit a single `portfolio.config.ts`
-- **Photo gallery hero** Desktop fanned layout with arc tooltip labels; mobile horizontal scroll; staggered entrance animations
+- **Photo gallery hero** Desktop fanned layout with arc tooltip labels; mobile swipeable card stack; staggered entrance animations
 - **GitHub heatmap** Contribution graph fetched from GitHub GraphQL API with ISR caching; placeholder fallback when no token is set
 - **Fuzzy search overlay** Cmd+K / Ctrl+K triggers Fuse.js-powered search across all sections with action links
 - **2 color themes** Black and Teal, switchable at runtime with `localStorage` persistence and flash-free hydration
 - **Scroll progress bar** + **Back-to-top FAB** toggleable via feature flags
 - **Card stack fan** Project cards with hover fan-out interaction
+- **Keycap buttons** Skeuomorphic keyboard-key style for the search trigger, hero nav chips, and back-to-top FAB; colors adapt to the active theme
 - **Accessible** Skip-to-content link, semantic HTML, keyboard navigation, `prefers-reduced-motion` support
 - **SEO** Open Graph tags, JSON-LD Person schema, semantic heading hierarchy
 - **Performance** Static generation, Geist font family via `next/font` for zero-FOUT, Tailwind v4 (zero runtime CSS)
@@ -178,12 +179,13 @@ public/
 │   │   │   └── ContactSection       # Social links
 │   │   └── ui/
 │   │       ├── ArcTooltip           # Curved tooltip for photo labels
-│   │       ├── BackToTopFAB         # Floating action button
-│   │       ├── CardStack            # Stacked project cards
-│   │       ├── Chip                 # Tag / skill chip
+│   │       ├── BackToTopFAB         # Keycap-styled floating action button
+│   │       ├── CardStack            # Mobile: swipeable photo card stack
+│   │       ├── Chip                 # Tag / link chip (flat or keycap variant)
 │   │       ├── GitHubHeatmap        # Contribution graph
+│   │       ├── KeycapButton         # Skeuomorphic keycap shell (search trigger)
 │   │       ├── Photo                # Single photo with motion
-│   │       ├── PhotoGallery         # Desktop fan + mobile scroll
+│   │       ├── PhotoGallery         # Desktop: fanned photo layout
 │   │       ├── ScrollProgressBar    # Top scroll indicator
 │   │       ├── SearchOverlay        # Cmd+K fuzzy search
 │   │       ├── SectionWrapper       # Shared section layout
