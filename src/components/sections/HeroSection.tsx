@@ -89,6 +89,7 @@ export function HeroSection() {
               external={link.external}
               download={link.download}
               onClick={link.href?.startsWith("#") ? handleAnchorClick : undefined}
+              keycap
             />
           ))}
           {features.searchOverlay && <SearchOverlay />}

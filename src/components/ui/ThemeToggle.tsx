@@ -6,7 +6,7 @@ export function ThemeToggle() {
   const { theme, setTheme } = useTheme();
 
   return (
-    <div className="flex items-center gap-1 rounded-full border border-chip-border bg-card-bg p-1">
+    <div className="flex items-center gap-1 border-none p-1">
       <button
         onClick={() => setTheme("black")}
         aria-label="Black theme"

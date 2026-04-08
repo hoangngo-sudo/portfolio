@@ -34,13 +34,13 @@ export const KeycapButton = forwardRef<HTMLButtonElement, KeycapButtonProps>(
       >
         <motion.button
           ref={ref}
-          className={`inline-flex cursor-pointer items-center gap-2 rounded-[14px] border-none bg-linear-to-b from-[#424242] to-[#343434] p-0 text-white shadow-[0_6px_10px_rgb(0_0_0/0.3)] focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-dark-bg focus-visible:outline-none ${className}`}
+          className={`inline-flex cursor-pointer items-center gap-2 rounded-lg border-none bg-linear-to-b from-keycap-cap-from to-keycap-cap-to px-2 py-2 text-white shadow-[0_6px_10px_rgb(0_0_0/0.3)] focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-dark-bg focus-visible:outline-none ${className}`}
           whileHover={shouldReduceMotion ? undefined : { scale: 1.03 }}
-          whileTap={{ scale: 0.93 }}
+          whileTap={{ scale: 0.93}}
           transition={springTransition}
           {...buttonProps}
         >
-          <span className="inline-flex items-center gap-2 rounded-[50px] bg-linear-to-b from-[#2d2d2d] to-[#424242] px-4 py-2 text-sm font-medium">
+          <span className="inline-flex items-center gap-2 rounded-[200px] bg-linear-to-b from-keycap-surface-from to-keycap-surface-to px-4 py-2 text-sm font-medium">
             {children}
           </span>
         </motion.button>

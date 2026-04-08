@@ -17,11 +17,17 @@
   --ink-body: #1f2937;
   --ink-muted: #4b5563;
 
-  --card-bg: color-mix(in srgb, var(--accent) 3%, transparent);
-  --card-border: color-mix(in srgb, var(--accent) 6%, transparent);
-  --card-hover: color-mix(in srgb, var(--accent) 5%, transparent);
-  --chip-border: color-mix(in srgb, var(--accent) 12%, transparent);
-  --chip-hover-bg: color-mix(in srgb, var(--accent) 6%, transparent);
+  --card-bg: color-mix(in srgb, var(--accent) 6%, rgba(0, 0, 0, 0.01));
+  --card-border: color-mix(in srgb, var(--accent) 10%, rgb(0 0 0 / 0.01));
+  --card-hover: color-mix(in srgb, var(--accent) 15%, rgb(0 0 0 / 0.01));
+  --chip-border: color-mix(in srgb, var(--accent) 25%, rgb(0 0 0 / 0.01));
+  --chip-hover-bg: color-mix(in srgb, var(--accent) 10%, rgb(0 0 0 / 0.01));
+
+  /* Keycap button colors */
+  --keycap-cap-from: color-mix(in srgb, var(--accent) 30%, #424242);
+  --keycap-cap-to: color-mix(in srgb, var(--accent) 25%, #343434);
+  --keycap-surface-from: color-mix(in srgb, var(--accent) 20%, #2d2d2d);
+  --keycap-surface-to: color-mix(in srgb, var(--accent) 30%, #424242);
 }
 
 /* Map CSS vars into Tailwind v4 theme */
@@ -44,6 +50,10 @@
   --color-card-hover: var(--card-hover);
   --color-chip-border: var(--chip-border);
   --color-chip-hover-bg: var(--chip-hover-bg);
+  --color-keycap-cap-from: var(--keycap-cap-from);
+  --color-keycap-cap-to: var(--keycap-cap-to);
+  --color-keycap-surface-from: var(--keycap-surface-from);
+  --color-keycap-surface-to: var(--keycap-surface-to);
   --font-heading: var(--font-geist-sans);
   --font-body: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
@@ -52,6 +62,11 @@
   --font-pixel-circle: var(--font-geist-pixel-circle);
   --font-pixel-triangle: var(--font-geist-pixel-triangle);
   --font-pixel-line: var(--font-geist-pixel-line);
+}
+
+/* Chip border brightens on dark backgrounds */
+.bg-dark-bg {
+  --chip-border: color-mix(in srgb, var(--accent) 25%, rgb(255 255 255 / 0.01));
 }
 
 /* Base styles */
@@ -92,8 +107,8 @@ html {
 }
 
 .keycap-wrap {
-  --keycap-rad: 14px;
-  --keycap-pad: 10px;
+  --keycap-rad: 4px;
+  --keycap-pad: 6px;
   --keycap-glow-rad: calc(var(--keycap-rad) + var(--keycap-pad));
   display: inline-block;
   position: relative;
@@ -106,10 +121,10 @@ html {
 .keycap-wrap::before {
   content: "";
   position: absolute;
-  inset: 8px;
+  inset: 12px;
   border-radius: var(--keycap-glow-rad);
   background: conic-gradient(from var(--keycap-rotation), purple, blue, green, yellow, orange, red);
-  filter: blur(18px);
+  filter: blur(14px);
   z-index: -2;
   animation: keycap-rotate 5s linear infinite;
   transition: filter 0.3s ease;
@@ -126,12 +141,12 @@ html {
   border-radius: calc(var(--keycap-glow-rad) + 1px);
   background: linear-gradient(
     to bottom,
-    rgb(255 255 255 / 0.4) 0%,
-    rgb(255 255 255 / 0.4) 2px,
-    rgb(100 100 100 / 0.1) 30%,
-    rgb(100 100 100 / 0.1) 70%,
-    rgb(255 255 255 / 0.4) 99%,
-    rgb(255 255 255 / 0.4) 100%
+    rgb(255 255 255 / 0.3) 0%,
+    rgb(255 255 255 / 0.3) 2px,
+    rgb(255 255 255 / 0.3) 30%,
+    rgb(255 255 255 / 0.3) 70%,
+    rgb(255 255 255 / 0.3) 99%,
+    rgb(255 255 255 / 0.3) 100%
   );
   z-index: -1;
 }
