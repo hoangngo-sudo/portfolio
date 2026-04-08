@@ -16,6 +16,10 @@ export function smoothScrollTo(targetY: number) {
   const prev = html.style.scrollBehavior;
   html.style.scrollBehavior = "auto";
 
+  // Disable bounce at page boundaries (top / bottom) to avoid clipped overshoot
+  const maxScroll = html.scrollHeight - window.innerHeight;
+  const atBoundary = targetY <= 0 || targetY >= maxScroll;
+
   activeScroll = animate(window.scrollY, targetY, {
     onUpdate: (value) => window.scrollTo(0, value),
     onComplete: () => {
@@ -23,135 +27,8 @@ export function smoothScrollTo(targetY: number) {
       activeScroll = null;
     },
     type: "spring",
-    visualDuration: 0.33,
-    bounce: 0.2
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-
-    
+    visualDuration: 0.4,
+    bounce: atBoundary ? 0 : 0.2,
   });
 }
 
