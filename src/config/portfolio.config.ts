@@ -63,7 +63,7 @@ const config: PortfolioConfig = {
       enabled: true,
       overline: "Overview",
       heading: "About me",
-      body: "I am a web developer who enjoys building things that look good and work even better. This site is where I try out new ideas, and figure out how to put them back together.",
+      body: "I am an aspiring web developer who enjoys building things on web that look good and work even better. This portfolio is where I try out new ideas, and figure out how to put them back together.",
       github: {
         username: "hoangngo-sudo",
       },
