@@ -29,7 +29,7 @@ export function Chip({ label, href, external, icon, className = "", id, download
     "inline-flex cursor-pointer items-center gap-2 rounded-lg border-none bg-linear-to-b from-keycap-cap-from to-keycap-cap-to px-2 py-2 text-current/80 shadow-[0_6px_10px_rgb(0_0_0/0.3)]";
 
   const surfaceClasses =
-    "inline-flex items-center gap-2 rounded-[200px] bg-linear-to-b from-keycap-surface-from to-keycap-surface-to px-4 py-2 text-sm font-medium";
+    "inline-flex items-center gap-2 rounded-[200px] bg-linear-to-b from-keycap-surface-from to-keycap-surface-to px-4 py-2 text-xs font-medium";
 
   if (keycap && href) {
     return (

@@ -34,9 +34,11 @@ export function Photo({
   );
   const x = useMotionValue(0);
   const [isHovered, setIsHovered] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
   const animationFrameRef = useRef<number | null>(null);
 
   function handleMouse(event: React.PointerEvent<HTMLDivElement>) {
+    if (isDragging) return;
     if (animationFrameRef.current) {
       cancelAnimationFrame(animationFrameRef.current);
     }
@@ -50,8 +52,12 @@ export function Photo({
   return (
     <motion.div
       drag
-      dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
-      whileTap={{ scale: 1.2, zIndex: 9999 }}
+      dragSnapToOrigin
+      dragMomentum={false}
+      dragTransition={{ bounceStiffness: 300, bounceDamping: 30 }}
+      onDragStart={() => setIsDragging(true)}
+      onDragEnd={() => setIsDragging(false)}
+      whileTap={{ scale: 1.1, zIndex: 9999 }}
       whileHover={{
         scale: 1.1,
         rotateZ: 2 * (direction === "left" ? -1 : 1),
