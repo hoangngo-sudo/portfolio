@@ -3,19 +3,18 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Dialog } from "@base-ui/react/dialog";
 import { FiSearch } from "react-icons/fi";
-import { getSearchIndex, type SearchItem } from "@/lib/search";
+import { searchItems, type SearchItem } from "@/lib/search";
 import { smoothScrollToId } from "@/lib/scroll";
 import { KeycapButton } from "@/components/ui/KeycapButton";
 
 export function SearchOverlay() {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
-  const fuse = useMemo(() => getSearchIndex(), []);
 
   const results = useMemo(() => {
     if (!query.trim()) return [];
-    return fuse.search(query, { limit: 20 }).map((r) => r.item);
-  }, [query, fuse]);
+    return searchItems(query);
+  }, [query]);
 
   // Group results by section
   const grouped = useMemo(() => {

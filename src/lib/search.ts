@@ -67,16 +67,41 @@ function collectSearchItems(): SearchItem[] {
   return items;
 }
 
+// Maps common query aliases to the canonical section label
+const SECTION_ALIASES: Record<string, string> = {
+  projects: "Projects",
+  project: "Projects",
+  skills: "Skills",
+  skill: "Skills",
+  courses: "Courses",
+  course: "Courses",
+  contact: "Contact",
+  contacts: "Contact",
+};
+
 let fuseInstance: Fuse<SearchItem> | null = null;
+let allItems: SearchItem[] | null = null;
 
 export function getSearchIndex(): Fuse<SearchItem> {
   if (!fuseInstance) {
-    const items = collectSearchItems();
-    fuseInstance = new Fuse(items, {
+    allItems = collectSearchItems();
+    fuseInstance = new Fuse(allItems, {
       keys: ["title", "description"],
       threshold: 0.3,
       includeScore: true,
     });
   }
   return fuseInstance;
+}
+
+export function searchItems(query: string): SearchItem[] {
+  const fuse = getSearchIndex();
+  const normalized = query.trim().toLowerCase();
+
+  const sectionLabel = SECTION_ALIASES[normalized];
+  if (sectionLabel) {
+    return (allItems ?? []).filter((item) => item.section === sectionLabel);
+  }
+
+  return fuse.search(query, { limit: 20 }).map((r) => r.item);
 }
