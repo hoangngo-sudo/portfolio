@@ -32,7 +32,7 @@ function collectSearchItems(): SearchItem[] {
           title: s.name,
           description: cat.label,
           section: "Skills",
-          sectionId: `skill-${s.name.toLowerCase().replace(/[\s.]+/g, "-")}`,
+          sectionId: "skills",
           href: s.href,
         });
       }
