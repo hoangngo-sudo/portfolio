@@ -4,6 +4,7 @@ import {
   Overline,
   SectionHeading,
 } from "@/components/ui/SectionWrapper";
+import SpotlightCard from "@/components/ui/SpotlightCard";
 
 interface Props {
   data: CoursesConfig;
@@ -23,9 +24,10 @@ export function CoursesSection({ data }: Props) {
             </h3>
             <div className="grid gap-3 sm:grid-cols-2">
               {category.items.map((course) => (
-                <div
+                <SpotlightCard
                   key={course.code}
-                  className="rounded-lg border border-card-border bg-card-bg p-4 transition-colors hover:bg-card-hover"
+                  spotlightSize={60}
+                  className="rounded-lg border border-card-border bg-card-bg p-4"
                 >
                   <p className="text-sm font-semibold text-text-primary">
                     {course.code}{" "}
@@ -38,7 +40,7 @@ export function CoursesSection({ data }: Props) {
                       {course.description}
                     </p>
                   )}
-                </div>
+                </SpotlightCard>
               ))}
             </div>
           </div>

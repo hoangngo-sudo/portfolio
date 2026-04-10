@@ -5,6 +5,7 @@ import {
   SectionHeading,
 } from "@/components/ui/SectionWrapper";
 import { Chip } from "@/components/ui/Chip";
+import SpotlightCard from "@/components/ui/SpotlightCard";
 
 interface Props {
   data: ProjectsConfig;
@@ -32,12 +33,13 @@ export function ProjectsSection({ data }: Props) {
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {data.items.map((project) => (
-          <a
+          <SpotlightCard
             key={project.title}
+            as="a"
             href={project.href || "#"}
             target={project.href ? "_blank" : undefined}
             rel={project.href ? "noopener noreferrer" : undefined}
-            className="group flex flex-col rounded-xl border border-card-border bg-card-bg p-5 transition-colors hover:bg-card-hover"
+            className="group flex flex-col rounded-xl border border-card-border bg-card-bg p-5"
           >
             {project.image && (
               <div className="mb-3 h-24 w-full overflow-hidden rounded-lg bg-dark-bg-alt" />
@@ -60,7 +62,7 @@ export function ProjectsSection({ data }: Props) {
                 ))}
               </div>
             )}
-          </a>
+          </SpotlightCard>
         ))}
       </div>
     </SectionWrapper>
