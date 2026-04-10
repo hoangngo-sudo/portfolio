@@ -70,11 +70,11 @@ export function SkillsSection({ data }: Props) {
             <h3 className="mb-3 text-sm font-semibold uppercase tracking-wider text-ink-muted">
               {label}
             </h3>
-            <div className="py-4">
+            <div className="py-1">
               <LogoLoop
                 logos={logos}
                 direction={directionMap[label] ?? "left"}
-                logoHeight={56}
+                logoHeight={58}
                 gap={12}
                 fadeOut
                 fadeOutColor="var(--light-bg)"
