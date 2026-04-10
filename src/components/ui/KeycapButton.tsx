@@ -2,6 +2,7 @@
 
 import { forwardRef } from "react";
 import { motion, useReducedMotion } from "framer-motion";
+import { useWebHaptics } from "web-haptics/react";
 
 interface KeycapButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -11,6 +12,7 @@ interface KeycapButtonProps
 export const KeycapButton = forwardRef<HTMLButtonElement, KeycapButtonProps>(
   function KeycapButton({ children, className = "", ...props }, ref) {
     const shouldReduceMotion = useReducedMotion();
+    const haptic = useWebHaptics();
 
     const springTransition = shouldReduceMotion
       ? { duration: 0 }
@@ -39,6 +41,10 @@ export const KeycapButton = forwardRef<HTMLButtonElement, KeycapButtonProps>(
           whileTap={{ scale: 0.93}}
           transition={springTransition}
           {...buttonProps}
+          onClick={(e) => {
+            haptic.trigger("medium");
+            buttonProps.onClick?.(e);
+          }}
         >
           <span className="inline-flex items-center gap-2 rounded-[200px] bg-linear-to-b from-keycap-surface-from to-keycap-surface-to px-4 py-2 text-sm font-medium">
             {children}

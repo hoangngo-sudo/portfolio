@@ -2,6 +2,7 @@
 
 import { useMemo, useRef, useState } from "react";
 import { motion, useMotionValue } from "framer-motion";
+import { useWebHaptics } from "web-haptics/react";
 import type { Direction } from "@/types/config";
 import { ArcTooltip } from "@/components/ui/ArcTooltip";
 
@@ -33,6 +34,7 @@ export function Photo({
     [direction],
   );
   const x = useMotionValue(0);
+  const haptic = useWebHaptics();
   const [isHovered, setIsHovered] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const animationFrameRef = useRef<number | null>(null);
@@ -56,7 +58,10 @@ export function Photo({
       dragMomentum={false}
       dragTransition={{ bounceStiffness: 300, bounceDamping: 30 }}
       onDragStart={() => setIsDragging(true)}
-      onDragEnd={() => setIsDragging(false)}
+      onDragEnd={() => {
+        haptic.trigger("light");
+        setIsDragging(false);
+      }}
       whileTap={{ scale: 1.1, zIndex: 9999 }}
       whileHover={{
         scale: 1.1,

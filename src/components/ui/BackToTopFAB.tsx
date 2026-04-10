@@ -3,10 +3,12 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { smoothScrollTo } from "@/lib/scroll";
+import { useWebHaptics } from "web-haptics/react";
 
 export function BackToTopFAB() {
   const [visible, setVisible] = useState(false);
   const shouldReduceMotion = useReducedMotion();
+  const haptic = useWebHaptics();
 
   const springTransition = shouldReduceMotion
     ? { duration: 0 }
@@ -25,7 +27,10 @@ export function BackToTopFAB() {
     <AnimatePresence>
       {visible && (
         <motion.button
-          onClick={() => smoothScrollTo(0)}
+          onClick={() => {
+            haptic.trigger("medium");
+            smoothScrollTo(0);
+          }}
           aria-label="Back to top"
           className="fixed right-6 bottom-[calc(1.5rem+env(safe-area-inset-bottom,0px))] z-50 cursor-pointer rounded-lg border-none bg-linear-to-b from-keycap-cap-from to-keycap-cap-to px-2 py-2 text-white shadow-[0_6px_10px_rgb(0_0_0/0.3)]"
           initial={{ opacity: 0, y: 16 }}

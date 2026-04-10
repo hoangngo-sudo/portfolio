@@ -11,6 +11,7 @@ import {
 import type { PanInfo } from "framer-motion";
 
 import { useEffect, useRef, useState } from "react";
+import { useWebHaptics } from "web-haptics/react";
 import type { MobilePhoto } from "@/types/config";
 
 const fanSpring = { type: "spring" as const, stiffness: 260, damping: 20 };
@@ -77,6 +78,7 @@ function StackImage({
   minSpeed = 50,
 }: StackImageProps) {
   const shouldReduceMotion = useReducedMotion();
+  const haptic = useWebHaptics();
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
@@ -103,6 +105,7 @@ function StackImage({
     if (distance > minDistance || speed > minSpeed) {
       setNextImage();
     }
+    haptic.trigger("light");
     animate(x, 0, snapSpring);
     animate(y, 0, snapSpring);
   };

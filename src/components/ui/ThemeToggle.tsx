@@ -1,14 +1,19 @@
 "use client";
 
 import { useTheme } from "@/components/providers/ThemeProvider";
+import { useWebHaptics } from "web-haptics/react";
 
 export function ThemeToggle() {
   const { theme, setTheme } = useTheme();
+  const haptic = useWebHaptics();
 
   return (
     <div className="flex items-center gap-1 border-none p-1">
       <button
-        onClick={() => setTheme("black")}
+        onClick={() => {
+          haptic.trigger("selection");
+          setTheme("black");
+        }}
         aria-label="Black theme"
         className={`h-7 w-7 rounded-full transition-all ${
           theme === "black"
@@ -17,7 +22,10 @@ export function ThemeToggle() {
         }`}
       />
       <button
-        onClick={() => setTheme("teal")}
+        onClick={() => {
+          haptic.trigger("selection");
+          setTheme("teal");
+        }}
         aria-label="Teal theme"
         className={`h-7 w-7 rounded-full transition-all ${
           theme === "teal"

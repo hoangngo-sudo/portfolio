@@ -1,3 +1,5 @@
+"use client";
+
 import type { ContactConfig } from "@/types/config";
 import {
   SectionWrapper,
@@ -7,6 +9,7 @@ import {
 import { Chip } from "@/components/ui/Chip";
 import { FiMail, FiInstagram, FiLinkedin, FiGithub } from "react-icons/fi";
 import type { IconType } from "react-icons";
+import { useWebHaptics } from "web-haptics/react";
 
 const iconMap: Record<string, IconType> = {
   FiMail,
@@ -20,6 +23,8 @@ interface Props {
 }
 
 export function ContactSection({ data }: Props) {
+  const haptic = useWebHaptics();
+
   return (
     <SectionWrapper id="contact" variant="light">
       <Overline>{data.overline}</Overline>
@@ -35,6 +40,7 @@ export function ContactSection({ data }: Props) {
               href={link.href}
               external
               icon={Icon ? <Icon className="h-4 w-4" /> : undefined}
+              onClick={() => haptic.trigger("light")}
             />
           );
         })}

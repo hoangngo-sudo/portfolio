@@ -9,6 +9,7 @@ import { SearchOverlay } from "@/components/ui/SearchOverlay";
 import { PhotoGallery } from "@/components/ui/PhotoGallery";
 import { CardStack } from "@/components/ui/CardStack";
 import { smoothScrollToId } from "@/lib/scroll";
+import { useWebHaptics } from "web-haptics/react";
 
 const containerVariants = {
   hidden: {},
@@ -35,6 +36,7 @@ const itemVariants = {
 export function HeroSection() {
   const { meta, nav, features, hero } = config;
   const shouldReduceMotion = useReducedMotion();
+  const haptic = useWebHaptics();
 
   const handleAnchorClick = useCallback(
     (e: React.MouseEvent<HTMLAnchorElement>) => {
@@ -88,7 +90,10 @@ export function HeroSection() {
               href={link.href}
               external={link.external}
               download={link.download}
-              onClick={link.href?.startsWith("#") ? handleAnchorClick : undefined}
+              onClick={(e) => {
+                haptic.trigger("medium");
+                if (link.href?.startsWith("#")) handleAnchorClick(e);
+              }}
               keycap
             />
           ))}
