@@ -8,9 +8,9 @@ A config-driven developer portfolio built with **Next.js 16**, **Base UI**, **Ta
 flowchart TB
     USER([User]) --> HERO["HeroSection<br/>Photo gallery + headline"]
     HERO --> |Scroll| SYNOPSIS["SynopsisSection<br/>About me + GitHub heatmap"]
-    HERO --> |Scroll| PROJECTS["ProjectsSection<br/>Card stack with fan hover"]
-    HERO --> |Scroll| SKILLS["SkillsSection<br/>Categorized chip grid"]
-    HERO --> |Scroll| COURSES["CoursesSection<br/>Coursework listing"]
+    HERO --> |Scroll| PROJECTS["ProjectsSection<br/>SpotlightCard project cards"]
+    HERO --> |Scroll| SKILLS["SkillsSection<br/>Infinite marquee by category"]
+    HERO --> |Scroll| COURSES["CoursesSection<br/>SpotlightCard coursework"]
     HERO --> |Scroll| CONTACT["ContactSection<br/>Social links"]
 
     USER --> |Cmd+K| SEARCH["SearchOverlay<br/>Fuse.js fuzzy search"]
@@ -33,8 +33,10 @@ flowchart TB
 - **Fuzzy search overlay** Cmd+K / Ctrl+K triggers Fuse.js-powered search across all sections with action links
 - **2 color themes** Black and Teal, switchable at runtime with `localStorage` persistence and flash-free hydration
 - **Scroll progress bar** + **Back-to-top FAB** toggleable via feature flags
-- **Card stack fan** Project cards with hover fan-out interaction
-- **Keycap buttons** Skeuomorphic keyboard-key style for the search trigger, hero nav chips, and back-to-top FAB; colors adapt to the active theme
+- **Infinite skill marquee** Skills scrolled in three velocity-smoothed `requestAnimationFrame` loops (by Language, Framework, Tool), one scrolling right one left
+- **SpotlightCard** Project and coursework cards with a radial-gradient glow that follows the cursor, theme-aware accent color
+- **Shadow elevation** Two-tier depth system: `dm-elevation-3` for dark sections (inset highlight + ring + drop) and `elevation-3` for light sections (4-layer stacked shadow)
+- **Keycap buttons** Skeuomorphic keyboard-key style for the search trigger, hero nav chips, and back-to-top FAB; animated rainbow glow ring; colors adapt to the active theme
 - **Accessible** Skip-to-content link, semantic HTML, keyboard navigation, `prefers-reduced-motion` support
 - **SEO** Open Graph tags, JSON-LD Person schema, semantic heading hierarchy
 - **Performance** Static generation, Geist font family via `next/font` for zero-FOUT, Tailwind v4 (zero runtime CSS)
@@ -66,7 +68,11 @@ graph TD
     end
 
     subgraph Icons
-        RI["react-icons<br/>Feather icon set"]
+        RI["react-icons<br/>Feather + Simple Icons sets"]
+    end
+
+    subgraph Haptics
+        WH["web-haptics<br/>Touch feedback"]
     end
 
     NEXT --> TW
@@ -76,6 +82,7 @@ graph TD
     NEXT --> GHAPI
     NEXT --> GEIST
     NEXT --> RI
+    NEXT --> WH
 ```
 
 | Dependency | Purpose |
@@ -86,7 +93,8 @@ graph TD
 | [Framer Motion 12](https://motion.dev/) | Layout animations, staggered entrances, scroll-driven effects |
 | [Fuse.js](https://www.fusejs.io/) | Client-side fuzzy search |
 | [Geist](https://vercel.com/font) | Sans, Mono, and Pixel font families via `next/font` |
-| [react-icons](https://react-icons.github.io/react-icons/) | Icon library |
+| [react-icons](https://react-icons.github.io/react-icons/) | Feather (Fi) icons for contacts/search; Simple Icons (Si) for skill logos |
+| [web-haptics](https://github.com/nicktindall/web-haptics) | Touch haptic feedback |
 | [sharp](https://sharp.pixelplumbing.com/) | Image optimization at build time |
 | Vercel | Recommended hosting with ISR support |
 
@@ -171,24 +179,26 @@ public/
 │   │   ├── providers/
 │   │   │   └── ThemeProvider        # Theme context + localStorage sync
 │   │   ├── sections/
-│   │   │   ├── HeroSection          # Photo gallery + headline
-│   │   │   ├── SynopsisSection      # About + GitHub heatmap
-│   │   │   ├── ProjectsSection      # Card stack with fan hover
-│   │   │   ├── SkillsSection        # Categorized chip grid
-│   │   │   ├── CoursesSection       # Coursework listing
-│   │   │   └── ContactSection       # Social links
+│   │   │   ├── HeroSection          # Photo gallery + headline + stagger entrance
+│   │   │   ├── SynopsisSection      # About + GitHub heatmap (async server component)
+│   │   │   ├── ProjectsSection      # SpotlightCard project cards (dark)
+│   │   │   ├── SkillsSection        # LogoLoop marquee per skill category (light)
+│   │   │   ├── CoursesSection       # SpotlightCard coursework (dark)
+│   │   │   └── ContactSection       # Social link Chips with react-icons (light)
 │   │   └── ui/
 │   │       ├── ArcTooltip           # Curved tooltip for photo labels
 │   │       ├── BackToTopFAB         # Keycap-styled floating action button
 │   │       ├── CardStack            # Mobile: swipeable photo card stack
 │   │       ├── Chip                 # Tag / link chip (flat or keycap variant)
-│   │       ├── GitHubHeatmap        # Contribution graph
-│   │       ├── KeycapButton         # Skeuomorphic keycap shell (search trigger)
-│   │       ├── Photo                # Single photo with motion
-│   │       ├── PhotoGallery         # Desktop: fanned photo layout
-│   │       ├── ScrollProgressBar    # Top scroll indicator
-│   │       ├── SearchOverlay        # Cmd+K fuzzy search
-│   │       ├── SectionWrapper       # Shared section layout
+│   │       ├── GitHubHeatmap        # Contribution graph (theme-aware SVG)
+│   │       ├── KeycapButton         # Skeuomorphic keycap shell + rainbow glow (search trigger)
+│   │       ├── LogoLoop             # Infinite velocity-smoothed RAF marquee
+│   │       ├── Photo                # Single draggable photo with ArcTooltip
+│   │       ├── PhotoGallery         # Desktop: staggered spring photo fan-out
+│   │       ├── ScrollProgressBar    # Fixed top scroll indicator
+│   │       ├── SearchOverlay        # Cmd+K fuzzy search (Fuse.js + Base UI Dialog)
+│   │       ├── SectionWrapper       # Shared section layout (dark / light variants)
+│   │       ├── SpotlightCard        # Polymorphic card with cursor-following radial glow
 │   │       └── ThemeToggle          # Black ↔ Teal switcher
 │   ├── config/
 │   │   └── portfolio.config.ts     # Single-file site configuration
