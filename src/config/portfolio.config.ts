@@ -4,20 +4,20 @@ const config: PortfolioConfig = {
   meta: {
     name: "Hoang Minh Ngo",
     title: "Chicago, Illinois",
-    headline: "Hey, I am Hoang",
+    headline: "Hey there, I am Hoang",
     description: "",
     ogImage: "/og.png",
   },
 
   themes: {
     black: {
-      accent: "#7c8594",
-      accentLight: "#9ba3b0",
-      accentPale: "#f0f2f5",
-      darkBg: "#0d0d11",
-      darkBgAlt: "#191920",
+      accent: "#b3b3b3",
+      accentLight: "#d4d4d4",
+      accentPale: "#f1f1f1",
+      darkBg: "#111111",
+      darkBgAlt: "#232323",
       lightBg: "#ffffff",
-      lightBgAlt: "#f7f8fa",
+      lightBgAlt: "#f8f8f8",
     },
     teal: {
       accent: "#0d9488",
