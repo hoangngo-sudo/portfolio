@@ -35,7 +35,7 @@ flowchart TB
 - **Scroll progress bar** + **Back-to-top FAB** toggleable via feature flags
 - **Infinite skill marquee** Skills scrolled in three velocity-smoothed `requestAnimationFrame` loops (by Language, Framework, Tool), one scrolling right one left
 - **SpotlightCard** Project and coursework cards with a radial-gradient glow that follows the cursor, theme-aware accent color
-- **Shadow elevation** Two-tier depth system: `dm-elevation-3` for dark sections (inset highlight + ring + drop) and `elevation-3` for light sections (4-layer stacked shadow)
+- **Shadow elevation** Two-tier depth system: `dm-elevation-2` for dark sections (inset highlight + ring + drop) and `elevation-2` for light sections (3-layer stacked shadow)
 - **Keycap buttons** Skeuomorphic keyboard-key style for the search trigger, hero nav chips, and back-to-top FAB; animated rainbow glow ring; colors adapt to the active theme
 - **Accessible** Skip-to-content link, semantic HTML, keyboard navigation, `prefers-reduced-motion` support
 - **SEO** Open Graph tags, JSON-LD Person schema, semantic heading hierarchy
