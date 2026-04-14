@@ -13,6 +13,20 @@ import config from "@/config/portfolio.config";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import "./globals.css";
 
+function colorsToProps(c: typeof config.themes.black): Record<string, string> {
+  return {
+    accent: c.accent,
+    "accent-light": c.accentLight,
+    "accent-pale": c.accentPale,
+    "dark-bg": c.darkBg,
+    "dark-bg-alt": c.darkBgAlt,
+    "light-bg": c.lightBg,
+    "light-bg-alt": c.lightBgAlt,
+  };
+}
+
+const themeInitScript = `(function(){try{var themes=${JSON.stringify({ black: colorsToProps(config.themes.black), teal: colorsToProps(config.themes.teal) })};var t=localStorage.getItem('portfolio-theme')||'${config.themes.default}';var c=themes[t]||themes['${config.themes.default}'];var s=document.documentElement.style;for(var k in c){s.setProperty('--'+k,c[k])}}catch(e){}})()`;
+
 export const viewport: Viewport = {
   viewportFit: "cover",
 };
@@ -50,7 +64,7 @@ export default function RootLayout({
           id="theme-init"
           strategy="beforeInteractive"
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var themes={black:{accent:'#7c8594','accent-light':'#9ba3b0','accent-pale':'#f0f2f5','dark-bg':'#0d0d11','dark-bg-alt':'#191920','light-bg':'#ffffff','light-bg-alt':'#f7f8fa'},teal:{accent:'#0d9488','accent-light':'#14b8a6','accent-pale':'#f0fdfa','dark-bg':'#0f1a1a','dark-bg-alt':'#162222','light-bg':'#f8fdfb','light-bg-alt':'#f0f7f6'}};var t=localStorage.getItem('portfolio-theme')||'teal';var c=themes[t]||themes.teal;var s=document.documentElement.style;for(var k in c){s.setProperty('--'+k,c[k])}}catch(e){}})()`,
+            __html: themeInitScript,
           }}
         />
         <Script

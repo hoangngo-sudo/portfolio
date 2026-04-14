@@ -39,7 +39,7 @@ export function ProjectsSection({ data }: Props) {
             href={project.href || "#"}
             target={project.href ? "_blank" : undefined}
             rel={project.href ? "noopener noreferrer" : undefined}
-            className="group flex flex-col rounded-xl border border-card-border bg-card-bg p-5"
+            className="group flex flex-col rounded-xl bg-card-bg p-5 dm-elevation-3"
           >
             {project.image && (
               <div className="mb-3 h-24 w-full overflow-hidden rounded-lg bg-dark-bg-alt" />

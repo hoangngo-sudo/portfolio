@@ -27,7 +27,7 @@ export function CoursesSection({ data }: Props) {
                 <SpotlightCard
                   key={course.code}
                   spotlightSize={60}
-                  className="rounded-lg border border-card-border bg-card-bg p-4"
+                  className="rounded-lg bg-card-bg p-4 dm-elevation-3"
                 >
                   <p className="text-sm font-semibold text-text-primary">
                     {course.code}{" "}

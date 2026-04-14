@@ -46,10 +46,10 @@ export function SkillsSection({ data }: Props) {
           return {
             node: (
               <span
-                className="inline-flex items-center justify-center rounded-xl border border-chip-border bg-light-bg-alt p-3.5"
+                className="group/pill inline-flex items-center justify-center rounded-xl bg-light-bg-alt p-3.5 elevation-3"
                 title={skill.name}
               >
-                {IconComp && <IconComp className="size-7" />}
+                {IconComp && <IconComp className="size-7 transition-transform duration-300 ease-in-out group-hover/pill:scale-125" />}
               </span>
             ),
             ariaLabel: skill.name,
@@ -79,7 +79,7 @@ export function SkillsSection({ data }: Props) {
                 fadeOut
                 fadeOutColor="var(--light-bg)"
                 pauseOnHover
-                scaleOnHover
+                className="py-1.5"
                 ariaLabel={`${label} skills`}
               />
             </div>

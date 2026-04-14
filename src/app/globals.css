@@ -24,10 +24,16 @@
   --chip-hover-bg: color-mix(in srgb, var(--accent) 10%, rgb(0 0 0 / 0.01));
 
   /* Keycap button colors */
-  --keycap-cap-from: color-mix(in srgb, var(--accent) 30%, #424242);
-  --keycap-cap-to: color-mix(in srgb, var(--accent) 25%, #343434);
-  --keycap-surface-from: color-mix(in srgb, var(--accent) 20%, #2d2d2d);
-  --keycap-surface-to: color-mix(in srgb, var(--accent) 30%, #424242);
+  --keycap-cap-from: color-mix(in srgb, var(--accent) 30%, #525252);
+  --keycap-cap-to: color-mix(in srgb, var(--accent) 25%, #444444);
+  --keycap-surface-from: color-mix(in srgb, var(--accent) 20%, #3d3d3d);
+  --keycap-surface-to: color-mix(in srgb, var(--accent) 30%, #525252);
+
+  /* Shadow elevation tokens */
+  --dm-hi-mid:    rgba(255, 255, 255, 0.05);
+  --dm-ring-base: rgba(255, 255, 255, 0.02);
+  --dm-drop:      rgba(0, 0, 0, 0.18);
+  --shadow-color: rgb(0 0 0 / 0.06);
 }
 
 /* Map CSS vars into Tailwind v4 theme */
@@ -93,6 +99,25 @@ html {
 ::-webkit-scrollbar-thumb {
   background: var(--accent);
   border-radius: 4px;
+}
+
+/* Elevation 3 — dark mode */
+.dm-elevation-3 {
+  box-shadow:
+    inset 0 1px 0 0        var(--dm-hi-mid),
+    inset 0 0 0 1px        var(--dm-ring-base),
+          0 0 0 1px        rgba(0,0,0,0.12),
+          0 1px 1px -0.5px var(--dm-drop),
+          0 3px 3px -1.5px var(--dm-drop);
+}
+
+/* Elevation 3 — light mode */
+.elevation-3 {
+  box-shadow:
+    0px 0px 0px 1px        var(--shadow-color),
+    0px 1px 1px -0.5px     var(--shadow-color),
+    0px 3px 3px -1.5px     var(--shadow-color),
+    0px 6px 6px -3px       var(--shadow-color);
 }
 
 /* Keycap button glow animation */
