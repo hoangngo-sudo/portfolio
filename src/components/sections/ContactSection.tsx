@@ -41,7 +41,7 @@ export function ContactSection({ data }: Props) {
               external
               icon={Icon ? <Icon className="h-4 w-4" /> : undefined}
               onClick={() => haptic.trigger("light")}
-              className="elevation-3"
+              className="elevation-2"
             />
           );
         })}

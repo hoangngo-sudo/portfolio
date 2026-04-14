@@ -101,8 +101,8 @@ html {
   border-radius: 4px;
 }
 
-/* Elevation 3 — dark mode */
-.dm-elevation-3 {
+/* Elevation 2 — dark mode */
+.dm-elevation-2 {
   box-shadow:
     inset 0 1px 0 0        var(--dm-hi-mid),
     inset 0 0 0 1px        var(--dm-ring-base),
@@ -111,13 +111,12 @@ html {
           0 3px 3px -1.5px var(--dm-drop);
 }
 
-/* Elevation 3 — light mode */
-.elevation-3 {
+/* Elevation 2 — light mode */
+.elevation-2 {
   box-shadow:
-    0px 0px 0px 1px        var(--shadow-color),
-    0px 1px 1px -0.5px     var(--shadow-color),
-    0px 3px 3px -1.5px     var(--shadow-color),
-    0px 6px 6px -3px       var(--shadow-color);
+    0px 0px 0px 1px var(--shadow-color),
+    0px 1px 1px -0.5px var(--shadow-color),
+    0px 3px 3px -1.5px var(--shadow-color);
 }
 
 /* Keycap button glow animation */
