@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { Photo } from "@/components/ui/Photo";
 import type { DesktopPhoto } from "@/types/config";
@@ -16,6 +16,7 @@ export function PhotoGallery({
 }: PhotoGalleryProps) {
   const [isVisible, setIsVisible] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
+  const shouldReduceMotion = useReducedMotion();
 
   useEffect(() => {
     const visibilityTimer = setTimeout(() => {
@@ -72,15 +73,15 @@ export function PhotoGallery({
     <div className="relative mb-8 hidden h-[350px] w-full items-center justify-center lg:flex">
       <motion.div
         className="relative mx-auto flex w-full max-w-6xl justify-center"
-        initial={{ opacity: 0 }}
+        initial={shouldReduceMotion ? false : { opacity: 0 }}
         animate={{ opacity: isVisible ? 1 : 0 }}
-        transition={{ duration: 0.4, ease: "easeOut" }}
+        transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.4, ease: "easeOut" }}
       >
         <motion.div
           className="relative flex w-full justify-center"
           variants={containerVariants}
-          initial="hidden"
-          animate={isLoaded ? "visible" : "hidden"}
+          initial={shouldReduceMotion ? false : "hidden"}
+          animate={shouldReduceMotion ? "visible" : (isLoaded ? "visible" : "hidden")}
         >
           <div className="relative h-[220px] w-[220px]">
             {[...photos].reverse().map((photo, reverseIndex) => {

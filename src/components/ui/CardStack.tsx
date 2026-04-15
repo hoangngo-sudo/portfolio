@@ -126,7 +126,7 @@ function StackImage({
         rotateX: isActive ? rotateX : 0,
         rotateY: isActive ? rotateY : 0,
       }}
-      initial={{ opacity: 0, scale: 0.3 }}
+      initial={{ opacity: 0, scale: 0.8 }}
       animate={{
         rotateZ: fanRotation,
         scale: depthScale,

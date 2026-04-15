@@ -155,7 +155,7 @@ html {
 }
 
 .keycap-wrap:hover::before {
-  filter: blur(24px);
+  filter: blur(16px);
 }
 
 .keycap-wrap::after {
@@ -178,5 +178,6 @@ html {
 @media (prefers-reduced-motion: reduce) {
   .keycap-wrap::before {
     animation-play-state: paused;
+    transition: none;
   }
 }

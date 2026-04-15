@@ -37,7 +37,7 @@ export function BackToTopFAB() {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 16 }}
           whileHover={shouldReduceMotion ? undefined : { scale: 1.03 }}
-          whileTap={{ scale: 0.93 }}
+          whileTap={shouldReduceMotion ? undefined : { scale: 0.93 }}
           transition={springTransition}
         >
           <span className="inline-flex items-center rounded-[200px] bg-linear-to-b from-keycap-surface-from to-keycap-surface-to px-4 py-2 text-xs font-medium">

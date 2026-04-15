@@ -28,7 +28,7 @@ const itemVariants = {
     transition: {
       type: "spring" as const,
       bounce: 0.2,
-      visualDuration: 0.4,
+      visualDuration: 0.3,
     },
   },
 };

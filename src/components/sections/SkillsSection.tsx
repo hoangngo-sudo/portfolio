@@ -49,7 +49,7 @@ export function SkillsSection({ data }: Props) {
                 className="group/pill inline-flex items-center justify-center rounded-xl bg-light-bg-alt p-3.5 elevation-2"
                 title={skill.name}
               >
-                {IconComp && <IconComp className="size-7 transition-transform duration-300 ease-in-out group-hover/pill:scale-125" />}
+                {IconComp && <IconComp className="size-7 transition-transform duration-150 ease-out group-hover/pill:scale-125" />}
               </span>
             ),
             ariaLabel: skill.name,

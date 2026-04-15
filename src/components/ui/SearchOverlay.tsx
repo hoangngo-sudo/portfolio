@@ -62,7 +62,7 @@ export function SearchOverlay() {
           <KeycapButton {...props}>
             <FiSearch size={14} />
             Search
-            <span className="ml-2 hidden text-[11px] text-text-muted sm:inline">
+            <span className="ml-2 hidden text-[10px] font-medium text-current sm:inline">
               ⌘ K
             </span>
           </KeycapButton>

@@ -23,7 +23,7 @@ export function Chip({ label, href, external, icon, className = "", id, download
     : { type: "spring" as const, stiffness: 600, damping: 20 };
 
   const baseClasses =
-    "inline-flex items-center gap-2 rounded-lg border border-chip-border bg-transparent px-4 py-2 text-sm font-medium text-current/80 transition-colors hover:bg-chip-hover-bg hover:text-current";
+    "inline-flex cursor-pointer items-center gap-2 rounded-lg border border-chip-border bg-transparent px-4 py-2 text-sm font-medium text-current/80 transition-[colors,transform] duration-150 ease-out hover:bg-chip-hover-bg hover:text-current active:scale-[0.97]";
 
   const capClasses =
     "inline-flex cursor-pointer items-center gap-2 rounded-lg border-none bg-linear-to-b from-keycap-cap-from to-keycap-cap-to px-2 py-2 text-current/80 shadow-[0_6px_10px_rgb(0_0_0/0.3)]";
@@ -41,7 +41,7 @@ export function Chip({ label, href, external, icon, className = "", id, download
         className={`${capClasses} ${className}`}
         {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
         whileHover={shouldReduceMotion ? undefined : { scale: 1.03 }}
-        whileTap={{ scale: 0.93 }}
+        whileTap={shouldReduceMotion ? undefined : { scale: 0.93 }}
         transition={springTransition}
       >
         <span className={surfaceClasses}>

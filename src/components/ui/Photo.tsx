@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useRef, useState } from "react";
-import { motion, useMotionValue } from "framer-motion";
+import { motion, useMotionValue, useReducedMotion } from "framer-motion";
 import { useWebHaptics } from "web-haptics/react";
 import type { Direction } from "@/types/config";
 import { ArcTooltip } from "@/components/ui/ArcTooltip";
@@ -38,6 +38,7 @@ export function Photo({
   const [isHovered, setIsHovered] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const animationFrameRef = useRef<number | null>(null);
+  const shouldReduceMotion = useReducedMotion();
 
   function handleMouse(event: React.PointerEvent<HTMLDivElement>) {
     if (isDragging) return;
@@ -62,8 +63,8 @@ export function Photo({
         haptic.trigger("light");
         setIsDragging(false);
       }}
-      whileTap={{ scale: 1.1, zIndex: 9999 }}
-      whileHover={{
+      whileTap={shouldReduceMotion ? undefined : { scale: 1.1, zIndex: 9999 }}
+      whileHover={shouldReduceMotion ? undefined : {
         scale: 1.1,
         rotateZ: 2 * (direction === "left" ? -1 : 1),
         zIndex: 9999,

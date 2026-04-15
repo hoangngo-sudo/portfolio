@@ -3,6 +3,7 @@
 import {
   AnimatePresence,
   motion,
+  useReducedMotion,
   useSpring,
   useTransform,
 } from "framer-motion";
@@ -18,6 +19,7 @@ interface ArcTooltipProps {
 const springConfig = { stiffness: 100, damping: 15 };
 
 export function ArcTooltip({ label, isHovered, x }: ArcTooltipProps) {
+  const shouldReduceMotion = useReducedMotion();
   const rotate = useSpring(
     useTransform(x, [-100, 100], [-45, 45]),
     springConfig,
@@ -31,7 +33,7 @@ export function ArcTooltip({ label, isHovered, x }: ArcTooltipProps) {
     <AnimatePresence>
       {isHovered && (
         <motion.div
-          initial={{ opacity: 0, y: 20, scale: 0.6 }}
+          initial={shouldReduceMotion ? false : { opacity: 0, y: 20, scale: 0.93 }}
           animate={{
             opacity: 1,
             y: 0,
@@ -39,10 +41,10 @@ export function ArcTooltip({ label, isHovered, x }: ArcTooltipProps) {
             transition: {
               type: "spring",
               stiffness: 260,
-              damping: 10,
+              damping: 20,
             },
           }}
-          exit={{ opacity: 0, y: 20, scale: 0.6 }}
+          exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 20, scale: 0.93 }}
           style={{
             translateX,
             rotate,
