@@ -26,9 +26,9 @@ const itemVariants = {
     opacity: 1,
     y: 0,
     transition: {
-      type: "spring" as const,
-      bounce: 0.2,
-      visualDuration: 0.3,
+      type: "tween" as const,
+      duration: 0.5,
+      ease: [0.215, 0.61, 0.355, 1], // ease-out-cubic
     },
   },
 };
