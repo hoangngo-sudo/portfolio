@@ -28,7 +28,7 @@ const itemVariants = {
     transition: {
       type: "tween" as const,
       duration: 0.5,
-      ease: [0.215, 0.61, 0.355, 1], // ease-out-cubic
+      ease: [0.215, 0.61, 0.355, 1] as const, // ease-out-cubic
     },
   },
 };
