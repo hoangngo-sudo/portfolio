@@ -55,7 +55,7 @@ export function ProjectsSection({ data }: Props) {
                 {project.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="rounded-md border border-white/8 bg-dark-bg-alt px-2 py-0.5 text-xs font-medium text-text-muted"
+                    className="rounded-md border border-card-border bg-dark-bg-alt px-2 py-0.5 text-xs font-medium text-text-muted"
                   >
                     {tag}
                   </span>

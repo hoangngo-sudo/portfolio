@@ -12,6 +12,7 @@ import type { PanInfo } from "framer-motion";
 
 import { useEffect, useRef, useState } from "react";
 import { useWebHaptics } from "web-haptics/react";
+import Image from "next/image";
 import type { MobilePhoto } from "@/types/config";
 
 const fanSpring = { type: "spring" as const, stiffness: 260, damping: 20 };
@@ -138,10 +139,12 @@ function StackImage({
       onDrag={isActive ? onDrag : undefined}
       onDragEnd={onDragEnd}
     >
-      <img
+      <Image
         className="absolute inset-0 h-full w-full select-none touch-none object-cover"
         src={src}
         alt=""
+        fill
+        sizes="(max-width: 1024px) 55vw, 220px"
         onPointerDown={(e) => e.preventDefault()}
       />
     </motion.li>

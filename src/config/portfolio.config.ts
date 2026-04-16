@@ -5,7 +5,8 @@ const config: PortfolioConfig = {
     name: "Hoang Minh Ngo",
     title: "Chicago, Illinois",
     headline: "Hey there, I am Hoang",
-    description: "",
+    description: "Aspiring web developer building things on web that look good and work even better.",
+    siteUrl: "https://hoaangngo.com",
     ogImage: "/og.png",
   },
 

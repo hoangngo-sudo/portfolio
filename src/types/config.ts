@@ -29,6 +29,7 @@ export interface PortfolioConfig {
     title: string;
     headline: string;
     description: string;
+    siteUrl: string;
     ogImage?: string;
   };
 

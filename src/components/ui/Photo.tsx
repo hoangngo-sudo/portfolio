@@ -3,6 +3,7 @@
 import { useMemo, useRef, useState } from "react";
 import { motion, useMotionValue, useReducedMotion } from "framer-motion";
 import { useWebHaptics } from "web-haptics/react";
+import Image from "next/image";
 import type { Direction } from "@/types/config";
 import { ArcTooltip } from "@/components/ui/ArcTooltip";
 
@@ -89,10 +90,12 @@ export function Photo({
       tabIndex={0}
     >
       <div className="relative h-full w-full overflow-hidden rounded-lg shadow-sm shadow-slate-900/30">
-        <img
-          className="rounded-lg object-cover absolute inset-0 h-full w-full"
+        <Image
+          className="rounded-lg object-cover"
           src={src}
           alt={alt}
+          fill
+          sizes="220px"
           draggable={false}
         />
       </div>

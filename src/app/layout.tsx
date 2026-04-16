@@ -32,19 +32,29 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://example.com"),
+  metadataBase: new URL(config.meta.siteUrl),
   title: config.meta.name,
   description: config.meta.description,
   openGraph: {
     title: config.meta.name,
     description: config.meta.description,
-    images: config.meta.ogImage ? [config.meta.ogImage] : [],
+    images: config.meta.ogImage
+      ? [
+          {
+            url: config.meta.ogImage,
+            width: 1200,
+            height: 630,
+            alt: config.meta.name,
+          },
+        ]
+      : [],
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
     title: config.meta.name,
     description: config.meta.description,
+    images: config.meta.ogImage ? [config.meta.ogImage] : [],
   },
 };
 
@@ -76,7 +86,7 @@ export default function RootLayout({
               "@type": "Person",
               name: config.meta.name,
               description: config.meta.description,
-              url: "https://example.com",
+              url: config.meta.siteUrl,
             }),
           }}
         />
