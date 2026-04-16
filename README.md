@@ -94,7 +94,7 @@ graph TD
 | [Fuse.js](https://www.fusejs.io/) | Client-side fuzzy search |
 | [Geist](https://vercel.com/font) | Sans, Mono, and Pixel font families via `next/font` |
 | [react-icons](https://react-icons.github.io/react-icons/) | Feather (Fi) icons for contacts/search; Simple Icons (Si) for skill logos |
-| [web-haptics](https://github.com/nicktindall/web-haptics) | Touch haptic feedback |
+| [web-haptics](https://haptics.lochie.me/) | Touch haptic feedback |
 | [sharp](https://sharp.pixelplumbing.com/) | Image optimization at build time |
 | Vercel | Recommended hosting with ISR support |
 
