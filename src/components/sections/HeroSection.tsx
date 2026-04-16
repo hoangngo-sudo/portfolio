@@ -75,10 +75,6 @@ export function HeroSection() {
           {meta.headline}
         </motion.h1>
 
-        <motion.p variants={itemVariants} className="mb-8 max-w-xl text-lg text-text-secondary">
-          {meta.description}
-        </motion.p>
-
         <motion.div
           variants={itemVariants}
           className="flex flex-wrap items-center justify-center gap-3 text-text-secondary"
