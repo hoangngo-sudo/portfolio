@@ -38,7 +38,7 @@ export function Overline({ children }: { children: React.ReactNode }) {
 
 export function SectionHeading({ children }: { children: React.ReactNode }) {
   return (
-    <h2 className="mb-8 font-heading text-3xl font-bold tracking-tight md:text-4xl">
+    <h2 className="mb-8 text-balance font-heading text-3xl font-bold tracking-tight md:text-4xl">
       {children}
     </h2>
   );

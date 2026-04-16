@@ -79,7 +79,7 @@ export function SearchOverlay() {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search skills, projects, courses..."
-              className="flex-1 bg-transparent text-sm text-text-primary outline-none placeholder:text-text-muted"
+              className="flex-1 bg-transparent text-base text-text-primary outline-none placeholder:text-text-muted"
               autoFocus
             />
             <Dialog.Close className="rounded px-2 py-1 text-xs text-text-muted transition-colors hover:bg-card-hover hover:text-text-primary">

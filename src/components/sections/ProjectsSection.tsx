@@ -44,7 +44,7 @@ export function ProjectsSection({ data }: Props) {
             {project.image && (
               <div className="mb-3 h-24 w-full overflow-hidden rounded-lg bg-dark-bg-alt" />
             )}
-            <h3 className="mb-1 text-base font-semibold text-text-primary">
+            <h3 className="mb-1 text-balance text-base font-semibold text-text-primary">
               {project.title}
             </h3>
             <p className="mb-3 flex-1 text-sm text-text-secondary">

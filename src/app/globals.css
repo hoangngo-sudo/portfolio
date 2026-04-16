@@ -80,6 +80,8 @@ body {
   background: var(--light-bg);
   color: var(--ink-body);
   font-family: var(--font-body), sans-serif;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
 }
 
 /* Smooth scroll for anchor navigation */
@@ -154,8 +156,10 @@ html {
   transition: filter 0.3s ease;
 }
 
-.keycap-wrap:hover::before {
-  filter: blur(16px);
+@media (hover: hover) and (pointer: fine) {
+  .keycap-wrap:hover::before {
+    filter: blur(16px);
+  }
 }
 
 .keycap-wrap::after {

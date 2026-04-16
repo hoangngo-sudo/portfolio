@@ -70,7 +70,7 @@ export function HeroSection() {
 
         <motion.h1
           variants={itemVariants}
-          className="mb-4 font-heading text-4xl font-bold text-white md:text-6xl"
+          className="mb-4 text-balance font-heading text-4xl font-bold text-white md:text-6xl"
         >
           {meta.headline}
         </motion.h1>
