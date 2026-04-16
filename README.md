@@ -124,25 +124,12 @@ All content lives in [`src/config/portfolio.config.ts`](src/config/portfolio.con
 
 | Section | Description |
 |---|---|
-| `meta` | Name, title, headline, description, OG image |
+| `meta` | Name, title, headline, description, production URL (`siteUrl`), OG image |
 | `themes` | Black and Teal color definitions, default theme |
 | `nav` | Navigation links (supports `external` and `download` flags) |
 | `hero` | Desktop photo positions + mobile photo list |
 | `sections.*` | Each section has `enabled: boolean` + content data |
 | `features` | Toggle search overlay, scroll progress, back-to-top, GitHub heatmap |
-
-### Toggling sections
-
-Set `enabled: false` on any section to hide it:
-
-```typescript
-sections: {
-  courses: {
-    enabled: false, // hidden
-    // ...
-  },
-}
-```
 
 ### GitHub Heatmap
 
@@ -161,10 +148,12 @@ Place images in the `public/` directory:
 ```
 public/
 ├── photos/          # Hero gallery photos
-├── og.png           # Open Graph image
+├── og.png           # Open Graph image (1200×630 recommended)
 ├── resume.pdf       # Downloadable resume
 └── favicon.ico
 ```
+
+Hero photos use `next/image` with `fill` layout for native lazy loading and zero layout shift.
 
 ## Project Structure
 
@@ -172,8 +161,10 @@ public/
 .
 ├── src/
 │   ├── app/
-│   │   ├── layout.tsx              # Root layout, fonts, theme init, JSON-LD
-│   │   ├── page.tsx                # Page shell — renders enabled sections
+│   │   ├── layout.tsx              # Root layout, fonts, theme init, JSON-LD, metadata API
+│   │   ├── page.tsx                # Page shell
+│   │   ├── robots.ts               # robots.txt metadata route (static-export compatible)
+│   │   ├── sitemap.ts              # sitemap.xml metadata route (static-export compatible)
 │   │   └── globals.css             # Tailwind v4 + CSS custom properties
 │   ├── components/
 │   │   ├── providers/
@@ -193,7 +184,7 @@ public/
 │   │       ├── GitHubHeatmap        # Contribution graph (theme-aware SVG)
 │   │       ├── KeycapButton         # Skeuomorphic keycap shell + rainbow glow (search trigger)
 │   │       ├── LogoLoop             # Infinite velocity-smoothed RAF marquee
-│   │       ├── Photo                # Single draggable photo with ArcTooltip
+│   │       ├── Photo                # Single draggable photo with ArcTooltip (`next/image`)
 │   │       ├── PhotoGallery         # Desktop: staggered spring photo fan-out
 │   │       ├── ScrollProgressBar    # Fixed top scroll indicator
 │   │       ├── SearchOverlay        # Cmd+K fuzzy search (Fuse.js + Base UI Dialog)
@@ -203,13 +194,15 @@ public/
 │   ├── config/
 │   │   └── portfolio.config.ts     # Single-file site configuration
 │   ├── lib/
-│   │   ├── github.ts               # GitHub GraphQL client
-│   │   ├── scroll.ts               # Scroll utilities
+│   │   ├── github.ts               # GitHub GraphQL client (ISR cached)
+│   │   ├── scroll.ts               # Spring-animated scroll utilities
 │   │   └── search.ts               # Fuse.js search setup
 │   └── types/
 │       └── config.ts               # TypeScript config interfaces
 └── public/
-    └── photos/                     # Hero gallery images
+    ├── photos/                     # Hero gallery images
+    ├── og.png                      # Open Graph image (1200×630)
+    └── resume.pdf                  # Downloadable resume
 ```
 
 ## Deployment
