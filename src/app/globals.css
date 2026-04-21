@@ -1,5 +1,19 @@
 @import "tailwindcss";
 
+/* Register spotlight coords as typed properties so style recalculation
+   is scoped to the card subtree and doesn't cascade to unrelated elements */
+@property --spot-x {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: -9999px;
+}
+
+@property --spot-y {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: -9999px;
+}
+
 :root {
   --accent: #0d9488;
   --accent-light: #14b8a6;
@@ -103,7 +117,7 @@ html {
   border-radius: 4px;
 }
 
-/* Elevation 2 — dark mode */
+/* Elevation 2 for dark mode */
 .dm-elevation-2 {
   box-shadow:
     inset 0 1px 0 0        var(--dm-hi-mid),
@@ -113,7 +127,7 @@ html {
           0 3px 3px -1.5px var(--dm-drop);
 }
 
-/* Elevation 2 — light mode */
+/* Elevation 2 for light mode */
 .elevation-2 {
   box-shadow:
     0px 0px 0px 1px var(--shadow-color),

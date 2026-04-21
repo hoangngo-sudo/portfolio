@@ -69,6 +69,21 @@ export interface PortfolioConfig {
   };
 }
 
+export interface GlobeMarker {
+  lat: number;
+  lng: number;
+  src: string;   // avatar image path (e.g. "/photos/photo-1.jpg")
+  label: string; // tooltip / aria-label
+}
+
+export interface GlobeConfig {
+  heading: string;
+  markers?: GlobeMarker[];
+  atmosphereColor?: string;      // default: "#4da6ff"
+  atmosphereIntensity?: number;  // default: 20
+  autoRotateSpeed?: number;      // default: 0.3
+}
+
 export interface SynopsisConfig {
   enabled: boolean;
   heading: string;
@@ -78,6 +93,15 @@ export interface SynopsisConfig {
   github?: {
     username: string;
   };
+  globe?: GlobeConfig;
+}
+
+export interface ProjectItem {
+  title: string;
+  description: string;
+  repo?: string; // GitHub "owner/slug", e.g. "hoangngo-sudo/drincatuic"
+  href?: string;
+  tags?: string[];
 }
 
 export interface ProjectsConfig {
@@ -85,13 +109,7 @@ export interface ProjectsConfig {
   heading: string;
   overline: string;
   viewAllUrl?: string;
-  items: Array<{
-    title: string;
-    description: string;
-    image?: string;
-    href?: string;
-    tags?: string[];
-  }>;
+  items: ProjectItem[];
 }
 
 export interface SkillsConfig {

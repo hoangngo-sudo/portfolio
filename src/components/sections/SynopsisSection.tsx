@@ -4,29 +4,13 @@ import {
   Overline,
   SectionHeading,
 } from "@/components/ui/SectionWrapper";
-import { GitHubHeatmap } from "@/components/ui/GitHubHeatmap";
-import {
-  fetchContributions,
-  generatePlaceholderData,
-} from "@/lib/github";
-import config from "@/config/portfolio.config";
+import { GlobeCard } from "@/components/ui/GlobeCard";
 
 interface Props {
   data: SynopsisConfig;
 }
 
-export async function SynopsisSection({ data }: Props) {
-  let heatmapData = null;
-
-  if (config.features.githubHeatmap && data.github?.username) {
-    heatmapData = await fetchContributions(data.github.username);
-  }
-
-  // Fallback to placeholder data
-  if (!heatmapData) {
-    heatmapData = generatePlaceholderData();
-  }
-
+export function SynopsisSection({ data }: Props) {
   return (
     <SectionWrapper id="synopsis" variant="light">
       <div className="grid gap-10 md:grid-cols-[1.1fr_1.4fr]">
@@ -52,8 +36,10 @@ export async function SynopsisSection({ data }: Props) {
           )}
         </div>
 
-        <div className="flex items-center">
-          <GitHubHeatmap data={heatmapData} />
+        <div className="flex items-center justify-center">
+          {data.globe ? (
+            <GlobeCard config={data.globe} />
+          ) : null}
         </div>
       </div>
     </SectionWrapper>

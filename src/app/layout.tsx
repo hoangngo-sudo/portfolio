@@ -1,5 +1,4 @@
 import type { Metadata, Viewport } from "next";
-import Script from "next/script";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
 import {
@@ -11,6 +10,7 @@ import {
 } from "geist/font/pixel";
 import config from "@/config/portfolio.config";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
+import { ThemeScript } from "@/components/providers/ThemeScript";
 import "./globals.css";
 
 function colorsToProps(c: typeof config.themes.black): Record<string, string> {
@@ -69,16 +69,8 @@ export default function RootLayout({
       className={`${GeistSans.variable} ${GeistMono.variable} ${GeistPixelSquare.variable} ${GeistPixelGrid.variable} ${GeistPixelCircle.variable} ${GeistPixelTriangle.variable} ${GeistPixelLine.variable} h-full antialiased`}
       suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col font-body" suppressHydrationWarning>
-        <Script
-          id="theme-init"
-          strategy="beforeInteractive"
-          dangerouslySetInnerHTML={{
-            __html: themeInitScript,
-          }}
-        />
-        <Script
-          id="json-ld"
+      <head>
+        <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
@@ -87,9 +79,13 @@ export default function RootLayout({
               name: config.meta.name,
               description: config.meta.description,
               url: config.meta.siteUrl,
-            }),
+            }).replace(/</g, "\\u003c"),
           }}
         />
+      </head>
+      <body className="min-h-full flex flex-col font-body" suppressHydrationWarning>
+        {/* Theme init injected into SSR stream — avoids React 19 script-in-component warning */}
+        <ThemeScript script={themeInitScript} />
         {/* Skip to content link for accessibility */}
         <a
           href="#main-content"

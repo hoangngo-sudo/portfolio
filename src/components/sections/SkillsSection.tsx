@@ -9,21 +9,29 @@ import {
 } from "@/components/ui/SectionWrapper";
 import LogoLoop from "@/components/ui/LogoLoop";
 import type { LogoItem } from "@/components/ui/LogoLoop";
-import {
-  SiPython, SiCplusplus, SiOpenjdk, SiHtml5, SiCss,
-  SiJavascript, SiTypescript, SiSqlite, SiGnubash,
-  SiReact, SiNodedotjs, SiP5Dotjs, SiNextdotjs,
-  SiGit, SiGithub, SiLinux, SiDocker,
-  SiIntellijidea, SiClaude,
-} from "react-icons/si";
-import { VscVscodeInsiders } from "react-icons/vsc";
 
-const skillIconMap: Record<string, React.ComponentType<{ className?: string }>> = {
-  SiPython, SiCplusplus, SiOpenjdk, SiHtml5, SiCss,
-  SiJavascript, SiTypescript, SiSqlite, SiGnubash,
-  SiReact, SiNodedotjs, SiP5Dotjs, SiNextdotjs,
-  SiGit, SiGithub, SiLinux, SiDocker,
-  VscVscodeInsiders, SiIntellijidea, SiClaude,
+/** Maps config icon key → skillicons.dev icon ID */
+const skillIconId: Record<string, string> = {
+  python: "python",
+  cpp: "cpp",
+  java: "java",
+  html: "html",
+  css: "css",
+  javascript: "js",
+  typescript: "ts",
+  sqlite: "sqlite",
+  bash: "bash",
+  react: "react",
+  nodejs: "nodejs",
+  p5js: "p5js",
+  nextjs: "nextjs",
+  git: "git",
+  github: "github",
+  linux: "linux",
+  docker: "docker",
+  vscode: "vscode",
+  figma: "figma",
+  intellij: "idea",
 };
 
 const directionMap: Record<string, "left" | "right"> = {
@@ -42,14 +50,27 @@ export function SkillsSection({ data }: Props) {
       data.categories.map((category) => ({
         label: category.label,
         logos: category.items.map((skill): LogoItem => {
-          const IconComp = skill.icon ? skillIconMap[skill.icon] : null;
+          const iconId = skill.icon ? skillIconId[skill.icon] : null;
           return {
             node: (
               <span
-                className="group/pill inline-flex items-center justify-center rounded-xl bg-light-bg-alt p-3.5 elevation-2"
+                className="group/pill inline-flex items-center justify-center rounded-xl bg-light-bg-alt p-3 elevation-2"
                 title={skill.name}
               >
-                {IconComp && <IconComp className="size-7 transition-transform duration-150 ease-out group-hover/pill:scale-125" />}
+                {iconId ? (
+                  <img
+                    src={`https://skillicons.dev/icons?i=${iconId}&theme=dark`}
+                    alt={skill.name}
+                    width={40}
+                    height={40}
+                    loading="lazy"
+                    className="size-10 transition-transform duration-150 ease-out group-hover/pill:scale-125"
+                  />
+                ) : (
+                  <span className="flex size-10 items-center justify-center text-xs font-medium text-ink-muted">
+                    {skill.name}
+                  </span>
+                )}
               </span>
             ),
             ariaLabel: skill.name,
@@ -74,7 +95,7 @@ export function SkillsSection({ data }: Props) {
               <LogoLoop
                 logos={logos}
                 direction={directionMap[label] ?? "left"}
-                logoHeight={58}
+                logoHeight={64}
                 gap={12}
                 fadeOut
                 fadeOutColor="var(--light-bg)"

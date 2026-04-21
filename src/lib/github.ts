@@ -1,3 +1,71 @@
+export interface WeeklyCommitStats {
+  week: number;   // Unix timestamp (seconds) of week start
+  total: number;  // Total commits that week
+}
+
+export interface ProjectCommitsData {
+  weeks: WeeklyCommitStats[];  // Last 12 weeks
+  totalCommits: number;        // Sum of weeks[*].total
+  lastCommitDate: string | null; // ISO date string of last non-zero week, or null
+}
+
+/** GLOBAL_MAX: treat 30 commits/week as 100% bar height (absolute, not normalized). */
+const COMMIT_GLOBAL_MAX = 30;
+
+export async function fetchCommitActivity(
+  repo: string // "owner/slug"
+): Promise<ProjectCommitsData | null> {
+  const token = process.env.GITHUB_TOKEN;
+  const headers: Record<string, string> = {
+    "Content-Type": "application/json",
+    "User-Agent": "portfolio-site",
+  };
+  if (token) headers["Authorization"] = `Bearer ${token}`;
+
+  const url = `https://api.github.com/repos/${repo}/stats/commit_activity`;
+
+  for (let attempt = 0; attempt < 3; attempt++) {
+    try {
+      const res = await fetch(url, {
+        headers,
+        next: { revalidate: 3600 },
+      });
+
+      if (res.status === 202) {
+        // GitHub computing stats — wait 1s and retry
+        if (attempt < 2) {
+          await new Promise((r) => setTimeout(r, 1000));
+          continue;
+        }
+        return null;
+      }
+
+      if (!res.ok) return null;
+
+      const raw: Array<{ week: number; total: number; days: number[] }> =
+        await res.json();
+
+      if (!Array.isArray(raw)) return null;
+
+      const weeks = raw.slice(-12).map(({ week, total }) => ({ week, total }));
+      const totalCommits = weeks.reduce((sum, w) => sum + w.total, 0);
+      const lastActiveWeek = [...weeks].reverse().find((w) => w.total > 0);
+      const lastCommitDate = lastActiveWeek
+        ? new Date(lastActiveWeek.week * 1000).toISOString()
+        : null;
+
+      return { weeks, totalCommits, lastCommitDate };
+    } catch {
+      return null;
+    }
+  }
+
+  return null;
+}
+
+// Re-export constant for use in widget
+export { COMMIT_GLOBAL_MAX };
+
 export interface ContributionDay {
   contributionCount: number;
   date: string;

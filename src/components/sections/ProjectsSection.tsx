@@ -4,14 +4,24 @@ import {
   Overline,
   SectionHeading,
 } from "@/components/ui/SectionWrapper";
-import { Chip } from "@/components/ui/Chip";
 import SpotlightCard from "@/components/ui/SpotlightCard";
+import { ProjectCommitsWidget } from "@/components/ui/ProjectCommitsWidget";
+import { GitHubHeatmap } from "@/components/ui/GitHubHeatmap";
+import { fetchContributions, generatePlaceholderData } from "@/lib/github";
+import config from "@/config/portfolio.config";
 
 interface Props {
   data: ProjectsConfig;
 }
 
-export function ProjectsSection({ data }: Props) {
+export async function ProjectsSection({ data }: Props) {
+  let heatmapData = null;
+  const { sections, features } = config;
+  if (features.githubHeatmap && sections.synopsis?.github?.username) {
+    heatmapData = await fetchContributions(sections.synopsis.github.username);
+  }
+  if (!heatmapData) heatmapData = generatePlaceholderData();
+
   return (
     <SectionWrapper id="projects" variant="dark">
       <div className="flex items-baseline justify-between">
@@ -41,9 +51,7 @@ export function ProjectsSection({ data }: Props) {
             rel={project.href ? "noopener noreferrer" : undefined}
             className="group flex flex-col rounded-xl bg-card-bg p-5 dm-elevation-2"
           >
-            {project.image && (
-              <div className="mb-3 h-24 w-full overflow-hidden rounded-lg bg-dark-bg-alt" />
-            )}
+            {project.repo && <ProjectCommitsWidget repo={project.repo} />}
             <h3 className="mb-1 text-balance text-base font-semibold text-text-primary">
               {project.title}
             </h3>
@@ -65,6 +73,12 @@ export function ProjectsSection({ data }: Props) {
           </SpotlightCard>
         ))}
       </div>
+
+      {features.githubHeatmap && (
+        <div className="mt-4 w-fit max-w-full rounded-xl bg-card-bg p-5 dm-elevation-2">
+          <GitHubHeatmap data={heatmapData} />
+        </div>
+      )}
     </SectionWrapper>
   );
 }
