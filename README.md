@@ -178,34 +178,39 @@ Hero photos use `next/image` with `fill` layout for native lazy loading and zero
 │   ├── app/
 │   │   ├── layout.tsx              # Root layout, fonts, theme init, JSON-LD, metadata API
 │   │   ├── page.tsx                # Page shell
-│   │   ├── robots.ts               # robots.txt metadata route (static-export compatible)
-│   │   ├── sitemap.ts              # sitemap.xml metadata route (static-export compatible)
+│   │   ├── robots.ts               # robots.txt metadata route
+│   │   ├── sitemap.ts              # sitemap.xml metadata route
 │   │   └── globals.css             # Tailwind v4 + CSS custom properties
 │   ├── components/
 │   │   ├── providers/
-│   │   │   └── ThemeProvider        # Theme context + localStorage sync
+│   │   │   ├── ThemeProvider.tsx    # Theme context + localStorage sync
+│   │   │   └── ThemeScript.tsx      # Inline script for flash-free theme init
 │   │   ├── sections/
-│   │   │   ├── HeroSection          # Photo gallery + headline + stagger entrance
-│   │   │   ├── SynopsisSection      # About + GitHub heatmap (async server component)
-│   │   │   ├── ProjectsSection      # SpotlightCard project cards (dark)
-│   │   │   ├── SkillsSection        # LogoLoop marquee per skill category (light)
-│   │   │   ├── CoursesSection       # SpotlightCard coursework (dark)
-│   │   │   └── ContactSection       # Social link Chips with react-icons (light)
+│   │   │   ├── HeroSection.tsx                 # Photo gallery + headline + stagger entrance
+│   │   │   ├── SynopsisSection.tsx             # About + GitHub heatmap (async server component)
+│   │   │   ├── GithubContributionSection.tsx   # Standalone GitHub heatmap section
+│   │   │   ├── ProjectsSection.tsx             # SpotlightCard project cards (dark)
+│   │   │   ├── SkillsSection.tsx               # LogoLoop marquee per skill category (light)
+│   │   │   ├── CoursesSection.tsx              # SpotlightCard coursework (dark)
+│   │   │   └── ContactSection.tsx              # Social link Chips with react-icons (light)
 │   │   └── ui/
-│   │       ├── ArcTooltip           # Curved tooltip for photo labels
-│   │       ├── BackToTopFAB         # Keycap-styled floating action button
-│   │       ├── CardStack            # Mobile: swipeable photo card stack
-│   │       ├── Chip                 # Tag / link chip (flat or keycap variant)
-│   │       ├── GitHubHeatmap        # Contribution graph (theme-aware SVG)
-│   │       ├── KeycapButton         # Skeuomorphic keycap shell + rainbow glow (search trigger)
-│   │       ├── LogoLoop             # Infinite velocity-smoothed RAF marquee
-│   │       ├── Photo                # Single draggable photo with ArcTooltip (`next/image`)
-│   │       ├── PhotoGallery         # Desktop: staggered spring photo fan-out
-│   │       ├── ScrollProgressBar    # Fixed top scroll indicator
-│   │       ├── SearchOverlay        # Cmd+K fuzzy search (Fuse.js + Base UI Dialog)
-│   │       ├── SectionWrapper       # Shared section layout (dark / light variants)
-│   │       ├── SpotlightCard        # Polymorphic card with cursor-following radial glow
-│   │       └── ThemeToggle          # Black ↔ Teal switcher
+│   │       ├── ArcTooltip.tsx           # Spring-animated arc tooltip for photo labels
+│   │       ├── BackToTopFAB.tsx         # Keycap-styled floating action button
+│   │       ├── CardStack.tsx            # Mobile: swipeable photo card stack
+│   │       ├── Chip.tsx                 # Tag / link chip (flat, keycap variant)
+│   │       ├── GitHubHeatmap.tsx        # Contribution graph (theme-aware SVG)
+│   │       ├── Globe3D.tsx              # Three.js WebGL interactive globe
+│   │       ├── GlobeCard.tsx            # Clipped globe card
+│   │       ├── KeycapButton.tsx         # Skeuomorphic keycap shell + rainbow glow (search trigger)
+│   │       ├── LogoLoop.tsx             # Infinite velocity-smoothed RAF marquee
+│   │       ├── Photo.tsx                # Single draggable photo with ArcTooltip (`next/image`)
+│   │       ├── PhotoGallery.tsx         # Desktop: staggered spring photo fan-out
+│   │       ├── ProjectCommitsWidget.tsx # Per-project GitHub commit activity sparkline
+│   │       ├── ScrollProgressBar.tsx    # Fixed top scroll indicator
+│   │       ├── SearchOverlay.tsx        # Cmd+K fuzzy search (Fuse.js + Base UI Dialog)
+│   │       ├── SectionWrapper.tsx       # Shared section layout (dark / light variants)
+│   │       ├── SpotlightCard.tsx        # Polymorphic card with cursor-following radial glow
+│   │       └── ThemeToggle.tsx          # Black and Teal switcher
 │   ├── config/
 │   │   └── portfolio.config.ts     # Single-file site configuration
 │   ├── lib/
