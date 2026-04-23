@@ -110,7 +110,7 @@ This project would not be possible without the following open-source projects:
 This project has been inspired by the following websites and designs:
 
 - [anirudhkuppili.com](https://anirudhkuppili.com): layout structure, section hierarchy, color theming system, and overall visual language
-- [Aceternity UI](https://ui.aceternity.com/): `ArcTooltip` animated tooltip pattern, `SpotlightCard` cursor-following radial gradient, and globe card aesthetic
+- [Aceternity UI](https://ui.aceternity.com/): `ArcTooltip` animated tooltip pattern, and `SpotlightCard` cursor-following radial gradient
 - [Keycap Button](https://dribbble.com/shots/25117095--Keycap-Button): Skeuomorphic keycap button CSS
 
 ## Quick Start
