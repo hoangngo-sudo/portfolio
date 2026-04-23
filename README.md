@@ -98,6 +98,21 @@ graph TD
 | [sharp](https://sharp.pixelplumbing.com/) | Image optimization at build time |
 | Vercel | Recommended hosting with ISR support |
 
+## <a name="credits">Acknowledgment</a>
+
+This project would not be possible without the following open-source projects:
+
+- Haptic feedback from [web-haptics](https://haptics.lochie.me/)
+- Fuzzy search from [Fuse.js](https://www.fusejs.io/)
+- Accessible UI primitives from [Base UI](https://base-ui.com/)
+- Clipped WebGL globe card aesthetic from [COBE](https://cobe.vercel.app/)
+
+This project has been inspired by the following websites and designs:
+
+- [anirudhkuppili.com](https://anirudhkuppili.com): layout structure, section hierarchy, color theming system, and overall visual language
+- [Aceternity UI](https://ui.aceternity.com/): `ArcTooltip` animated tooltip pattern, `SpotlightCard` cursor-following radial gradient, and globe card aesthetic
+- [Keycap Button](https://dribbble.com/shots/25117095--Keycap-Button): Skeuomorphic keycap button CSS
+
 ## Quick Start
 
 ```bash
