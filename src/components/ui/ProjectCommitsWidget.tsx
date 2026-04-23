@@ -59,9 +59,9 @@ function CommitList({ commits }: { commits: RecentCommit[] }) {
     <div className="mb-4 border-b border-white/6 pb-4">
       {/* Header */}
       <div className="mb-2.5 flex items-center gap-1.5">
-        <FiGitCommit size={12} className="text-accent opacity-60" aria-hidden="true" />
+        <FiGitCommit size={18} className="text-accent opacity-60" aria-hidden="true" />
         <span className="text-[11px] font-medium uppercase tracking-widest text-text-muted">
-          Recent activity
+          Recent commit
         </span>
       </div>
 
