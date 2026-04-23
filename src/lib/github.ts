@@ -105,7 +105,7 @@ export async function fetchContributions(
 ): Promise<ContributionData | null> {
   const token = process.env.GITHUB_TOKEN;
   if (!token) {
-    console.warn("[github] GITHUB_TOKEN env var is missing — using placeholder heatmap data");
+    console.warn("[github] GITHUB_TOKEN env var is missing; fallback to using placeholder heatmap data");
     return null;
   }
 
@@ -121,14 +121,14 @@ export async function fetchContributions(
     });
 
     if (!res.ok) {
-      console.warn(`[github] API returned ${res.status} — check if GITHUB_TOKEN is valid`);
+      console.warn(`[github] API returned ${res.status}`);
       return null;
     }
 
     const json = await res.json();
     const calendar = json.data?.user?.contributionsCollection?.contributionCalendar ?? null;
     if (!calendar) {
-      console.warn(`[github] No contribution data for user "${username}" — check username exists`);
+      console.warn(`[github] No contribution data for user "${username}"`);
     }
     return calendar;
   } catch (err) {

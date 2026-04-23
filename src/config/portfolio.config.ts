@@ -62,14 +62,14 @@ const config: PortfolioConfig = {
   sections: {
     synopsis: {
       enabled: true,
-      overline: "Overview",
+      overline: "b. 2003",
       heading: "About me",
-      body: "I am an aspiring web developer who enjoys building things on web that look good and work even better. This portfolio is where I try out new ideas, and figure out how to put them back together.",
+      body: "I grew up in Ho Chi Minh city, Vietnam and now study Computer Science in Chicago. I build for the web because it is the most immediate medium I know.\n\nMy focus is on web development. I care about how things feel as much as how they work.\n\nWhen I am not building, I am pulling apart other people's work to understand what makes it good or picking up a new tool just to see what it teaches me.",
       github: {
         username: "hoangngo-sudo",
       },
       globe: {
-        heading: "From Saigon to Chicago",
+        heading: "From HCM to Chicago",
         markers: [
           { lat: 10.8231, lng: 106.6297, src: "/photos/photo-1.jpg", label: "Ho Chi Minh City, Vietnam" },
           { lat: 41.8781, lng: -87.6298, src: "/photos/photo-1.jpg", label: "Chicago, Illinois" },
@@ -82,7 +82,7 @@ const config: PortfolioConfig = {
 
     projects: {
       enabled: true,
-      overline: "Standout Work",
+      overline: "",
       heading: "Featured Projects",
       viewAllUrl: "https://github.com/hoangngo-sudo",
       items: [
@@ -112,7 +112,7 @@ const config: PortfolioConfig = {
 
     skills: {
       enabled: true,
-      overline: "Capabilities",
+      overline: "",
       heading: "Highlighted Skills",
       categories: [
         {
@@ -155,7 +155,7 @@ const config: PortfolioConfig = {
 
     courses: {
       enabled: true,
-      overline: "Coursework",
+      overline: "",
       heading: "CS courses that I took and will be taking",
       categories: [
         {
@@ -171,8 +171,8 @@ const config: PortfolioConfig = {
             { code: "CS277", name: "Technical Communication in Comp Sci", description: "Writing and presenting technical content for CS audiences" },
             { code: "CS301", name: "Languages and Automata", description: "Formal languages, finite automata, and computability theory" },
             { code: "CS341", name: "Programming Language Concepts", description: "Paradigms, type systems, and language design principles" },
-            { code: "CS342", name: "Software Design", description: "Design patterns, architecture, and software engineering practices" },
-            { code: "CS377", name: "Ethical Issues in Computing", description: "Privacy, security, AI ethics, and professional responsibility" },
+            { code: "CS342", name: "Software Design", description: "Design patterns, architecture, and software engineering practices in Java" },
+            { code: "CS377", name: "Ethical Issues in Computing", description: "Privacy, security, AI ethics, and ACM professional conduct" },
             { code: "CS361", name: "System Computing", description: "Operating systems, processes, threads, and synchronization" },
             { code: "CS362", name: "Computer Design", description: "Digital logic, processor design, and hardware organization" },
             { code: "CS401", name: "Computer Algorithms I", description: "Algorithm design, complexity analysis, and NP-completeness" },
@@ -187,7 +187,7 @@ const config: PortfolioConfig = {
 
     contact: {
       enabled: true,
-      overline: "Digital Presence",
+      overline: "",
       heading: "Online",
       links: [
         {
