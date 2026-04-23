@@ -7,14 +7,14 @@ import Image from "next/image";
 import type { GlobeMarker } from "@/types/config";
 
 const THETA = 0.2; // tilt (radians)
-// cobe internal: ee = 0.8 (globe radius), markerElevation default = 0.05
-const ELEV = 0.85;
+// cobe internal: ee = 0.8 (globe radius)
+const ELEV = 0.8;
 
 function project(
   lat: number,
   lng: number,
   phi: number,
-): { sx: number; sy: number; visible: boolean } {
+): { sx: number; sy: number; zView: number } {
   const latRad = (lat * Math.PI) / 180;
   const lngRad = (lng * Math.PI) / 180;
 
@@ -37,7 +37,7 @@ function project(
   return {
     sx: (c + 1) / 2,
     sy: (-s + 1) / 2,
-    visible: zView >= 0,
+    zView,
   };
 }
 
@@ -64,8 +64,6 @@ export function Globe3D({
   // Cache container dimensions read once (+ ResizeObserver), never in rAF
   const wRef = useRef(0);
   const hRef = useRef(0);
-  // Track previous visibility per marker to skip no-op style writes
-  const prevVisibleRef = useRef<boolean[]>(markers.map(() => false));
   // Drag state
   const isDraggingRef = useRef(false);
   const lastXRef = useRef(0);
@@ -153,14 +151,29 @@ export function Globe3D({
       for (let i = 0; i < markers.length; i++) {
         const el = avatarRefs.current[i];
         if (!el) continue;
-        const { sx, sy, visible } = project(markers[i].lat, markers[i].lng, phiRef.current);
+        const { sx, sy, zView } = project(markers[i].lat, markers[i].lng, phiRef.current);
+
         // translate: A-tier (compositor transform, no layout)
         el.style.transform = `translate(${sx * w}px, ${sy * h}px)`;
-        if (visible !== prevVisibleRef.current[i]) {
-          prevVisibleRef.current[i] = visible;
-          el.style.opacity = visible ? "1" : "0";
-          el.style.pointerEvents = visible ? "auto" : "none";
+
+        // Depth-based fade + blur: ease-out-cubic over ±0.2 horizon band
+        // Reduced-motion: hard toggle, no blur
+        let opacity: number;
+        let blurPx: number;
+        if (prefersReducedMotion) {
+          opacity = zView > 0 ? 1 : 0;
+          blurPx = 0;
+        } else {
+          const FADE = 0.2;
+          const t = Math.max(0, Math.min(1, (zView + FADE) / (2 * FADE)));
+          const eased = 1 - Math.pow(1 - t, 3); // ease-out-cubic
+          opacity = eased;
+          blurPx = (1 - eased) * 4; // 0px front → 4px back
         }
+
+        el.style.opacity = opacity < 0.005 ? "0" : opacity > 0.995 ? "1" : opacity.toFixed(3);
+        el.style.filter = blurPx < 0.05 ? "" : `blur(${blurPx.toFixed(2)}px)`;
+        el.style.pointerEvents = zView > 0 ? "auto" : "none";
       }
 
       rafId = requestAnimationFrame(frame);
@@ -206,12 +219,12 @@ export function Globe3D({
         <div
           key={i}
           ref={(el) => { avatarRefs.current[i] = el; }}
-          className="absolute transition-opacity duration-300"
+          className="absolute"
           style={{
             top: 0,
             left: 0,
             opacity: 0,
-            willChange: "transform, opacity",
+            willChange: "transform, opacity, filter",
           }}
           aria-label={m.label}
         >

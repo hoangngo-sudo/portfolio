@@ -31,8 +31,7 @@ export function CoursesSection({ data }: Props) {
                 >
                   <p className="text-sm font-semibold text-text-primary">
                     {course.code}{" "}
-                    <span className="font-normal text-text-secondary">
-                      · {course.name}
+                    <span className="font-normal text-text-secondary">{course.name}
                     </span>
                   </p>
                   {course.description && (

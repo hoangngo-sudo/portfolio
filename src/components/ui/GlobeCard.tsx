@@ -26,9 +26,6 @@ export function GlobeCard({ config }: Props) {
     <div className="flex w-full cursor-default flex-col overflow-hidden rounded-2xl bg-dark-bg dm-elevation-2">
       {/* Text at top — mirrors the reference card layout */}
       <div className="px-6 pt-6 pb-2">
-        <p className="text-xs font-semibold uppercase tracking-[3px] text-text-muted">
-          Location
-        </p>
         <h3 className="mt-1 text-xl font-bold text-text-primary">
           {config.heading}
         </h3>

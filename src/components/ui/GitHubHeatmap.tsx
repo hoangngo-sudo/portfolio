@@ -55,7 +55,7 @@ export function GitHubHeatmap({ data }: GitHubHeatmapProps) {
   const rgb = hexToRgb(colors.accent);
   const shades = rgb
     ? [
-        "rgba(255, 255, 255, 0.06)",                             // 0 — empty
+        "rgba(255, 255, 255, 0.06)",                             // 0
         `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.22)`,             // 1–2
         `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.44)`,             // 3–5
         `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.70)`,             // 6–8
@@ -112,7 +112,7 @@ export function GitHubHeatmap({ data }: GitHubHeatmapProps) {
       )}
 
       <div className="flex flex-col gap-2">
-        {/* Scroll container — no card box, scrolls horizontally; Emil: no fade on scrollable lists */}
+        {/* Scroll container */}
         <div className="overflow-x-auto" onMouseLeave={() => setTooltip(null)}>
           <svg
             width={svgWidth}
