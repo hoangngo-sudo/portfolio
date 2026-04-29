@@ -1,4 +1,4 @@
-import { animate, type AnimationPlaybackControls } from "framer-motion";
+import { animate, type AnimationPlaybackControls } from "motion";
 
 let activeScroll: AnimationPlaybackControls | null = null;
 

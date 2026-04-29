@@ -4,6 +4,7 @@ import config from "@/config/portfolio.config";
 export interface SearchItem {
   title: string;
   description?: string;
+  searchText?: string; // extra text indexed by Fuse but not displayed
   section: string;
   sectionId: string;
   href?: string;
@@ -17,7 +18,8 @@ function collectSearchItems(): SearchItem[] {
     for (const p of sections.projects.items) {
       items.push({
         title: p.title,
-        description: [p.description, ...(p.tags ?? [])].join(" "),
+        description: p.description,
+        searchText: (p.tags ?? []).join(" "),
         section: "Projects",
         sectionId: "projects",
         href: p.href,
@@ -86,7 +88,7 @@ export function getSearchIndex(): Fuse<SearchItem> {
   if (!fuseInstance) {
     allItems = collectSearchItems();
     fuseInstance = new Fuse(allItems, {
-      keys: ["title", "description"],
+      keys: ["title", "description", "searchText"],
       threshold: 0.3,
       includeScore: true,
     });

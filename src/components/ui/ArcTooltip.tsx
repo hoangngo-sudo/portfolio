@@ -6,8 +6,8 @@ import {
   useReducedMotion,
   useSpring,
   useTransform,
-} from "framer-motion";
-import type { MotionValue } from "framer-motion";
+} from "motion/react";
+import type { MotionValue } from "motion/react";
 
 interface ArcTooltipProps {
   label: string;
@@ -50,9 +50,9 @@ export function ArcTooltip({ label, isHovered, x }: ArcTooltipProps) {
             rotate,
             whiteSpace: "nowrap",
           }}
-          className="pointer-events-none absolute -top-16 left-1/2 z-50 flex -translate-x-1/2 flex-col items-center justify-center rounded-md bg-black px-4 py-2 text-xs shadow-xl"
+          className="pointer-events-none absolute -top-16 left-1/2 z-50 flex -translate-x-1/2 flex-col items-center justify-center rounded-md bg-dark-bg-alt px-4 py-2 text-xs dm-elevation-2"
         >
-          <div className="relative z-30 text-base font-bold text-white">
+          <div className="relative z-30 text-base font-bold text-text-primary">
             {label}
           </div>
         </motion.div>

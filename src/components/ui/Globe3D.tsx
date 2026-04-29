@@ -2,8 +2,9 @@
 
 import { useEffect, useRef } from "react";
 import createGlobe from "cobe";
-import { useReducedMotion } from "framer-motion";
+import { useReducedMotion } from "motion/react";
 import Image from "next/image";
+import { useWebHaptics } from "web-haptics/react";
 import type { GlobeMarker } from "@/types/config";
 
 const THETA = 0.2; // tilt (radians)
@@ -68,7 +69,11 @@ export function Globe3D({
   const isDraggingRef = useRef(false);
   const lastXRef = useRef(0);
   const momentumRef = useRef(0); // radians/frame carried after release
+  const hapticAccumRef = useRef(0); // accumulated rotation for detent haptics
   const prefersReducedMotion = useReducedMotion();
+  const haptic = useWebHaptics();
+  const hapticRef = useRef(haptic);
+  hapticRef.current = haptic;
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -99,12 +104,17 @@ export function Globe3D({
     });
 
     // Drag handlers
+    // ~15° in radians — natural picker-wheel detent interval
+    const HAPTIC_DETENT = Math.PI / 12;
+
     function onPointerDown(e: PointerEvent) {
       isDraggingRef.current = true;
       lastXRef.current = e.clientX;
       momentumRef.current = 0;
+      hapticAccumRef.current = 0;
       el.setPointerCapture(e.pointerId);
       el.style.cursor = "grabbing";
+      hapticRef.current.trigger("light");
     }
     function onPointerMove(e: PointerEvent) {
       if (!isDraggingRef.current) return;
@@ -114,8 +124,15 @@ export function Globe3D({
       const dphi = (dx / wRef.current) * Math.PI * 1.2;
       phiRef.current += dphi;
       momentumRef.current = dphi;
+      // Fire "selection" at every ~15° detent, like a picker wheel
+      hapticAccumRef.current += Math.abs(dphi);
+      if (hapticAccumRef.current >= HAPTIC_DETENT) {
+        hapticRef.current.trigger("selection");
+        hapticAccumRef.current -= HAPTIC_DETENT;
+      }
     }
     function onPointerUp() {
+      if (isDraggingRef.current) hapticRef.current.trigger("light");
       isDraggingRef.current = false;
       el.style.cursor = "grab";
     }
