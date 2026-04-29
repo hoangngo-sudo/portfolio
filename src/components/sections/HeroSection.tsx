@@ -9,6 +9,7 @@ import { SearchOverlay } from "@/components/ui/SearchOverlay";
 import { PhotoGallery } from "@/components/ui/PhotoGallery";
 import { CardStack } from "@/components/ui/CardStack";
 import { smoothScrollToId } from "@/lib/scroll";
+import { useLocalClock } from "@/lib/clock";
 import { useWebHaptics } from "web-haptics/react";
 
 const containerVariants = {
@@ -37,6 +38,7 @@ export function HeroSection() {
   const { meta, nav, features, hero } = config;
   const shouldReduceMotion = useReducedMotion();
   const haptic = useWebHaptics();
+  const clock = useLocalClock();
 
   const handleAnchorClick = useCallback(
     (e: React.MouseEvent<HTMLAnchorElement>) => {
@@ -66,6 +68,11 @@ export function HeroSection() {
           className="mb-3 text-xs font-semibold uppercase tracking-[4px] text-text-secondary"
         >
           {meta.title}
+          {clock && (
+            <span className="mt-1 block font-mono normal-case tracking-normal tabular-nums opacity-70">
+              {clock}
+            </span>
+          )}
         </motion.p>
 
         <motion.h1
