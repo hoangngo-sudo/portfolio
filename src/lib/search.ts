@@ -45,7 +45,7 @@ function collectSearchItems(): SearchItem[] {
     for (const cat of sections.courses.categories) {
       for (const c of cat.items) {
         items.push({
-          title: `${c.code} · ${c.name}`,
+          title: `${c.code}: ${c.name}`,
           description: c.description,
           section: "Courses",
           sectionId: "courses",

@@ -14,6 +14,10 @@ export function BackToTopFAB() {
     ? { duration: 0 }
     : { type: "spring" as const, stiffness: 600, damping: 20 };
 
+  const exitTransition = shouldReduceMotion
+    ? { duration: 0 }
+    : { type: "tween" as const, duration: 0.15, ease: [0.215, 0.61, 0.355, 1] };
+
   useEffect(() => {
     function handleScroll() {
       setVisible(window.scrollY > 200);
@@ -34,8 +38,8 @@ export function BackToTopFAB() {
           aria-label="Back to top"
           className="fixed right-6 bottom-[calc(1.5rem+env(safe-area-inset-bottom,0px))] z-50 cursor-pointer rounded-lg border-none bg-linear-to-b from-keycap-cap-from to-keycap-cap-to px-2 py-2 text-white shadow-[0_6px_10px_rgb(0_0_0/0.3)]"
           initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0, transition: springTransition }}
+          exit={{ opacity: 0, y: 16, transition: exitTransition }}
           whileHover={shouldReduceMotion ? undefined : { scale: 1.03 }}
           whileTap={shouldReduceMotion ? undefined : { scale: 0.93 }}
           transition={springTransition}
