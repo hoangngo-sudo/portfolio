@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion } from "motion/react";
 import config from "@/config/portfolio.config";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { Chip } from "@/components/ui/Chip";
@@ -16,19 +16,19 @@ const containerVariants = {
   hidden: {},
   visible: {
     transition: {
-      staggerChildren: 0.1,
+      staggerChildren: 0.08,
     },
   },
 };
 
 const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
+  hidden: { opacity: 0, y: 12 },
   visible: {
     opacity: 1,
     y: 0,
     transition: {
       type: "tween" as const,
-      duration: 0.5,
+      duration: 0.3,
       ease: [0.215, 0.61, 0.355, 1] as const, // ease-out-cubic
     },
   },
@@ -105,7 +105,7 @@ export function HeroSection() {
 
         {/* Desktop photo gallery */}
         <motion.div variants={itemVariants}>
-          <PhotoGallery photos={hero.desktopPhotos} animationDelay={0.9} />
+          <PhotoGallery photos={hero.desktopPhotos} animationDelay={0.4} />
         </motion.div>
 
         {/* Mobile card stack */}
