@@ -2,6 +2,7 @@
 
 import React, { useRef, useCallback, useEffect } from "react";
 import { useTheme } from "@/components/providers/ThemeProvider";
+import { hexToRgb } from "@/lib/color";
 
 type AsProp<T extends React.ElementType> = { as?: T };
 
@@ -11,16 +12,6 @@ type SpotlightCardProps<T extends React.ElementType = "div"> = AsProp<T> &
     spotlightSize?: number;
     children?: React.ReactNode;
   };
-
-/** Parse 3- or 6-digit hex to {r,g,b}. Returns null on invalid input. */
-function hexToRgb(hex: string): { r: number; g: number; b: number } | null {
-  const m = /^#?([0-9a-f]{3,6})$/i.exec(hex);
-  if (!m) return null;
-  const h = m[1].length === 3
-    ? m[1][0] + m[1][0] + m[1][1] + m[1][1] + m[1][2] + m[1][2]
-    : m[1];
-  return { r: parseInt(h.slice(0, 2), 16), g: parseInt(h.slice(2, 4), 16), b: parseInt(h.slice(4, 6), 16) };
-}
 
 function SpotlightCardInner<T extends React.ElementType = "div">(
   props: SpotlightCardProps<T> & { ref?: React.ForwardedRef<Element> },
@@ -113,18 +104,6 @@ function SpotlightCardInner<T extends React.ElementType = "div">(
     }
   }, [spotlightColor, spotlightSize, colors.accent, rootRef]);
 
-  const handleBlur = useCallback(() => {
-    if (rafRef.current !== null) {
-      cancelAnimationFrame(rafRef.current);
-      rafRef.current = null;
-    }
-    if (overlayRef.current) overlayRef.current.style.opacity = "0";
-    const el = rootRef.current;
-    if (el) {
-      el.style.removeProperty("--spot-x");
-      el.style.removeProperty("--spot-y");
-    }
-  }, [rootRef]);
 
   const handleMouseMove = useCallback(
     (e: React.MouseEvent) => {
@@ -161,12 +140,13 @@ function SpotlightCardInner<T extends React.ElementType = "div">(
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onFocus={handleFocus}
-      onBlur={handleBlur}
+      onBlur={handleMouseLeave}
     >
       <div
         ref={overlayRef}
         aria-hidden
         className="pointer-events-none absolute inset-0 z-0 opacity-0 transition-opacity duration-200"
+        style={{ willChange: "transform" }}
       />
       <div className="relative z-1">{children}</div>
     </Tag>

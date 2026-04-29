@@ -8,6 +8,12 @@ let activeScroll: AnimationPlaybackControls | null = null;
  * JS-driven animation (which causes visible jitter on mobile).
  */
 export function smoothScrollTo(targetY: number) {
+  // Jump instantly for users who prefer reduced motion
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    window.scrollTo({ top: targetY, behavior: "instant" });
+    return;
+  }
+
   // Cancel any in-flight scroll animation
   if (activeScroll) activeScroll.stop();
 

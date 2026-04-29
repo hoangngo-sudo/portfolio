@@ -62,6 +62,7 @@ export function HeroSection() {
         variants={containerVariants}
         initial={shouldReduceMotion ? false : "hidden"}
         animate="visible"
+        style={{ willChange: "transform, opacity" }}
       >
         <motion.p
           variants={itemVariants}

@@ -2,6 +2,7 @@
 
 import type { ContributionData } from "@/lib/github";
 import { useTheme } from "@/components/providers/ThemeProvider";
+import { hexToRgb } from "@/lib/color";
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
   AnimatePresence,
@@ -30,15 +31,6 @@ const DAY_LABEL_WIDTH = 26;
 const MONTH_LABEL_HEIGHT = 16;
 
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-
-function hexToRgb(hex: string): { r: number; g: number; b: number } | null {
-  const m = /^#?([0-9a-f]{3,6})$/i.exec(hex);
-  if (!m) return null;
-  const h = m[1].length === 3
-    ? m[1][0] + m[1][0] + m[1][1] + m[1][1] + m[1][2] + m[1][2]
-    : m[1];
-  return { r: parseInt(h.slice(0, 2), 16), g: parseInt(h.slice(2, 4), 16), b: parseInt(h.slice(4, 6), 16) };
-}
 
 function getDateParts(dateStr: string): { weekday: string; month: string; day: number; year: number } {
   const d = new Date(dateStr + "T00:00:00");
@@ -89,7 +81,7 @@ export function GitHubHeatmap({ data, fadeColor = "var(--light-bg)" }: GitHubHea
     return () => window.removeEventListener("resize", updateEdges);
   }, [updateEdges]);
 
-  // Raw cursor position MotionValues
+  // Raw cursor position MotionValues — updated directly, smoothed by spring below
   const rawX = useMotionValue(0);
   const rawY = useMotionValue(0);
 
@@ -97,7 +89,7 @@ export function GitHubHeatmap({ data, fadeColor = "var(--light-bg)" }: GitHubHea
   // bounce: 0 = critically damped — no overshoot past the cursor.
   const springCfg = shouldReduceMotion
     ? { stiffness: 10000, damping: 1000 } // instant when reduced motion
-    : { visualDuration: 0.2, bounce: 0 };
+    : { visualDuration: 0.08, bounce: 0 };
   const springX = useSpring(rawX, springCfg);
   const springY = useSpring(rawY, springCfg);
 
@@ -148,7 +140,7 @@ export function GitHubHeatmap({ data, fadeColor = "var(--light-bg)" }: GitHubHea
           <motion.div
             key="heatmap-tooltip"
             className="pointer-events-none fixed left-0 top-0 z-50"
-            style={{ x: springX, y: springY }}
+            style={{ x: springX, y: springY, willChange: "transform" }}
           >
             {/* Inner: CSS translate for centering (compositor) + enter/exit animation */}
             <motion.div
@@ -231,6 +223,7 @@ export function GitHubHeatmap({ data, fadeColor = "var(--light-bg)" }: GitHubHea
                   WebkitBackdropFilter: "blur(6px)",
                   maskImage: "linear-gradient(to right, black 0%, transparent 100%)",
                   WebkitMaskImage: "linear-gradient(to right, black 0%, transparent 100%)",
+                  willChange: "filter",
                 }}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1, transition: { ease: EASE_OUT_CUBIC, duration: 0.15 } }}
@@ -251,6 +244,7 @@ export function GitHubHeatmap({ data, fadeColor = "var(--light-bg)" }: GitHubHea
                   WebkitBackdropFilter: "blur(6px)",
                   maskImage: "linear-gradient(to left, black 0%, transparent 100%)",
                   WebkitMaskImage: "linear-gradient(to left, black 0%, transparent 100%)",
+                  willChange: "filter",
                 }}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1, transition: { ease: EASE_OUT_CUBIC, duration: 0.15 } }}
@@ -261,7 +255,7 @@ export function GitHubHeatmap({ data, fadeColor = "var(--light-bg)" }: GitHubHea
         <div
           ref={scrollRef}
           className="overflow-x-auto"
-          style={{ scrollbarWidth: "thin", scrollbarColor: "var(--accent) transparent" }}
+          style={{ scrollbarWidth: "thin", scrollbarColor: "var(--accent) transparent", willChange: "transform" }}
           onScroll={updateEdges}
           onPointerMove={(e) => {
             if (e.pointerType === "touch") return;
@@ -316,7 +310,7 @@ export function GitHubHeatmap({ data, fadeColor = "var(--light-bg)" }: GitHubHea
                   height={CELL_SIZE}
                   rx={3}
                   fill={getShade(day.contributionCount)}
-                  style={{ transition: "fill 0.25s ease", cursor: "default" }}
+                  style={{ cursor: "default" }}
                   onPointerEnter={(e) => {
                     if (e.pointerType === "touch") return;
                     rawX.set(e.clientX);
@@ -350,7 +344,7 @@ export function GitHubHeatmap({ data, fadeColor = "var(--light-bg)" }: GitHubHea
                 key={i}
                 aria-hidden="true"
                 className="rounded-sm"
-                style={{ width: CELL_SIZE, height: CELL_SIZE, background: shade, transition: "background 0.25s ease" }}
+                style={{ width: CELL_SIZE, height: CELL_SIZE, background: shade }}
               />
             ))}
             <span>More</span>

@@ -90,7 +90,7 @@ export function PhotoGallery({
                 <motion.div
                   key={photo.src}
                   className="absolute left-0 top-0"
-                  style={{ zIndex: photo.zIndex }}
+                  style={{ zIndex: photo.zIndex, willChange: "transform" }}
                   variants={photoVariants}
                   custom={{ x: photo.x, y: photo.y, order }}
                 >

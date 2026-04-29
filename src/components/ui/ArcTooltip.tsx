@@ -16,7 +16,7 @@ interface ArcTooltipProps {
   x: MotionValue<number>;
 }
 
-const springConfig = { stiffness: 100, damping: 15 };
+const springConfig = { stiffness: 70, damping: 12 };
 
 export function ArcTooltip({ label, isHovered, x }: ArcTooltipProps) {
   const shouldReduceMotion = useReducedMotion();
@@ -49,6 +49,7 @@ export function ArcTooltip({ label, isHovered, x }: ArcTooltipProps) {
             translateX,
             rotate,
             whiteSpace: "nowrap",
+            willChange: "transform",
           }}
           className="pointer-events-none absolute -top-16 left-1/2 z-50 flex -translate-x-1/2 flex-col items-center justify-center rounded-md bg-dark-bg-alt px-4 py-2 text-xs dm-elevation-2"
         >

@@ -99,6 +99,7 @@ function CommitList({ commits }: { commits: RecentCommit[] }) {
 }
 
 export function ProjectCommitsWidget({ repo }: Props) {
+  const reducedMotion = useReducedMotion();
   const [commits, setCommits] = useState<RecentCommit[] | null | "loading">("loading");
 
   useEffect(() => {
@@ -137,7 +138,7 @@ export function ProjectCommitsWidget({ repo }: Props) {
         <motion.div
           key="skeleton"
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.15 }}
+          transition={{ duration: reducedMotion ? 0 : 0.15 }}
         >
           <SkeletonCommits />
         </motion.div>
@@ -145,9 +146,9 @@ export function ProjectCommitsWidget({ repo }: Props) {
       {Array.isArray(commits) && commits.length > 0 && (
         <motion.div
           key="content"
-          initial={{ opacity: 0 }}
+          initial={reducedMotion ? false : { opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.2 }}
+          transition={{ duration: reducedMotion ? 0 : 0.2 }}
         >
           <CommitList commits={commits} />
         </motion.div>

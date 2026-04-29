@@ -10,9 +10,9 @@ export function ScrollProgressBar() {
       const scrollTop = window.scrollY;
       const docHeight =
         document.documentElement.scrollHeight - window.innerHeight;
-      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      const progress = docHeight > 0 ? scrollTop / docHeight : 0;
       if (barRef.current) {
-        barRef.current.style.width = `${progress}%`;
+        barRef.current.style.transform = `scaleX(${progress})`;
       }
     }
 
@@ -24,8 +24,8 @@ export function ScrollProgressBar() {
     <div className="fixed top-0 left-0 z-50 h-1 w-full">
       <div
         ref={barRef}
-        className="h-full bg-accent"
-        style={{ width: "0%" }}
+        className="h-full w-full bg-accent"
+        style={{ transform: "scaleX(0)", transformOrigin: "left" }}
       />
     </div>
   );
