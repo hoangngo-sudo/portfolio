@@ -18,7 +18,7 @@ export type LogoItem =
       height?: number;
     };
 
-export interface LogoLoopProps {
+interface LogoLoopProps {
   logos: LogoItem[];
   speed?: number;
   direction?: 'left' | 'right' | 'up' | 'down';
@@ -227,7 +227,7 @@ const useAnimationLoop = (
   }, [seqWidth, seqHeight, isVertical]);
 };
 
-export const LogoLoop = React.memo<LogoLoopProps>(
+const LogoLoop = React.memo<LogoLoopProps>(
   ({
     logos,
     speed = 60,

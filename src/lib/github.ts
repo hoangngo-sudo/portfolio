@@ -1,9 +1,9 @@
-export interface WeeklyCommitStats {
+interface WeeklyCommitStats {
   week: number;   // Unix timestamp (seconds) of week start
   total: number;  // Total commits that week
 }
 
-export interface ProjectCommitsData {
+interface ProjectCommitsData {
   weeks: WeeklyCommitStats[];  // Last 12 weeks
   totalCommits: number;        // Sum of weeks[*].total
   lastCommitDate: string | null; // ISO date string of last non-zero week, or null
@@ -12,7 +12,7 @@ export interface ProjectCommitsData {
 /** GLOBAL_MAX: treat 30 commits/week as 100% bar height (absolute, not normalized). */
 const COMMIT_GLOBAL_MAX = 30;
 
-export async function fetchCommitActivity(
+async function fetchCommitActivity(
   repo: string // "owner/slug"
 ): Promise<ProjectCommitsData | null> {
   const token = process.env.GITHUB_TOKEN;
@@ -63,16 +63,13 @@ export async function fetchCommitActivity(
   return null;
 }
 
-// Re-export constant for use in widget
-export { COMMIT_GLOBAL_MAX };
-
-export interface ContributionDay {
+interface ContributionDay {
   contributionCount: number;
   date: string;
   color: string;
 }
 
-export interface ContributionWeek {
+interface ContributionWeek {
   contributionDays: ContributionDay[];
 }
 

@@ -173,7 +173,7 @@ function SpotlightCardInner<T extends React.ElementType = "div">(
   );
 }
 
-export const SpotlightCard = React.forwardRef(SpotlightCardInner) as <
+const SpotlightCard = React.forwardRef(SpotlightCardInner) as <
   T extends React.ElementType = "div",
 >(
   props: SpotlightCardProps<T> & { ref?: React.ForwardedRef<Element> },

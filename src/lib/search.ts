@@ -84,7 +84,7 @@ const SECTION_ALIASES: Record<string, string> = {
 let fuseInstance: Fuse<SearchItem> | null = null;
 let allItems: SearchItem[] | null = null;
 
-export function getSearchIndex(): Fuse<SearchItem> {
+function getSearchIndex(): Fuse<SearchItem> {
   if (!fuseInstance) {
     allItems = collectSearchItems();
     fuseInstance = new Fuse(allItems, {
