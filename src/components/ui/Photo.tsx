@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useRef, useState } from "react";
-import { motion, useMotionValue, useReducedMotion } from "framer-motion";
+import { motion, useMotionValue, useReducedMotion } from "motion/react";
 import { useWebHaptics } from "web-haptics/react";
 import Image from "next/image";
 import type { Direction } from "@/types/config";

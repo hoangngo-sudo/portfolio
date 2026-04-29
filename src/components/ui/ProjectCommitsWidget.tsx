@@ -1,8 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
-import { FiGitCommit } from "react-icons/fi";
+import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 
 interface Props {
   repo: string; // "owner/slug"
@@ -32,7 +31,7 @@ const WIDTHS = [68, 50, 58];
 
 function SkeletonCommits() {
   return (
-    <div className="mb-4 border-b border-white/6 pb-4">
+    <div className="mb-4 rounded-lg bg-black/40 px-4 py-3">
       {/* Header */}
       <div className="mb-2.5 flex items-center gap-1.5">
         <div className="h-3 w-3 rounded-full bg-white/[0.07]" />
@@ -56,10 +55,9 @@ function CommitList({ commits }: { commits: RecentCommit[] }) {
   const reducedMotion = useReducedMotion();
 
   return (
-    <div className="mb-4 border-b border-white/6 pb-4">
+    <div className="mb-4 rounded-lg bg-black/40 px-4 py-3">
       {/* Header */}
       <div className="mb-2.5 flex items-center gap-1.5">
-        <FiGitCommit size={18} className="text-accent opacity-60" aria-hidden="true" />
         <span className="text-[11px] font-medium uppercase tracking-widest text-text-muted">
           Recent commit
         </span>

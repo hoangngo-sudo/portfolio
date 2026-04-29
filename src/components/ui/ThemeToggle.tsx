@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion } from "motion/react";
 import { useTheme } from "@/components/providers/ThemeProvider";
 import { useWebHaptics } from "web-haptics/react";
 
@@ -39,7 +39,7 @@ export function ThemeToggle() {
             }}
             whileTap={reduced ? undefined : { scale: 0.82 }}
             transition={reduced ? { duration: 0 } : PRESS_SPRING}
-            className="relative h-7 w-7 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:ring-offset-2 focus-visible:ring-offset-dark-bg"
+            className="relative h-7 w-7 shrink-0 aspect-square rounded-full focus-visible:outline-2 focus-visible:outline-white/40 focus-visible:outline-offset-1"
             style={{
               backgroundColor: color,
               opacity: isActive ? 1 : 0.3,
@@ -50,7 +50,7 @@ export function ThemeToggle() {
             {isActive && (
               <motion.span
                 layoutId="theme-active-ring"
-                className="pointer-events-none absolute -inset-1 rounded-full ring-2 ring-white/50"
+                className="pointer-events-none absolute -inset-0.5 rounded-full ring-2 ring-white/50"
                 transition={reduced ? { duration: 0 } : RING_SPRING}
               />
             )}

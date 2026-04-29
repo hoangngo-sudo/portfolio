@@ -7,8 +7,8 @@ import {
   useReducedMotion,
   useTransform,
   wrap,
-} from "framer-motion";
-import type { PanInfo } from "framer-motion";
+} from "motion/react";
+import type { PanInfo } from "motion/react";
 
 import { useEffect, useRef, useState } from "react";
 import { useWebHaptics } from "web-haptics/react";
