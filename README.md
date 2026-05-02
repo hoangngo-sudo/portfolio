@@ -43,13 +43,13 @@ flowchart TB
 - **Scroll progress bar** + **Back-to-top FAB** toggleable via feature flags
 - **Infinite skill marquee** Skills scrolled in three velocity-smoothed `requestAnimationFrame` loops (by Language, Framework, Tool), one scrolling right one left
 - **SpotlightCard** Project and coursework cards with a radial-gradient glow that follows the cursor, theme-aware accent color
-- **Shadow elevation** Two-tier depth system: `dm-elevation-2` for dark sections (inset highlight + ring + drop) and `elevation-2` for light sections (3-layer stacked shadow)
+- **Shadow elevation** Two-tier depth system: `dm-elevation-2` for dark sections and 3-layer stacked shadow `elevation-2` for light sections
 - **Keycap buttons** Skeuomorphic keyboard-key style for the search trigger, hero nav chips, and back-to-top FAB; animated rainbow glow ring; colors adapt to the active theme
-- **Web haptics** Touch feedback on interactive elements (chips, drags, globe rotation, keycap taps)
+- **Web haptics** Touch feedback on chips, drags, globe rotation and keycap taps
 - **Themed scrollbar** Thin accent-colored scrollbar consistent across all scroll containers
 - **Accessible** Skip-to-content link, semantic HTML, keyboard navigation, `prefers-reduced-motion` support
 - **SEO** Open Graph tags, JSON-LD Person schema, semantic heading hierarchy
-- **Performance** Static generation, Geist font family via `next/font` for zero-FOUT, Tailwind v4 (zero runtime CSS)
+- **Performance** Static generation, Geist font family via `next/font` for zero-FOUT, Tailwind v4
 
 ## Tech Stack
 
@@ -65,7 +65,7 @@ graph TD
     end
 
     subgraph Animation
-        FM["Motion 12<br/>framer-motion + motion/react"] 
+        FM["Motion 12<br/>motion/react + motion"] 
         FMP["Motion Plus<br/>AnimateNumber digit-flip"]
     end
 
@@ -109,8 +109,8 @@ graph TD
 | [Next.js 16](https://nextjs.org/) | App Router framework with React 19 |
 | [Base UI](https://base-ui.com/) | Unstyled, accessible UI primitives |
 | [Tailwind CSS v4](https://tailwindcss.com/) | Utility-first styling |
-| [Motion 12](https://motion.dev/) | Spring animations — `framer-motion` (older components) + `motion/react` (newer) |
-| [Motion Plus](https://motion.plus/) | `AnimateNumber` for animated digit-flip counters |
+| [Motion 12](https://motion.dev/) | Spring animations from `motion/react` + `motion` for vanilla scroll utility |
+| [Motion Plus](https://motion.dev/) | `AnimateNumber` for animated digit-flip counters |
 | [Fuse.js](https://www.fusejs.io/) | Client-side fuzzy search |
 | [Geist](https://vercel.com/font) | Sans, Mono, and Pixel font families via `next/font` |
 | [react-icons](https://react-icons.github.io/react-icons/) | Feather (Fi) icons for contacts/search; Simple Icons (Si) for skill logos |
@@ -130,9 +130,11 @@ This project would not be possible without the following open-source projects:
 
 This project has been inspired by the following websites and designs:
 
+- [braydoncoyer.dev](https://www.braydoncoyer.dev/): hero section gallery images display with spring-animated photo fan-out
 - [anirudhkuppili.com](https://anirudhkuppili.com): layout structure, section hierarchy, color theming system, and overall visual language
 - [Aceternity UI](https://ui.aceternity.com/): `ArcTooltip` animated tooltip pattern, and `SpotlightCard` cursor-following radial gradient
 - [Keycap Button](https://dribbble.com/shots/25117095--Keycap-Button): Skeuomorphic keycap button CSS
+
 
 ## Quick Start
 
@@ -198,18 +200,17 @@ Hero photos use `next/image` with `fill` layout for native lazy loading and zero
 ├── src/
 │   ├── app/
 │   │   ├── layout.tsx              # Root layout, fonts, theme init, JSON-LD, metadata API
-│   │   ├── page.tsx                # Page shell
+│   │   ├── page.tsx                # Single page: conditionally renders sections from config
 │   │   ├── robots.ts               # robots.txt metadata route
 │   │   ├── sitemap.ts              # sitemap.xml metadata route
-│   │   └── globals.css             # Tailwind v4 + CSS custom properties
+│   │   └── globals.css             # Tailwind v4 + CSS custom properties + scrollbar
 │   ├── components/
 │   │   ├── providers/
 │   │   │   ├── ThemeProvider.tsx    # Theme context + localStorage sync
 │   │   │   └── ThemeScript.tsx      # Inline script for flash-free theme init
 │   │   ├── sections/
 │   │   │   ├── HeroSection.tsx                 # Photo gallery + headline + stagger entrance
-│   │   │   ├── SynopsisSection.tsx             # About + GitHub heatmap (async server component)
-│   │   │   ├── GithubContributionSection.tsx   # Standalone GitHub heatmap section
+│   │   │   ├── SynopsisSection.tsx             # About + GitHub heatmap + globe
 │   │   │   ├── ProjectsSection.tsx             # SpotlightCard project cards (dark)
 │   │   │   ├── SkillsSection.tsx               # LogoLoop marquee per skill category (light)
 │   │   │   ├── CoursesSection.tsx              # SpotlightCard coursework (dark)
@@ -217,27 +218,29 @@ Hero photos use `next/image` with `fill` layout for native lazy loading and zero
 │   │   └── ui/
 │   │       ├── ArcTooltip.tsx           # Spring-animated arc tooltip for photo labels
 │   │       ├── BackToTopFAB.tsx         # Keycap-styled floating action button
-│   │       ├── CardStack.tsx            # Mobile: swipeable photo card stack
-│   │       ├── Chip.tsx                 # Tag / link chip (flat, keycap variant)
-│   │       ├── GitHubHeatmap.tsx        # Contribution graph (theme-aware SVG)
-│   │       ├── Globe3D.tsx              # cobe WebGL interactive globe with haptic drag rotation
-│   │       ├── GlobeCard.tsx            # Clipped globe card
+│   │       ├── CardStack.tsx            # Mobile: swipeable photo card stack with 3D tilt
+│   │       ├── Chip.tsx                 # Tag / link chip (flat CSS + keycap variant)
+│   │       ├── GitHubHeatmap.tsx        # Contribution graph (theme-aware SVG + AnimateNumber tooltip)
+│   │       ├── Globe3D.tsx              # cobe WebGL interactive globe with haptic drag detents
+│   │       ├── GlobeCard.tsx            # Clipped globe card wrapper
 │   │       ├── KeycapButton.tsx         # Skeuomorphic keycap shell + rainbow glow (search trigger)
 │   │       ├── LogoLoop.tsx             # Infinite velocity-smoothed RAF marquee
-│   │       ├── Photo.tsx                # Single draggable photo with ArcTooltip (`next/image`)
+│   │       ├── Photo.tsx                # Single draggable photo with ArcTooltip
 │   │       ├── PhotoGallery.tsx         # Desktop: staggered spring photo fan-out
-│   │       ├── ProjectCommitsWidget.tsx # Per-project GitHub commit activity sparkline
+│   │       ├── ProjectCommitsWidget.tsx # Per-project GitHub commit sparkline
 │   │       ├── ScrollProgressBar.tsx    # Fixed top scroll indicator
 │   │       ├── SearchOverlay.tsx        # Cmd+K fuzzy search (Fuse.js + Base UI Dialog)
-│   │       ├── SectionWrapper.tsx       # Shared section layout (dark / light variants)
+│   │       ├── SectionWrapper.tsx       # Shared section layout (dark / light variants, no animation)
 │   │       ├── SpotlightCard.tsx        # Polymorphic card with cursor-following radial glow
-│   │       └── ThemeToggle.tsx          # Black and Teal switcher
+│   │       └── ThemeToggle.tsx          # Black and Teal theme switcher
 │   ├── config/
 │   │   └── portfolio.config.ts     # Single-file site configuration
 │   ├── lib/
-│   │   ├── github.ts               # GitHub GraphQL client (ISR cached)
-│   │   ├── scroll.ts               # Spring-animated scroll utilities
-│   │   └── search.ts               # Fuse.js search setup
+│       ├── clock.ts               # Realtime clock helpers
+│       ├── color.ts               # Color manipulation utilities
+│       ├── github.ts              # GitHub GraphQL client (ISR cached)
+│       ├── scroll.ts              # Spring-animated scroll utilities
+│       └── search.ts              # Fuse.js search index builder
 │   └── types/
 │       └── config.ts               # TypeScript config interfaces
 └── public/
