@@ -20,7 +20,14 @@ export function BackToTopFAB() {
 
   useEffect(() => {
     function handleScroll() {
-      setVisible(window.scrollY > 200);
+      const y = window.scrollY;
+
+      setVisible((prev) => {
+        // Hysteresis: show above 200, hide below 100.
+        // Prevents flicker when mouse-wheel scrolling near the boundary.
+        if (prev) return y > 100;
+        return y > 200;
+      });
     }
 
     window.addEventListener("scroll", handleScroll, { passive: true });
