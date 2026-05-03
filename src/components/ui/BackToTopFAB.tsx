@@ -16,7 +16,7 @@ export function BackToTopFAB() {
 
   const exitTransition = shouldReduceMotion
     ? { duration: 0 }
-    : { type: "tween" as const, duration: 0.15, ease: [0.215, 0.61, 0.355, 1] };
+    : { type: "tween" as const, duration: 0.15, ease: [0.215, 0.61, 0.355, 1] as const };
 
   useEffect(() => {
     function handleScroll() {
