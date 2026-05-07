@@ -112,10 +112,15 @@ export interface ProjectsConfig {
   items: ProjectItem[];
 }
 
+export type StackDescriptionPart =
+  | { type: "text"; content: string }
+  | { type: "pill"; name: string; icon?: string };
+
 export interface SkillsConfig {
   enabled: boolean;
   heading: string;
   overline: string;
+  stackDescription?: StackDescriptionPart[];
   categories: Array<{
     label: string;
     items: Array<{

@@ -52,13 +52,13 @@ export function HeroSection() {
 
   return (
     <section className="relative flex min-h-screen flex-col items-center justify-center bg-dark-bg px-[5%] py-16 text-center">
-      {/* ThemeToggle — top-right */}
+      {/* ThemeToggle - top-right */}
       <div className="absolute right-4 top-4 z-10">
         <ThemeToggle />
       </div>
 
       <div>
-        {/* Location — replays on scroll-back */}
+        {/* Location - replays on scroll-back */}
         <StaggeredBlurText
           as="p"
           text={meta.title}
@@ -68,7 +68,7 @@ export function HeroSection() {
           duration={0.5}
           blurAmount={8}
           yOffset={10}
-          className="mb-1 text-xs font-semibold uppercase tracking-[4px] text-text-secondary"
+          className="mb-1 font-mono text-xs uppercase tracking-[2px] text-text-secondary"
         />
         {clock && (
           <StaggeredBlurText
@@ -81,7 +81,7 @@ export function HeroSection() {
             blurAmount={6}
             yOffset={8}
             targetOpacity={0.7}
-            className="mb-3 text-xs font-semibold tracking-[4px] text-text-secondary"
+            className="mb-3 font-mono text-xs tracking-[2px] text-text-secondary"
           />
         )}
 
@@ -98,7 +98,7 @@ export function HeroSection() {
           className="mb-4 max-w-2xl text-balance font-heading text-4xl font-bold text-white md:text-6xl"
         />
 
-        {/* Nav buttons — animate once */}
+        {/* Nav buttons - animate once */}
         <motion.div
           initial={shouldReduceMotion ? false : { opacity: 0, y: 12 }}
           animate={shouldReduceMotion ? false : { opacity: 1, y: 0 }}
@@ -112,7 +112,7 @@ export function HeroSection() {
           {navContent}
         </motion.div>
 
-        {/* Desktop photo gallery — animate once */}
+        {/* Desktop photo gallery - animate once */}
         <motion.div
           initial={shouldReduceMotion ? false : { opacity: 0, y: 16 }}
           animate={shouldReduceMotion ? false : { opacity: 1, y: 0 }}
@@ -125,7 +125,7 @@ export function HeroSection() {
           <PhotoGallery photos={hero.desktopPhotos} animationDelay={0} />
         </motion.div>
 
-        {/* Mobile card stack — animate once */}
+        {/* Mobile card stack - animate once */}
         <motion.div
           initial={shouldReduceMotion ? false : { opacity: 0, y: 12 }}
           animate={shouldReduceMotion ? false : { opacity: 1, y: 0 }}

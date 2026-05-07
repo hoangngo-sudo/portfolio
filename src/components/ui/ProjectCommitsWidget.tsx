@@ -58,8 +58,8 @@ function CommitList({ commits }: { commits: RecentCommit[] }) {
     <div className="mb-4 rounded-lg bg-black/40 px-4 py-3">
       {/* Header */}
       <div className="mb-2.5 flex items-center gap-1.5">
-        <span className="text-[11px] font-medium uppercase tracking-widest text-text-muted">
-          Recent commit
+        <span className="text-xs font-mono text-text-muted">
+          Recent Commit
         </span>
       </div>
 
@@ -76,7 +76,7 @@ function CommitList({ commits }: { commits: RecentCommit[] }) {
               delay: reducedMotion ? 0 : i * 0.06,
             }}
           >
-            <span className="shrink-0 font-mono text-[10px] leading-none text-accent/50 select-none">
+            <span className="shrink-0 select-none text-xs leading-none font-mono text-text-muted">
               {c.sha.slice(0, 7)}
             </span>
             <span
@@ -87,7 +87,7 @@ function CommitList({ commits }: { commits: RecentCommit[] }) {
             </span>
             <time
               dateTime={c.date}
-              className="shrink-0 tabular-nums text-[11px] text-text-muted"
+              className="shrink-0 font-mono text-xs text-text-muted"
             >
               {formatRelativeDate(c.date)}
             </time>

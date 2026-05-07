@@ -19,7 +19,7 @@ export function CoursesSection({ data }: Props) {
       <div className="space-y-8">
         {data.categories.map((category) => (
           <div key={category.label}>
-            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-text-muted">
+            <h3 className="mb-4 text-xs uppercase tracking-wider text-text-muted">
               {category.label}
             </h3>
             <div className="grid gap-3 sm:grid-cols-2">

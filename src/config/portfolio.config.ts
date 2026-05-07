@@ -113,7 +113,25 @@ const config: PortfolioConfig = {
     skills: {
       enabled: true,
       overline: "",
-      heading: "Highlighted Skills",
+      heading: "Skills",
+      stackDescription: [
+        { type: "text", content: "My main stack is " },
+        { type: "pill", name: "React", icon: "react" },
+        { type: "text", content: " and " },
+        { type: "pill", name: "Next.js", icon: "nextjs" },
+        { type: "text", content: " for building full-stack applications, with " },
+        { type: "pill", name: "JavaScript", icon: "javascript" },
+        { type: "text", content: " as my language. Everything is version-controlled with " },
+        { type: "pill", name: "Git", icon: "git" },
+        { type: "text", content: " and deployed through " },
+        { type: "pill", name: "GitHub", icon: "github" },
+        { type: "text", content: ". " },
+        { type: "text", content: "For database management, I use " },
+        { type: "pill", name: "Supabase", icon: "supabase" },
+        { type: "text", content: " (I am learning backend so what I could do right now is using service hehe). At last, but not least, I use " },
+        { type: "pill", name: "VSCode", icon: "vscode" },
+        { type: "text", content: " IDE with AI assisted Copilot for creating awesome projects." },
+      ],
       categories: [
         {
           label: "Language",
