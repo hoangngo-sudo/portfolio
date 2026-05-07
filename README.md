@@ -9,7 +9,7 @@ flowchart TB
     USER([User]) --> HERO["HeroSection<br/>Photo gallery + headline"]
     HERO --> |Scroll| SYNOPSIS["SynopsisSection<br/>About me + GitHub heatmap + Globe"]
     HERO --> |Scroll| PROJECTS["ProjectsSection<br/>SpotlightCard project cards"]
-    HERO --> |Scroll| SKILLS["SkillsSection<br/>Infinite marquee by category"]
+    HERO --> |Scroll| SKILLS["SkillsSection<br/>Categorized skill pill grid"]
     HERO --> |Scroll| COURSES["CoursesSection<br/>SpotlightCard coursework"]
     HERO --> |Scroll| CONTACT["ContactSection<br/>Social links"]
 
@@ -41,10 +41,10 @@ flowchart TB
 - **Project commit sparklines** Per-project GitHub commit activity for the last 12 weeks
 - **2 color themes** Black and Teal, switchable at runtime with `localStorage` persistence and flash-free hydration
 - **Scroll progress bar** + **Back-to-top FAB** toggleable via feature flags
-- **Infinite skill marquee** Skills scrolled in three velocity-smoothed `requestAnimationFrame` loops (by Language, Framework, Tool), one scrolling right one left
+- **Categorized skill pills** Tech stack displayed as a categorized grid of theme-aware pills with hover effects and skillicons.dev CDN icons; inline stack description paragraph with embedded pill buttons; static rendering (no client JavaScript needed)
 - **SpotlightCard** Project and coursework cards with a radial-gradient glow that follows the cursor, theme-aware accent color
 - **Shadow elevation** Two-tier depth system: `dm-elevation-2` for dark sections and 3-layer stacked shadow `elevation-2` for light sections
-- **Keycap buttons** Skeuomorphic keyboard-key style for the search trigger, hero nav chips, and back-to-top FAB; animated rainbow glow ring; colors adapt to the active theme
+- **Keycap buttons** Skeuomorphic keyboard-key style for the search trigger, hero nav chips, theme toggle, and back-to-top FAB; animated rainbow glow ring; colors adapt to the active theme
 - **Web haptics** Touch feedback on chips, drags, globe rotation and keycap taps
 - **Themed scrollbar** Thin accent-colored scrollbar consistent across all scroll containers
 - **Accessible** Skip-to-content link, semantic HTML, keyboard navigation, `prefers-reduced-motion` support
@@ -212,7 +212,7 @@ Hero photos use `next/image` with `fill` layout for native lazy loading and zero
 │   │   │   ├── HeroSection.tsx                 # Photo gallery + headline + stagger entrance
 │   │   │   ├── SynopsisSection.tsx             # About + GitHub heatmap + globe
 │   │   │   ├── ProjectsSection.tsx             # SpotlightCard project cards (dark)
-│   │   │   ├── SkillsSection.tsx               # LogoLoop marquee per skill category (light)
+│   │   │   ├── SkillsSection.tsx               # Categorized pill grid with skillicons.dev CDN
 │   │   │   ├── CoursesSection.tsx              # SpotlightCard coursework (dark)
 │   │   │   └── ContactSection.tsx              # Social link Chips with react-icons (light)
 │   │   └── ui/
@@ -224,7 +224,7 @@ Hero photos use `next/image` with `fill` layout for native lazy loading and zero
 │   │       ├── Globe3D.tsx              # cobe WebGL interactive globe with haptic drag detents
 │   │       ├── GlobeCard.tsx            # Clipped globe card wrapper
 │   │       ├── KeycapButton.tsx         # Skeuomorphic keycap shell + rainbow glow (search trigger)
-│   │       ├── LogoLoop.tsx             # Infinite velocity-smoothed RAF marquee
+│   │       ├── ProjectCommitsWidget.tsx # GitHub commit activity widget
 │   │       ├── Photo.tsx                # Single draggable photo with ArcTooltip
 │   │       ├── PhotoGallery.tsx         # Desktop: staggered spring photo fan-out
 │   │       ├── ProjectCommitsWidget.tsx # Per-project GitHub commit sparkline
