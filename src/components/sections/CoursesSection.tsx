@@ -4,7 +4,7 @@ import {
   Overline,
   SectionHeading,
 } from "@/components/ui/SectionWrapper";
-import SpotlightCard from "@/components/ui/SpotlightCard";
+import { CourseShowMoreClient } from "./CourseShowMoreClient";
 
 interface Props {
   data: CoursesConfig;
@@ -16,35 +16,7 @@ export function CoursesSection({ data }: Props) {
       <Overline>{data.overline}</Overline>
       <SectionHeading>{data.heading}</SectionHeading>
 
-      <div className="space-y-8">
-        {data.categories.map((category) => (
-          <div key={category.label}>
-            <h3 className="mb-4 text-xs uppercase tracking-wider text-text-muted">
-              {category.label}
-            </h3>
-            <div className="grid gap-3 sm:grid-cols-2">
-              {category.items.map((course) => (
-                <SpotlightCard
-                  key={course.code}
-                  spotlightSize={60}
-                  className="rounded-xl bg-card-bg p-4 dm-elevation-2"
-                >
-                  <p className="text-sm font-semibold text-text-primary">
-                    {course.code}{" "}
-                    <span className="font-normal text-text-secondary">{course.name}
-                    </span>
-                  </p>
-                  {course.description && (
-                    <p className="mt-1 text-xs text-text-muted">
-                      {course.description}
-                    </p>
-                  )}
-                </SpotlightCard>
-              ))}
-            </div>
-          </div>
-        ))}
-      </div>
+      <CourseShowMoreClient data={data} />
     </SectionWrapper>
   );
 }
