@@ -40,7 +40,7 @@ export function BackToTopFAB() {
         <motion.button
           onClick={() => {
             haptic.trigger("medium");
-            smoothScrollTo(0);
+            smoothScrollTo(0, { duration: 0.6, bounce: 0.05 });
           }}
           aria-label="Back to top"
           className="fixed right-6 bottom-[calc(1.5rem+env(safe-area-inset-bottom,0px))] z-50 cursor-pointer rounded-lg border-none bg-linear-to-b from-keycap-cap-from to-keycap-cap-to px-2 py-2 text-white shadow-[0_6px_10px_rgb(0_0_0/0.3)]"

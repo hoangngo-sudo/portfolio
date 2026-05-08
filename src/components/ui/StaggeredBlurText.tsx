@@ -102,10 +102,7 @@ export function StaggeredBlurText({
       animate={replay ? undefined : "visible"}
       whileInView={replay ? "visible" : undefined}
       viewport={replay ? { once: false, amount: 0.3 } : undefined}
-      style={{
-        display: "inline",
-        willChange: "transform, opacity",
-      }}
+      style={{ display: "inline" }}
       aria-label={ariaLabel ?? text}
       role={Component === "h1" || Component === "h2" ? "heading" : undefined}
     >
@@ -114,10 +111,7 @@ export function StaggeredBlurText({
           key={i}
           variants={wordVariants}
           custom={wordCustom}
-          style={{
-            display: "inline-block",
-            willChange: "transform, filter, opacity",
-          }}
+          style={{ display: "inline-block" }}
         >
           {word}
           {/* Non-breaking space keeps last word from collapsing into next element */}

@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback } from "react";
-import { motion, useReducedMotion } from "motion/react";
+import { motion, useReducedMotion, type Variants } from "motion/react";
 import config from "@/config/portfolio.config";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { Chip } from "@/components/ui/Chip";
@@ -12,6 +12,22 @@ import { StaggeredBlurText } from "@/components/ui/StaggeredBlurText";
 import { smoothScrollToId } from "@/lib/scroll";
 import { useLocalClock } from "@/lib/clock";
 import { useWebHaptics } from "web-haptics/react";
+
+const heroBlockVariants: Variants = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.07, delayChildren: 0.3 },
+  },
+};
+
+const heroItemVariants: Variants = {
+  hidden: { opacity: 0, y: 12 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.45, ease: [0.215, 0.61, 0.355, 1] },
+  },
+};
 
 export function HeroSection() {
   const { meta, nav, features, hero } = config;
@@ -98,45 +114,32 @@ export function HeroSection() {
           className="mb-4 max-w-2xl text-balance font-heading text-4xl font-bold text-white md:text-6xl"
         />
 
-        {/* Nav buttons - animate once */}
+        {/* Nav + gallery + card stack — single staggered parent */}
         <motion.div
-          initial={shouldReduceMotion ? false : { opacity: 0, y: 12 }}
-          animate={shouldReduceMotion ? false : { opacity: 1, y: 0 }}
-          transition={{
-            delay: 0.3,
-            duration: 0.45,
-            ease: [0.215, 0.61, 0.355, 1], // ease-out-cubic
-          }}
-          className="flex flex-wrap items-center justify-center gap-3 text-text-secondary"
+          variants={heroBlockVariants}
+          initial={shouldReduceMotion ? false : "hidden"}
+          animate="visible"
         >
-          {navContent}
-        </motion.div>
+          {/* Nav buttons */}
+          <motion.div
+            variants={heroItemVariants}
+            className="flex flex-wrap items-center justify-center gap-3 text-text-secondary"
+          >
+            {navContent}
+          </motion.div>
 
-        {/* Desktop photo gallery - animate once */}
-        <motion.div
-          initial={shouldReduceMotion ? false : { opacity: 0, y: 16 }}
-          animate={shouldReduceMotion ? false : { opacity: 1, y: 0 }}
-          transition={{
-            delay: 0.35,
-            duration: 0.55,
-            ease: [0.215, 0.61, 0.355, 1], // ease-out-cubic
-          }}
-        >
-          <PhotoGallery photos={hero.desktopPhotos} animationDelay={0} />
-        </motion.div>
+          {/* Desktop photo gallery */}
+          <motion.div variants={heroItemVariants}>
+            <PhotoGallery photos={hero.desktopPhotos} animationDelay={0} />
+          </motion.div>
 
-        {/* Mobile card stack - animate once */}
-        <motion.div
-          initial={shouldReduceMotion ? false : { opacity: 0, y: 12 }}
-          animate={shouldReduceMotion ? false : { opacity: 1, y: 0 }}
-          transition={{
-            delay: 0.4,
-            duration: 0.45,
-            ease: [0.215, 0.61, 0.355, 1], // ease-out-cubic
-          }}
-          className="mt-8 flex items-center justify-center lg:hidden"
-        >
-          <CardStack images={hero.mobilePhotos} />
+          {/* Mobile card stack */}
+          <motion.div
+            variants={heroItemVariants}
+            className="mt-8 flex items-center justify-center lg:hidden"
+          >
+            <CardStack images={hero.mobilePhotos} />
+          </motion.div>
         </motion.div>
       </div>
     </section>

@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import type { ContactConfig } from "@/types/config";
 import { Chip } from "@/components/ui/Chip";
 import { FlutedGlassBackground } from "@/components/ui/FlutedGlassBackground";
@@ -20,13 +21,52 @@ interface Props {
 
 export function ContactSection({ data }: Props) {
   const haptic = useWebHaptics();
+  const [shaderReady, setShaderReady] = useState(false);
+
+  // Pre-activate the shader as soon as any "#contact" link is clicked so the
+  // WebGL canvas is ready before the smooth-scroll animation arrives.
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      const link = (e.target as HTMLElement).closest<HTMLAnchorElement>(
+        'a[href="#contact"]',
+      );
+      if (link) setShaderReady(true);
+    };
+    document.addEventListener("click", handler);
+    return () => document.removeEventListener("click", handler);
+  }, []);
+
+  // Mount the WebGL shader when the courses section scrolls into view — avoids
+  // the shader competing for GPU resources during the hero entrance animation.
+  useEffect(() => {
+    const courses = document.getElementById("courses");
+    const activate = () => setShaderReady(true);
+
+    // No courses element or already scrolled past it — activate on next frame
+    if (!courses || courses.getBoundingClientRect().bottom < 0) {
+      const raf = requestAnimationFrame(activate);
+      return () => cancelAnimationFrame(raf);
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          activate();
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "0px" },
+    );
+    observer.observe(courses);
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <section
       id="contact"
       className="sticky bottom-0 z-0 min-h-screen overflow-hidden bg-dark-bg text-text-primary"
     >
-      <FlutedGlassBackground />
+      {shaderReady && <FlutedGlassBackground />}
 
       <div className="relative z-10 mx-auto flex min-h-screen w-full max-w-6xl flex-col justify-center">
         {/* Chips column */}

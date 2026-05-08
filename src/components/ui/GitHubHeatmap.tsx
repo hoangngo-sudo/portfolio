@@ -1,7 +1,6 @@
 "use client";
 
 import type { ContributionData } from "@/lib/github";
-import { useTheme } from "@/components/providers/ThemeProvider";
 import { hexToRgb } from "@/lib/color";
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
@@ -13,7 +12,7 @@ import {
 } from "motion/react";
 import { AnimateNumber } from "motion-plus/react";
 
-// ease-out-cubic — same blueprint used in Globe3D depth fade
+// ease-out-cubic; same blueprint used in Globe3D depth fade
 const EASE_OUT_CUBIC: [number, number, number, number] = [0.215, 0.61, 0.355, 1];
 
 interface GitHubHeatmapProps {
@@ -55,14 +54,33 @@ interface TooltipData {
 }
 
 export function GitHubHeatmap({ data, fadeColor = "var(--light-bg)" }: GitHubHeatmapProps) {
-  const { colors } = useTheme();
   const weeks = data.weeks;
   const shouldReduceMotion = useReducedMotion();
+
+  // Read the accent colour directly from the CSS variable so we always match
+  // whatever <ThemeScript> applied before first paint — no hydration mismatch.
+  const [accentHex, setAccentHex] = useState<string>("#0d9488");
+  useEffect(() => {
+    const raw = getComputedStyle(document.documentElement)
+      .getPropertyValue("--accent")
+      .trim();
+    if (raw) setAccentHex(raw);
+
+    // Re-sync whenever the theme CSS variable changes (user switches theme)
+    const observer = new MutationObserver(() => {
+      const updated = getComputedStyle(document.documentElement)
+        .getPropertyValue("--accent")
+        .trim();
+      if (updated) setAccentHex(updated);
+    });
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["style"] });
+    return () => observer.disconnect();
+  }, []);
 
   // Tooltip visibility + data
   const [tooltipData, setTooltipData] = useState<TooltipData | null>(null);
 
-  // Scroll edge state — hide blur overlay when already at that edge
+  // Scroll edge state; hide blur overlay when already at that edge
   const scrollRef = useRef<HTMLDivElement>(null);
   const [atStart, setAtStart] = useState(true);
   const [atEnd, setAtEnd] = useState(false);
@@ -86,15 +104,15 @@ export function GitHubHeatmap({ data, fadeColor = "var(--light-bg)" }: GitHubHea
   const rawY = useMotionValue(0);
 
   // Spring-smoothed position so the tooltip path follows cursor naturally.
-  // bounce: 0 = critically damped — no overshoot past the cursor.
+  // bounce: 0 = critically damped; no overshoot past the cursor.
   const springCfg = shouldReduceMotion
     ? { stiffness: 10000, damping: 1000 } // instant when reduced motion
     : { visualDuration: 0.08, bounce: 0 };
   const springX = useSpring(rawX, springCfg);
   const springY = useSpring(rawY, springCfg);
 
-  // 5-stop opacity scale from the theme accent color
-  const rgb = hexToRgb(colors.accent);
+  // 5-stop opacity scale from the theme accent CSS variable
+  const rgb = hexToRgb(accentHex);
   const shades = rgb
     ? [
         "rgba(255, 255, 255, 0.06)",                             // 0
@@ -133,10 +151,10 @@ export function GitHubHeatmap({ data, fadeColor = "var(--light-bg)" }: GitHubHea
 
   return (
     <>
-      {/* Tooltip — outer drives compositor x/y spring; inner animates opacity+scale */}
+      {/* Tooltip - outer drives compositor x/y spring; inner animates opacity+scale */}
       <AnimatePresence>
         {tooltipData && (
-          // Outer: zero-anchor fixed wrapper — x/y are compositor-only transforms
+          // Outer: zero-anchor fixed wrapper; x/y are compositor-only transforms
           <motion.div
             key="heatmap-tooltip"
             className="pointer-events-none fixed left-0 top-0 z-50"
@@ -208,9 +226,9 @@ export function GitHubHeatmap({ data, fadeColor = "var(--light-bg)" }: GitHubHea
       </AnimatePresence>
 
       <div className="flex flex-col gap-2">
-        {/* Scroll container — wrapped in relative so blur overlays are contained */}
+        {/* Scroll container, which is wrapped in relative so blur overlays are contained */}
         <div className="relative overflow-hidden">
-          {/* Left blur — fades in/out as scroll edge changes */}
+          {/* Left blur, which is fades in/out as scroll edge changes */}
           <AnimatePresence>
             {!atStart && (
               <motion.div
@@ -231,7 +249,7 @@ export function GitHubHeatmap({ data, fadeColor = "var(--light-bg)" }: GitHubHea
               />
             )}
           </AnimatePresence>
-          {/* Right blur — fades in/out as scroll edge changes */}
+          {/* Right blur, wehich is fades in/out as scroll edge changes */}
           <AnimatePresence>
             {!atEnd && (
               <motion.div

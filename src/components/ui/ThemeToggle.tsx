@@ -31,6 +31,8 @@ export function ThemeToggle() {
             role="radio"
             aria-checked={isActive}
             aria-label={label}
+            // Active state is client-only (localStorage)
+            suppressHydrationWarning
             onClick={() => {
               haptic.trigger("selection");
               setTheme(id);
@@ -44,7 +46,7 @@ export function ThemeToggle() {
               transition: "opacity 150ms ease, box-shadow 150ms ease",
             }}
           >
-            {/* Inner surface dot — inverted gradient creates the recessed keycap depth */}
+            {/* Inner surface dot by inverting gradient creates the recessed keycap depth */}
             <span
               className="pointer-events-none absolute inset-[6px] rounded-full bg-linear-to-b from-keycap-surface-from to-keycap-surface-to"
               aria-hidden="true"

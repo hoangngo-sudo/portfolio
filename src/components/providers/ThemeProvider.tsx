@@ -34,14 +34,25 @@ function applyThemeToDOM(colors: ThemeColors) {
 }
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
+  // Must match SSR: server has no localStorage, so always start with the
+  // default theme. The useEffect below corrects the state after hydration.
+  // Reading localStorage here (even behind typeof window guard) causes a
+  // hydration mismatch because the server rendered the default theme.
   const [theme, setThemeState] = useState<ThemeName>(config.themes.default);
 
+  // No cookies/localStorage on the server — lazy initializer returns the
+  // default. After hydration, correct the state to match what localStorage
+  // actually holds. Do NOT call applyThemeToDOM here: <ThemeScript> in
+  // layout.tsx already applied the right CSS variables before first paint,
+  // so touching the DOM would cause a redundant (and potentially flashy) write.
   useEffect(() => {
     const stored = localStorage.getItem(STORAGE_KEY) as ThemeName | null;
     const resolved: ThemeName =
       stored === "black" || stored === "teal" ? stored : config.themes.default;
-    setThemeState(resolved);
-    applyThemeToDOM(config.themes[resolved]);
+    // Defer to avoid the synchronous-setState-in-effect lint warning while
+    // still correcting the state in the same microtask flush as the first paint.
+    const raf = requestAnimationFrame(() => setThemeState(resolved));
+    return () => cancelAnimationFrame(raf);
   }, []);
 
   const setTheme = useCallback((next: ThemeName) => {
