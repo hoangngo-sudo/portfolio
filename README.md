@@ -11,7 +11,7 @@ flowchart TB
     HERO --> |Scroll| PROJECTS["ProjectsSection<br/>SpotlightCard project cards"]
     HERO --> |Scroll| SKILLS["SkillsSection<br/>Categorized skill pill grid"]
     HERO --> |Scroll| COURSES["CoursesSection<br/>SpotlightCard coursework"]
-    HERO --> |Scroll| CONTACT["ContactSection<br/>Social links"]
+    HERO --> |Scroll| CONTACT["ContactSection<br/>Sticky footer — 'Online' text + social chips"]
 
     USER --> |Cmd+K| SEARCH["SearchOverlay<br/>Fuse.js fuzzy search"]
 
@@ -42,6 +42,7 @@ flowchart TB
 - **2 color themes** Black and Teal, switchable at runtime with `localStorage` persistence and flash-free hydration
 - **Scroll progress bar** + **Back-to-top FAB** toggleable via feature flags
 - **Categorized skill pills** Tech stack displayed as a categorized grid of theme-aware pills with hover effects and skillicons.dev CDN icons; inline stack description paragraph with embedded pill buttons; static rendering (no client JavaScript needed)
+- **Sticky footer contact** Pure CSS sticky reveal content sections scroll over with `z-10` while the Contact section sits at `z-0`, pinned to the viewport bottom; decorative "Online" branding text partially cut at the bottom edge
 - **SpotlightCard** Project and coursework cards with a radial-gradient glow that follows the cursor, theme-aware accent color
 - **Shadow elevation** Two-tier depth system: `dm-elevation-2` for dark sections and 3-layer stacked shadow `elevation-2` for light sections
 - **Keycap buttons** Skeuomorphic keyboard-key style for the search trigger, hero nav chips, theme toggle, and back-to-top FAB; animated rainbow glow ring; colors adapt to the active theme
@@ -127,6 +128,7 @@ This project would not be possible without the following open-source projects:
 - Fuzzy search from [Fuse.js](https://www.fusejs.io/)
 - Accessible UI primitives from [Base UI](https://base-ui.com/)
 - Clipped WebGL globe card aesthetic from [COBE](https://cobe.vercel.app/)
+- Fluted glass shader from [Paper](https://shaders.paper.design/)
 
 This project has been inspired by the following websites and designs:
 
@@ -166,7 +168,7 @@ All content lives in [`src/config/portfolio.config.ts`](src/config/portfolio.con
 | `themes` | Black and Teal color definitions, default theme |
 | `nav` | Navigation links (supports `external` and `download` flags) |
 | `hero` | Desktop photo positions + mobile photo list |
-| `sections.*` | Each section has `enabled: boolean` + content data |
+| `sections.*` | Each section has `enabled: boolean` + content data (Contact: sticky footer outside content z-10 wrapper) |
 | `features` | Toggle search overlay, scroll progress, back-to-top, GitHub heatmap |
 
 ### GitHub Heatmap
@@ -236,11 +238,11 @@ Hero photos use `next/image` with `fill` layout for native lazy loading and zero
 │   ├── config/
 │   │   └── portfolio.config.ts     # Single-file site configuration
 │   ├── lib/
-│       ├── clock.ts               # Realtime clock helpers
-│       ├── color.ts               # Color manipulation utilities
-│       ├── github.ts              # GitHub GraphQL client (ISR cached)
-│       ├── scroll.ts              # Spring-animated scroll utilities
-│       └── search.ts              # Fuse.js search index builder
+│   |   ├── clock.ts               # Realtime clock helpers
+│   |   ├── color.ts               # Color manipulation utilities
+│   |   ├── github.ts              # GitHub GraphQL client (ISR cached)
+│   |   ├── scroll.ts              # Spring-animated scroll utilities
+│   |   └── search.ts              # Fuse.js search index builder
 │   └── types/
 │       └── config.ts               # TypeScript config interfaces
 └── public/
