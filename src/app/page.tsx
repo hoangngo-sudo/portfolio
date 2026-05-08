@@ -16,23 +16,25 @@ export default function Page() {
       {features.scrollProgress && <ScrollProgressBar />}
 
       <main id="main-content">
-        <HeroSection />
+        <div className="relative z-10">
+          <HeroSection />
 
-        {sections.synopsis?.enabled && (
-          <SynopsisSection data={sections.synopsis} />
-        )}
+          {sections.synopsis?.enabled && (
+            <SynopsisSection data={sections.synopsis} />
+          )}
 
-        {sections.projects?.enabled && (
-          <ProjectsSection data={sections.projects} />
-        )}
+          {sections.projects?.enabled && (
+            <ProjectsSection data={sections.projects} />
+          )}
 
-        {sections.skills?.enabled && (
-          <SkillsSection data={sections.skills} />
-        )}
+          {sections.skills?.enabled && (
+            <SkillsSection data={sections.skills} />
+          )}
 
-        {sections.courses?.enabled && (
-          <CoursesSection data={sections.courses} />
-        )}
+          {sections.courses?.enabled && (
+            <CoursesSection data={sections.courses} />
+          )}
+        </div>
 
         {sections.contact?.enabled && (
           <ContactSection data={sections.contact} />
