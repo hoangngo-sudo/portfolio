@@ -17,8 +17,6 @@ const EASE_OUT_CUBIC: [number, number, number, number] = [0.215, 0.61, 0.355, 1]
 
 interface GitHubHeatmapProps {
   data: ContributionData;
-  /** Background colour the gradient fades into. Defaults to the light-section bg. */
-  fadeColor?: string;
 }
 
 const CELL_SIZE = 12;
@@ -53,20 +51,23 @@ interface TooltipData {
   count: number;
 }
 
-export function GitHubHeatmap({ data, fadeColor = "var(--light-bg)" }: GitHubHeatmapProps) {
+export function GitHubHeatmap({ data }: GitHubHeatmapProps) {
   const weeks = data.weeks;
   const shouldReduceMotion = useReducedMotion();
 
   // Read the accent colour directly from the CSS variable so we always match
-  // whatever <ThemeScript> applied before first paint — no hydration mismatch.
-  const [accentHex, setAccentHex] = useState<string>("#0d9488");
-  useEffect(() => {
-    const raw = getComputedStyle(document.documentElement)
-      .getPropertyValue("--accent")
-      .trim();
-    if (raw) setAccentHex(raw);
+  // whatever <ThemeScript> applied before first paint.
+  const [accentHex, setAccentHex] = useState<string>(() => {
+    if (typeof document === "undefined") return "#0d9488";
+    return (
+      getComputedStyle(document.documentElement)
+        .getPropertyValue("--accent")
+        .trim() || "#0d9488"
+    );
+  });
 
-    // Re-sync whenever the theme CSS variable changes (user switches theme)
+  useEffect(() => {
+    // Re-sync whenever the theme CSS variable changes
     const observer = new MutationObserver(() => {
       const updated = getComputedStyle(document.documentElement)
         .getPropertyValue("--accent")
@@ -99,7 +100,7 @@ export function GitHubHeatmap({ data, fadeColor = "var(--light-bg)" }: GitHubHea
     return () => window.removeEventListener("resize", updateEdges);
   }, [updateEdges]);
 
-  // Raw cursor position MotionValues — updated directly, smoothed by spring below
+  // Raw cursor position MotionValues which updated directly, smoothed by spring below
   const rawX = useMotionValue(0);
   const rawY = useMotionValue(0);
 
@@ -116,9 +117,9 @@ export function GitHubHeatmap({ data, fadeColor = "var(--light-bg)" }: GitHubHea
   const shades = rgb
     ? [
         "rgba(255, 255, 255, 0.06)",                             // 0
-        `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.22)`,             // 1–2
-        `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.44)`,             // 3–5
-        `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.70)`,             // 6–8
+        `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.22)`,             // 1-2
+        `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.44)`,             // 3-5
+        `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.70)`,             // 6-8
         `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 1.00)`,             // 9+
       ]
     : ["#1a2e2e", "#134040", "#0a7070", "#0d9488", "#2dd4bf"];

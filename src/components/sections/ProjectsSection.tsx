@@ -107,7 +107,7 @@ export async function ProjectsSection({ data }: Props) {
 
       {features.githubHeatmap && (
         <div className="mt-3 w-fit max-w-full rounded-xl bg-card-bg p-5 dm-elevation-2">
-          <GitHubHeatmap data={heatmapData} fadeColor="var(--card-bg)" />
+          <GitHubHeatmap data={heatmapData} />
         </div>
       )}
     </SectionWrapper>
