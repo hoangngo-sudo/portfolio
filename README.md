@@ -48,6 +48,8 @@ flowchart TB
 - **Keycap buttons** Skeuomorphic keyboard-key style for the search trigger, hero nav chips, theme toggle, and back-to-top FAB; animated rainbow glow ring; colors adapt to the active theme
 - **Web haptics** Touch feedback on chips, drags, globe rotation and keycap taps
 - **Themed scrollbar** Thin accent-colored scrollbar consistent across all scroll containers
+- **Map pin avatars** SVG map pin markers on the globe with embedded photos and counter-rotation tilt during drag
+- **Motion-optimized** Full-project animation audit — 83% of 28 animations are S or A-tier; zero layout thrashing
 - **Accessible** Skip-to-content link, semantic HTML, keyboard navigation, `prefers-reduced-motion` support
 - **SEO** Open Graph tags, JSON-LD Person schema, semantic heading hierarchy
 - **Performance** Static generation, Geist font family via `next/font` for zero-FOUT, Tailwind v4
@@ -90,6 +92,7 @@ graph TD
 
     subgraph Globe
         COBE["COBE<br/>WebGL globe renderer"]
+        PAPER["Paper Shaders<br/>Fluted glass background"]
     end
 
     NEXT --> TW
@@ -103,6 +106,7 @@ graph TD
     NEXT --> RI
     NEXT --> WH
     NEXT --> COBE
+    NEXT --> PAPER
 ```
 
 | Dependency | Purpose |
@@ -117,6 +121,7 @@ graph TD
 | [react-icons](https://react-icons.github.io/react-icons/) | Feather (Fi) icons for contacts/search; Simple Icons (Si) for skill logos |
 | [web-haptics](https://haptics.lochie.me/) | Touch haptic feedback |
 | [COBE](https://cobe.vercel.app/) | WebGL globe renderer |
+| [Paper Shaders](https://shaders.paper.design/) | WebGL fluted glass background effect |
 | [sharp](https://sharp.pixelplumbing.com/) | Image optimization at build time |
 | Vercel | Recommended hosting with ISR support |
 
