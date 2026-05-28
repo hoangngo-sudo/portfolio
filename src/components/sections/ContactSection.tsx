@@ -42,7 +42,7 @@ export function ContactSection({ data }: Props) {
     const courses = document.getElementById("courses");
     const activate = () => setShaderReady(true);
 
-    // No courses element or already scrolled past it — activate on next frame
+    // No courses element or already scrolled past it
     if (!courses || courses.getBoundingClientRect().bottom < 0) {
       const raf = requestAnimationFrame(activate);
       return () => cancelAnimationFrame(raf);
@@ -88,12 +88,12 @@ export function ContactSection({ data }: Props) {
         </div>
 
         {/* "Online" text */}
-        <h2
-          className="pointer-events-none absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/5 select-none font-heading text-[60px] font-bold leading-none text-white sm:left-[5vw] sm:translate-x-0 sm:text-[60px]"
+        <h6
+          className="pointer-events-none absolute bottom-0 left-[5vw] translate-y-1/5 select-none font-heading text-5xl font-bold leading-none text-white"
           aria-hidden="true"
         >
           Online
-        </h2>
+        </h6>
       </div>
     </section>
   );

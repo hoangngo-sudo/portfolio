@@ -84,7 +84,7 @@ export function CourseShowMoreClient({ data }: Props) {
     [],
   );
 
-  // Motion props for hidden cards — compositor-only, reduced-motion aware
+  // Motion props for hidden cards
   const hiddenCardTransition = reduced
     ? { duration: 0 }
     : {

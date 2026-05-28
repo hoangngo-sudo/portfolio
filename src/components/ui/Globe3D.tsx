@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import createGlobe from "cobe";
 import { useReducedMotion } from "motion/react";
-import Image from "next/image";
+import { MapPinAvatar } from "@/components/ui/MapPinAvatar";
 import { useWebHaptics } from "web-haptics/react";
 import type { GlobeMarker } from "@/types/config";
 
@@ -69,6 +69,7 @@ export function Globe3D({
   const isDraggingRef = useRef(false);
   const lastXRef = useRef(0);
   const momentumRef = useRef(0); // radians/frame carried after release
+  const tiltRef = useRef(0);      // accumulated pin tilt (degrees) which makes counter-rotates during drag
   const hapticAccumRef = useRef(0); // accumulated rotation for detent haptics
   const prefersReducedMotion = useReducedMotion();
   const haptic = useWebHaptics();
@@ -104,13 +105,14 @@ export function Globe3D({
     });
 
     // Drag handlers
-    // ~15° in radians — natural picker-wheel detent interval
+    // ~15° in radians which is natural picker-wheel detent interval
     const HAPTIC_DETENT = Math.PI / 12;
 
     function onPointerDown(e: PointerEvent) {
       isDraggingRef.current = true;
       lastXRef.current = e.clientX;
       momentumRef.current = 0;
+      tiltRef.current = 0;
       hapticAccumRef.current = 0;
       el.setPointerCapture(e.pointerId);
       el.style.cursor = "grabbing";
@@ -124,6 +126,9 @@ export function Globe3D({
       const dphi = (dx / wRef.current) * Math.PI * 1.2;
       phiRef.current += dphi;
       momentumRef.current = dphi;
+      // Accumulate tilt — counter-rotate: drag right → pin tilts left
+      // dphi is in radians; gain converts to degrees with a subtle range
+      tiltRef.current -= dphi * 80; // rad→deg gain: ~25° max for a fast swipe
       // Fire "selection" at every ~15° detent, like a picker wheel
       hapticAccumRef.current += Math.abs(dphi);
       if (hapticAccumRef.current >= HAPTIC_DETENT) {
@@ -160,6 +165,13 @@ export function Globe3D({
         phiRef.current += momentumRef.current;
         momentumRef.current *= 0.93; // friction decay
       }
+
+      // Tilt decay — spring back to upright when not dragging
+      tiltRef.current *= 0.92;
+      // Soft-clamp to ±30° to prevent excessive tilt on long drags
+      if (tiltRef.current > 30) tiltRef.current = 30;
+      else if (tiltRef.current < -30) tiltRef.current = -30;
+
       globe.update({ phi: phiRef.current });
 
       const w = wRef.current;
@@ -170,8 +182,9 @@ export function Globe3D({
         if (!el) continue;
         const { sx, sy, zView } = project(markers[i].lat, markers[i].lng, phiRef.current);
 
-        // translate: A-tier (compositor transform, no layout)
-        el.style.transform = `translate(${sx * w}px, ${sy * h}px)`;
+        // translate + tilt: A-tier (compositor transform, no layout)
+        const tilt = tiltRef.current;
+        el.style.transform = `translate(${sx * w}px, ${sy * h}px) rotate(${tilt.toFixed(2)}deg)`;
 
         // Depth-based fade + blur: ease-out-cubic over ±0.2 horizon band
         // Reduced-motion: hard toggle, no blur
@@ -185,7 +198,7 @@ export function Globe3D({
           const t = Math.max(0, Math.min(1, (zView + FADE) / (2 * FADE)));
           const eased = 1 - Math.pow(1 - t, 3); // ease-out-cubic
           opacity = eased;
-          blurPx = (1 - eased) * 4; // 0px front → 4px back
+          blurPx = (1 - eased) * 4; // 0px front to 4px back
         }
 
         el.style.opacity = opacity < 0.005 ? "0" : opacity > 0.995 ? "1" : opacity.toFixed(3);
@@ -245,30 +258,15 @@ export function Globe3D({
           }}
           aria-label={m.label}
         >
-          {/* Avatar circle */}
-          <div
-            className="absolute size-9 overflow-hidden rounded-full shadow-lg ring-2 ring-white/30"
-            style={{ top: -68, left: -18 }}
-          >
-            <Image
-              src={m.src}
-              alt={m.label}
-              width={36}
-              height={36}
-              className="h-full w-full object-cover"
-            />
-          </div>
-
-          {/* Connector */}
-          <div
-            className="absolute w-px bg-linear-to-b from-transparent to-white/60"
-            style={{ top: -32, left: -0.5, height: 28 }}
-          />
-
-          {/* Surface dot at the projected globe point */}
-          <div
-            className="absolute size-2 rounded-full bg-white/80"
-            style={{ top: -4, left: -4 }}
+          <MapPinAvatar
+            src={m.src}
+            alt={m.label}
+            size={36}
+            style={{
+              // Pin tip at viewBox (12, 30). At size=36, tip is at physical (18, 45).
+              // Offset so tip lands on the projected globe surface point.
+              transform: "translate(-18px, -45px)",
+            }}
           />
         </div>
       ))}

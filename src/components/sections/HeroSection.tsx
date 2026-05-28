@@ -68,13 +68,13 @@ export function HeroSection() {
 
   return (
     <section className="relative flex min-h-screen flex-col items-center justify-center bg-dark-bg px-[5%] py-16 text-center">
-      {/* ThemeToggle - top-right */}
+      {/* ThemeToggle */}
       <div className="absolute right-4 top-4 z-10">
         <ThemeToggle />
       </div>
 
       <div>
-        {/* Location - replays on scroll-back */}
+        {/* Location which replays on scroll-back */}
         <StaggeredBlurText
           as="p"
           text={meta.title}
@@ -114,7 +114,7 @@ export function HeroSection() {
           className="mb-4 max-w-2xl text-balance font-heading text-4xl font-bold text-white md:text-6xl"
         />
 
-        {/* Nav + gallery + card stack — single staggered parent */}
+        {/* Nav + gallery + card stack to be in a single staggered parent */}
         <motion.div
           variants={heroBlockVariants}
           initial={shouldReduceMotion ? false : "hidden"}

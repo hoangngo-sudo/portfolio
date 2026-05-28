@@ -84,12 +84,12 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-full flex flex-col font-body" suppressHydrationWarning>
-        {/* Theme init injected into SSR stream — avoids React 19 script-in-component warning */}
+        {/* Theme init injected into SSR stream to avoid React 19 script-in-component warning */}
         <ThemeScript script={themeInitScript} />
         {/* Skip to content link for accessibility */}
         <a
           href="#main-content"
-          className="fixed top-0 left-0 z-200 -translate-y-full bg-accent px-4 py-2 text-sm text-white transition-transform focus:translate-y-0"
+          className="fixed top-0 left-0 z-200 -translate-y-full bg-accent px-4 py-2 text-sm text-white motion-safe:transition-transform focus:translate-y-0"
         >
           Skip to content
         </a>

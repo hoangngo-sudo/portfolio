@@ -174,7 +174,7 @@ html {
   z-index: -2;
   animation: keycap-rotate 5s linear infinite;
   transition: filter 0.3s ease;
-  will-change: background;
+  will-change: filter;
 }
 
 @media (hover: hover) and (pointer: fine) {
