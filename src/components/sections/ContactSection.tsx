@@ -89,7 +89,7 @@ export function ContactSection({ data }: Props) {
 
         {/* "Online" text */}
         <h6
-          className="pointer-events-none absolute bottom-0 left-[5vw] translate-y-1/5 select-none font-heading text-5xl font-bold leading-none text-white"
+          className="pointer-events-none absolute bottom-0 left-[5vw] translate-y-1/5 select-none font-heading text-3xl font-bold tracking-tight text-text-primary md:text-4xl"
           aria-hidden="true"
         >
           Online
