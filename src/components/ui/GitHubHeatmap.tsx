@@ -57,17 +57,22 @@ export function GitHubHeatmap({ data }: GitHubHeatmapProps) {
 
   // Read the accent colour directly from the CSS variable so we always match
   // whatever <ThemeScript> applied before first paint.
-  const [accentHex, setAccentHex] = useState<string>(() => {
-    if (typeof document === "undefined") return "#0d9488";
-    return (
-      getComputedStyle(document.documentElement)
-        .getPropertyValue("--accent")
-        .trim() || "#0d9488"
-    );
-  });
+  // Initial value is deterministic (teal default) to avoid hydration mismatch.
+  // The effect reads the actual CSS value and updates asynchronously.
+  const [accentHex, setAccentHex] = useState<string>("#0d9488");
 
   useEffect(() => {
-    // Re-sync whenever the theme CSS variable changes
+    // Read the actual CSS variable value (may differ from default if user has
+    // a saved theme preference). Defer setState via queueMicrotask to avoid
+    // synchronous setState in effect body (React 19 strict linting).
+    const raw = getComputedStyle(document.documentElement)
+      .getPropertyValue("--accent")
+      .trim();
+    if (raw && raw !== "#0d9488") {
+      queueMicrotask(() => setAccentHex(raw));
+    }
+
+    // Re-sync whenever the theme CSS variable changes at runtime
     const observer = new MutationObserver(() => {
       const updated = getComputedStyle(document.documentElement)
         .getPropertyValue("--accent")
@@ -363,7 +368,7 @@ export function GitHubHeatmap({ data }: GitHubHeatmapProps) {
                 key={i}
                 aria-hidden="true"
                 className="rounded-sm"
-                style={{ width: CELL_SIZE, height: CELL_SIZE, background: shade }}
+                style={{ width: "12px", height: "12px", background: shade }}
               />
             ))}
             <span>More</span>
