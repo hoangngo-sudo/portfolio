@@ -64,12 +64,12 @@ const config: PortfolioConfig = {
       enabled: true,
       overline: "b. 2003",
       heading: "About me",
-      body: "I grew up in Ho Chi Minh city, Vietnam and now study Computer Science in Chicago. I build for the web because it is the most immediate medium I know.\n\nMy focus is on web development. I care about how things feel as much as how they work.\n\nWhen I am not building, I am pulling apart other people's work to understand what makes it good or picking up a new tool just to see what it teaches me.",
+      body: "I grew up in Ho Chi Minh City (HCMC), Vietnam, and now I am studying Computer Science in Chicago. I got into software because I like building things that help people.\n\nMost of my time goes into web development. I care a lot about how things feel. A good interface should feel like second nature, where you do not have to think about what to click next.\n\nOutside of code, I am always trying to get better. I pick up new skills wherever I can, read to absorb things, and keep figuring out what it actually means to build something worth building. My faith in God keeps me grounded through all of it. It reminds me that there is more to this than just shipping features, that the people using what I build matter more than the code itself, and that I am not doing any of this alone.",
       github: {
         username: "hoangngo-sudo",
       },
       globe: {
-        heading: "From HCM to Chicago",
+        heading: "From HCMC to Chicago",
         markers: [
           { lat: 10.8231, lng: 106.6297, src: "/photos/photo-1.jpg", label: "Ho Chi Minh City, Vietnam" },
           { lat: 41.8781, lng: -87.6298, src: "/photos/photo-1.jpg", label: "Chicago, Illinois" },
@@ -128,9 +128,9 @@ const config: PortfolioConfig = {
         { type: "text", content: ". " },
         { type: "text", content: "For database management, I use " },
         { type: "pill", name: "Supabase", icon: "supabase" },
-        { type: "text", content: " (I am learning backend so what I could do right now is using service hehe). At last, but not least, I use " },
+        { type: "text", content: " (I am learning backend so bear with me of what I could do right now is using service *smiling face*). At last, but not least, I use " },
         { type: "pill", name: "VSCode", icon: "vscode" },
-        { type: "text", content: " IDE with AI assisted Copilot for creating awesome projects." },
+        { type: "text", content: " IDE with AI assisted agent to create awesome projects." },
       ],
       categories: [
         {

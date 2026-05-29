@@ -70,7 +70,7 @@ export function ContactSection({ data }: Props) {
 
       <div className="relative z-10 mx-auto flex min-h-screen w-full max-w-6xl flex-col justify-center">
         {/* Chips column */}
-        <div className="flex flex-col items-end gap-3 px-[5vw] pt-16 md:pt-20">
+        <div className="flex flex-col items-end gap-3 px-[5vw] pt-20">
           {data.links.map((link) => {
             const Icon = iconMap[link.icon];
             return (
@@ -89,7 +89,7 @@ export function ContactSection({ data }: Props) {
 
         {/* "Online" text */}
         <h6
-          className="pointer-events-none absolute bottom-0 left-[5vw] translate-y-1/5 select-none font-heading text-3xl font-bold tracking-tight text-text-primary md:text-4xl"
+          className="pointer-events-none absolute bottom-0 left-[5vw] translate-y-1/8 select-none font-heading text-4xl font-bold tracking-tight leading-none text-text-primary"
           aria-hidden="true"
         >
           Online
