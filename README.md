@@ -7,25 +7,25 @@ A config-driven developer portfolio built with **Next.js 16**, **Base UI**, **Ta
 ```mermaid
 flowchart TB
     USER([User]) --> HERO["HeroSection<br/>Photo gallery + headline"]
-    HERO --> |Scroll| SYNOPSIS["SynopsisSection<br/>About me + GitHub heatmap + Globe"]
-    HERO --> |Scroll| PROJECTS["ProjectsSection<br/>SpotlightCard project cards"]
+    HERO --> |Scroll| SYNOPSIS["SynopsisSection<br/>About me + 3D Globe"]
+    HERO --> |Scroll| PROJECTS["ProjectsSection<br/>SpotlightCards + GitHub heatmap + commit sparklines"]
     HERO --> |Scroll| SKILLS["SkillsSection<br/>Categorized skill pill grid"]
     HERO --> |Scroll| COURSES["CoursesSection<br/>SpotlightCard coursework"]
     HERO --> |Scroll| CONTACT["ContactSection<br/>Sticky footer — 'Online' text + social chips"]
 
     USER --> |Cmd+K| SEARCH["SearchOverlay<br/>Fuse.js fuzzy search"]
 
-    SYNOPSIS --> |GraphQL| GITHUB[("GitHub API<br/>Contribution data")]
+    PROJECTS --> |GraphQL| GITHUB[("GitHub API<br/>Contribution data")]
     GITHUB --> |ISR cached| HEATMAP["GitHubHeatmap<br/>Contribution graph + AnimateNumber tooltip"]
-    SYNOPSIS --> GLOBE["Globe3D<br/>cobe WebGL + haptic drag"]
-
     PROJECTS --> |REST| GHREST[("GitHub API<br/>Commit activity")]
     GHREST --> |ISR cached| COMMITS["ProjectCommitsWidget<br/>12-week sparkline"]
+
+    SYNOPSIS --> GLOBE["Globe3D<br/>cobe WebGL + haptic drag"]
 
     USER --> |Toggle| THEME{"Black / Teal Theme"}
     THEME --> |localStorage| USER
 
-    USER --> |Drag / Tap | HAPTICS["web-haptics<br/>Detent + light + medium"]
+    USER --> |Drag / Tap| HAPTICS["web-haptics<br/>Detent + light + medium"]
 
     USER --> |Scroll| PROGRESS["ScrollProgressBar"]
     USER --> |Scroll down| FAB["BackToTopFAB"]
@@ -36,16 +36,16 @@ flowchart TB
 - **Config-driven** Edit a single `portfolio.config.ts`
 - **Photo gallery hero** Desktop fanned layout with spring arc tooltip labels; mobile swipeable card stack; staggered entrance animations
 - **Interactive 3D globe** `cobe` WebGL globe in the about section with drag rotation and haptic detents (picks up every ~15° like a scroll wheel)
-- **GitHub heatmap** Contribution graph fetched from GitHub GraphQL API with ISR caching; animated tooltip with `AnimateNumber` digit-flip for counts and date parts; placeholder fallback when no token is set
+- **GitHub heatmap** Contribution graph with year navigation, `AnimateNumber` digit-flip tooltips, and skillicons.dev GitHub brand icon; fetched from GitHub GraphQL API with ISR caching; placeholder fallback when no token is set
 - **Fuzzy search overlay** Cmd+K / Ctrl+K triggers Fuse.js-powered search across all sections with action links; tags indexed separately from display text
 - **Project commit sparklines** Per-project GitHub commit activity for the last 12 weeks
-- **2 color themes** Black and Teal, switchable at runtime with `localStorage` persistence and flash-free hydration
+- **2 color themes** Black and Teal, switchable via keycap-styled toggle with `layoutId` morph ring animation (squash & stretch spring); flash-free hydration via anti-FOUC inline script
 - **Scroll progress bar** + **Back-to-top FAB** toggleable via feature flags
 - **Categorized skill pills** Tech stack displayed as a categorized grid of theme-aware pills with hover effects and skillicons.dev CDN icons; inline stack description paragraph with embedded pill buttons; static rendering (no client JavaScript needed)
 - **Sticky footer contact** Pure CSS sticky reveal content sections scroll over with `z-10` while the Contact section sits at `z-0`, pinned to the viewport bottom; decorative "Online" branding text partially cut at the bottom edge
 - **SpotlightCard** Project and coursework cards with a radial-gradient glow that follows the cursor, theme-aware accent color
 - **Shadow elevation** Two-tier depth system: `dm-elevation-2` for dark sections and 3-layer stacked shadow `elevation-2` for light sections
-- **Keycap buttons** Skeuomorphic keyboard-key style for the search trigger, hero nav chips, theme toggle, and back-to-top FAB; animated rainbow glow ring; colors adapt to the active theme
+- **Keycap buttons** Skeuomorphic keyboard-key style for the search trigger, hero nav chips, theme toggle (with animated morph ring), and back-to-top FAB; animated rainbow glow ring on search; colors adapt to the active theme
 - **Web haptics** Touch feedback on chips, drags, globe rotation and keycap taps
 - **Themed scrollbar** Thin accent-colored scrollbar consistent across all scroll containers
 - **Map pin avatars** SVG map pin markers on the globe with embedded photos and counter-rotation tilt during drag
@@ -83,7 +83,8 @@ graph TD
     end
 
     subgraph Icons
-        RI["react-icons<br/>Feather + Simple Icons sets"]
+        RI["react-icons<br/>Feather set"]
+        SKILL["skillicons.dev<br/>Brand & skill icons"]
     end
 
     subgraph Haptics
@@ -118,7 +119,8 @@ graph TD
 | [Motion Plus](https://motion.dev/) | `AnimateNumber` for animated digit-flip counters |
 | [Fuse.js](https://www.fusejs.io/) | Client-side fuzzy search |
 | [Geist](https://vercel.com/font) | Sans, Mono, and Pixel font families via `next/font` |
-| [react-icons](https://react-icons.github.io/react-icons/) | Feather (Fi) icons for contacts/search; Simple Icons (Si) for skill logos |
+| [react-icons](https://react-icons.github.io/react-icons/) | Feather (Fi) icons for navigation arrows and search |
+| [skillicons.dev](https://skillicons.dev/) | CDN brand icons for skill pills, theme toggle, and GitHub logo |
 | [web-haptics](https://haptics.lochie.me/) | Touch haptic feedback |
 | [COBE](https://cobe.vercel.app/) | WebGL globe renderer |
 | [Paper Shaders](https://shaders.paper.design/) | WebGL fluted glass background effect |
