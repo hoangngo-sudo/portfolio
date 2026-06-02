@@ -37,11 +37,11 @@
   --chip-border: color-mix(in srgb, var(--accent) 25%, rgb(0 0 0 / 0.01));
   --chip-hover-bg: color-mix(in srgb, var(--accent) 10%, rgb(0 0 0 / 0.01));
 
-  /* Keycap button colors */
-  --keycap-cap-from: color-mix(in srgb, var(--accent) 30%, #525252);
-  --keycap-cap-to: color-mix(in srgb, var(--accent) 25%, #444444);
-  --keycap-surface-from: color-mix(in srgb, var(--accent) 20%, #3d3d3d);
-  --keycap-surface-to: color-mix(in srgb, var(--accent) 30%, #525252);
+  /* Keycap gradient tokens — accent-aware via color-mix */
+  --keycap-cap-from: color-mix(in srgb, var(--accent) 18%, #525252);
+  --keycap-cap-to:   color-mix(in srgb, var(--accent) 8%, #444444);
+  --keycap-surface-from: color-mix(in srgb, var(--accent) 30%, #3d3d3d);
+  --keycap-surface-to:   color-mix(in srgb, var(--accent) 15%, #292929);
 
   /* Shadow elevation tokens */
   --dm-hi-mid:    rgba(255, 255, 255, 0.05);
@@ -141,68 +141,73 @@ html {
     0px 3px 3px -1.5px var(--shadow-color);
 }
 
-/* Keycap button glow animation */
-@property --keycap-rotation {
+/* Search rainbow glow shell */
+@property --rainbow-rotation {
   syntax: "<angle>";
   inherits: false;
   initial-value: 0deg;
 }
 
-@keyframes keycap-rotate {
-  to { --keycap-rotation: 360deg; }
+@keyframes rainbow-rotate {
+  to { --rainbow-rotation: 360deg; }
 }
 
-.keycap-wrap {
-  --keycap-rad: 4px;
-  --keycap-pad: 6px;
-  --keycap-glow-rad: calc(var(--keycap-rad) + var(--keycap-pad));
+.rainbow-shell {
+  --shell-rad: 9999px;
+  --shell-pad: 6px;
+  --shell-glow-rad: calc(var(--shell-rad) + var(--shell-pad));
   display: inline-block;
   position: relative;
-  border-radius: var(--keycap-glow-rad);
-  padding: var(--keycap-pad);
-  background: rgb(255 255 255 / 0.08);
+  border-radius: var(--shell-glow-rad);
+  padding: var(--shell-pad);
+  background: rgb(255 255 255 / 0.06);
   isolation: isolate;
 }
 
-.keycap-wrap::before {
+.rainbow-shell::before {
   content: "";
   position: absolute;
-  inset: 12px;
-  border-radius: var(--keycap-glow-rad);
-  background: conic-gradient(from var(--keycap-rotation), purple, blue, green, yellow, orange, red);
-  filter: blur(14px);
+  inset: 4px;
+  border-radius: var(--shell-glow-rad);
+  background: conic-gradient(
+    from var(--rainbow-rotation),
+    #8b5cf6,
+    #3b82f6,
+    #22c55e,
+    #eab308,
+    #f97316,
+    #ef4444,
+    #8b5cf6
+  );
+  filter: blur(8px);
   z-index: -2;
-  animation: keycap-rotate 5s linear infinite;
-  transition: filter 0.3s ease;
+  animation: rainbow-rotate 5s linear infinite;
   will-change: filter;
 }
 
-@media (hover: hover) and (pointer: fine) {
-  .keycap-wrap:hover::before {
-    filter: blur(16px);
-  }
-}
-
-.keycap-wrap::after {
+.rainbow-shell::after {
   content: "";
   position: absolute;
   inset: -1px;
-  border-radius: calc(var(--keycap-glow-rad) + 1px);
-  background: linear-gradient(
-    to bottom,
-    rgb(255 255 255 / 0.3) 0%,
-    rgb(255 255 255 / 0.3) 2px,
-    rgb(255 255 255 / 0.3) 30%,
-    rgb(255 255 255 / 0.3) 70%,
-    rgb(255 255 255 / 0.3) 99%,
-    rgb(255 255 255 / 0.3) 100%
+  border-radius: calc(var(--shell-glow-rad) + 1px);
+  background: radial-gradient(
+    circle at center,
+    transparent 70%,
+    rgb(100 100 100 / 0.08) 85%,
+    rgb(255 255 255 / 0.35) 97%,
+    rgb(255 255 255 / 0.35) 100%
   );
   z-index: -1;
 }
 
+@media (hover: hover) and (pointer: fine) {
+  .rainbow-shell:hover::before {
+    filter: blur(12px);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .keycap-wrap::before {
+  .rainbow-shell::before {
     animation-play-state: paused;
-    transition: none;
   }
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import type { ContributionData } from "@/lib/github";
+import type { ContributionData, YearContributionData } from "@/lib/github";
 import { hexToRgb } from "@/lib/color";
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
@@ -11,12 +11,14 @@ import {
   useSpring,
 } from "motion/react";
 import { AnimateNumber } from "motion-plus/react";
+import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
+import { useWebHaptics } from "web-haptics/react";
 
 // ease-out-cubic; same blueprint used in Globe3D depth fade
 const EASE_OUT_CUBIC: [number, number, number, number] = [0.215, 0.61, 0.355, 1];
 
 interface GitHubHeatmapProps {
-  data: ContributionData;
+  years: YearContributionData[];
 }
 
 const CELL_SIZE = 12;
@@ -51,9 +53,14 @@ interface TooltipData {
   count: number;
 }
 
-export function GitHubHeatmap({ data }: GitHubHeatmapProps) {
+export function GitHubHeatmap({ years }: GitHubHeatmapProps) {
+  const [currentYearIndex, setCurrentYearIndex] = useState(years.length - 1);
+  const currentYearData = years[currentYearIndex];
+  const data = currentYearData.data;
+  const year = currentYearData.year;
   const weeks = data.weeks;
   const shouldReduceMotion = useReducedMotion();
+  const haptic = useWebHaptics();
 
   // Read the accent colour directly from the CSS variable so we always match
   // whatever <ThemeScript> applied before first paint.
@@ -137,16 +144,21 @@ export function GitHubHeatmap({ data }: GitHubHeatmapProps) {
     return shades[4];
   }
 
-  // Derive month labels: emit a label at the first week that starts a new month
+  // Derive month labels: emit a label at the first week that starts a new month.
+  // Track last labeled month to avoid duplicates (e.g. "JanJan" when two weeks
+  // both start within the first 7 days of January).
   const monthLabels: { label: string; x: number }[] = [];
+  let lastMonth = -1;
   weeks.forEach((week, wi) => {
     const firstDay = week.contributionDays[0];
     if (!firstDay) return;
     // Append 'T00:00:00' to avoid UTC-vs-local timezone shift
     const date = new Date(firstDay.date + "T00:00:00");
-    if (date.getDate() <= 7) {
+    const month = date.getMonth();
+    if (date.getDate() <= 7 && month !== lastMonth) {
+      lastMonth = month;
       monthLabels.push({
-        label: MONTHS[date.getMonth()],
+        label: MONTHS[month],
         x: DAY_LABEL_WIDTH + wi * CELL_STEP,
       });
     }
@@ -213,14 +225,7 @@ export function GitHubHeatmap({ data }: GitHubHeatmapProps) {
                           {p.day}
                         </AnimateNumber>
                         ,{" "}
-                        <AnimateNumber
-                          transition={{
-                            y: { type: "spring", visualDuration: 0.3, bounce: 0.1 },
-                            opacity: { ease: "linear", duration: 0.15 },
-                          }}
-                        >
-                          {p.year}
-                        </AnimateNumber>
+                        {p.year}
                       </>
                     );
                   })()}
@@ -232,6 +237,48 @@ export function GitHubHeatmap({ data }: GitHubHeatmapProps) {
       </AnimatePresence>
 
       <div className="flex flex-col gap-2">
+        {/* Year navigation header — label on left, nav buttons on right */}
+        <div className="flex items-center justify-between">
+          <span className="flex items-center gap-2 text-xl font-bold" style={{ color: "var(--text-primary)" }}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="https://skillicons.dev/icons?i=github&theme=dark"
+              alt=""
+              aria-hidden="true"
+              width={24}
+              height={24}
+              className="size-6"
+            />
+            GitHub
+          </span>
+          <div className="flex items-center gap-1.5">
+            <button
+              type="button"
+              aria-label={currentYearIndex > 0 ? `View ${years[currentYearIndex - 1].year}` : "No earlier year"}
+              disabled={currentYearIndex === 0}
+              onClick={() => {
+                setCurrentYearIndex((i) => i - 1);
+                haptic.trigger("light");
+              }}
+              className="flex h-7 w-7 items-center justify-center rounded-full border border-white/5 bg-dark-bg-alt dm-elevation-2 transition-colors duration-150 hover:bg-accent/10 focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-30"
+            >
+              <FiChevronLeft size={12} />
+            </button>
+            <button
+              type="button"
+              aria-label={currentYearIndex < years.length - 1 ? `View ${years[currentYearIndex + 1].year}` : "No later year"}
+              disabled={currentYearIndex === years.length - 1}
+              onClick={() => {
+                setCurrentYearIndex((i) => i + 1);
+                haptic.trigger("light");
+              }}
+              className="flex h-7 w-7 items-center justify-center rounded-full border border-white/5 bg-dark-bg-alt dm-elevation-2 transition-colors duration-150 hover:bg-accent/10 focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-30"
+            >
+              <FiChevronRight size={12} />
+            </button>
+          </div>
+        </div>
+
         {/* Scroll container, which is wrapped in relative so blur overlays are contained */}
         <div className="relative overflow-hidden">
           {/* Left blur, which is fades in/out as scroll edge changes */}
@@ -292,7 +339,7 @@ export function GitHubHeatmap({ data }: GitHubHeatmapProps) {
             width={svgWidth}
             height={svgHeight}
             role="img"
-            aria-label={`${data.totalContributions.toLocaleString("en-US")} contributions in the last year`}
+            aria-label={`${data.totalContributions.toLocaleString("en-US")} contributions in ${year}`}
             className="block"
           >
             {/* Month labels */}
@@ -359,7 +406,8 @@ export function GitHubHeatmap({ data }: GitHubHeatmapProps) {
             >
               {data.totalContributions}
             </AnimateNumber>
-            {" contributions in the last year"}
+            {" contributions in "}
+            {year}
           </span>
           <div className="flex items-center gap-1">
             <span>Less</span>

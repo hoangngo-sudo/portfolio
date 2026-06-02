@@ -43,17 +43,15 @@ export function BackToTopFAB() {
             smoothScrollTo(0, { duration: 0.6, bounce: 0.05 });
           }}
           aria-label="Back to top"
-          className="fixed right-6 bottom-[calc(1.5rem+env(safe-area-inset-bottom,0px))] z-50 cursor-pointer rounded-lg border-none bg-linear-to-b from-keycap-cap-from to-keycap-cap-to px-2 py-2 text-white shadow-[0_6px_10px_rgb(0_0_0/0.3)]"
+          className="fixed right-6 bottom-[calc(1.5rem+env(safe-area-inset-bottom,0px))] z-50 cursor-pointer rounded-full bg-dark-bg-alt dm-elevation-2 px-6 py-2.5 text-sm font-medium text-text-primary focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-dark-bg focus-visible:outline-none select-none"
           initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0, transition: springTransition }}
+          animate={{ opacity: visible ? 0.5 : 0, y: 0, transition: springTransition }}
           exit={{ opacity: 0, y: 16, transition: exitTransition }}
-          whileHover={shouldReduceMotion ? undefined : { scale: 1.03 }}
-          whileTap={shouldReduceMotion ? undefined : { scale: 0.93 }}
+          whileHover={shouldReduceMotion ? undefined : { opacity: 1 }}
+          whileTap={shouldReduceMotion ? undefined : { scale: 0.97 }}
           transition={springTransition}
         >
-          <span className="inline-flex items-center rounded-[200px] bg-linear-to-b from-keycap-surface-from to-keycap-surface-to px-4 py-2 text-xs font-medium">
-            Back to top
-          </span>
+          Back to top
         </motion.button>
       )}
     </AnimatePresence>

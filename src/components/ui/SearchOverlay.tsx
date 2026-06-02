@@ -1,15 +1,22 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { motion, useReducedMotion } from "motion/react";
 import { Dialog } from "@base-ui/react/dialog";
 import { FiSearch } from "react-icons/fi";
 import { searchItems, type SearchItem } from "@/lib/search";
 import { smoothScrollToId } from "@/lib/scroll";
-import { KeycapButton } from "@/components/ui/KeycapButton";
+import { useWebHaptics } from "web-haptics/react";
 
 export function SearchOverlay() {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
+  const shouldReduceMotion = useReducedMotion();
+  const haptic = useWebHaptics();
+
+  const springTransition = shouldReduceMotion
+    ? { duration: 0 }
+    : { type: "spring" as const, stiffness: 600, damping: 20 };
 
   const results = useMemo(() => {
     if (!query.trim()) return [];
@@ -58,14 +65,32 @@ export function SearchOverlay() {
   return (
     <Dialog.Root open={open} onOpenChange={setOpen}>
       <Dialog.Trigger
-        render={(props) => (
-          <KeycapButton {...props}>
-            <FiSearch size={14} />
-            Search
-            <span className="ml-2 hidden text-[10px] font-medium text-current sm:inline">
-              ⌘ K
-            </span>
-          </KeycapButton>
+        render={({
+          onAnimationStart: _a,
+          onDragStart: _ds,
+          onDragEnd: _de,
+          onDrag: _d,
+          onDragOver: _do,
+          ...safeProps
+        }) => (
+          <div className="rainbow-shell">
+            <motion.button
+              {...safeProps}
+              onClick={(e) => {
+                haptic.trigger("medium");
+                setOpen(true);
+              }}
+              className="inline-flex cursor-pointer items-center gap-2 rounded-full bg-dark-bg-alt dm-elevation-2 px-6 py-2.5 text-sm font-medium text-text-primary focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-dark-bg focus-visible:outline-none select-none"
+              whileTap={shouldReduceMotion ? undefined : { scale: 0.97 }}
+              transition={springTransition}
+            >
+              <FiSearch size={14} />
+              Search
+              <kbd className="hidden items-center justify-center rounded-md bg-white/10 px-1.5 py-1 text-[10px] font-medium leading-none text-text-secondary sm:inline-flex">
+                Ctrl K
+              </kbd>
+            </motion.button>
+          </div>
         )}
       />
 

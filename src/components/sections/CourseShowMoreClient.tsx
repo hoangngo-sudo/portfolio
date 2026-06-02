@@ -68,7 +68,8 @@ export function CourseShowMoreClient({ data }: Props) {
       <SpotlightCard
         key={course.code}
         spotlightSize={60}
-        className="rounded-xl bg-card-bg p-4 dm-elevation-2"
+        smoothCorners={{ radius: 12, smoothing: 0.6 }}
+        className="bg-card-bg p-4 dm-elevation-2"
       >
         <p className="text-sm font-semibold text-text-primary">
           {course.code}{" "}

@@ -126,7 +126,7 @@ export function Globe3D({
       const dphi = (dx / wRef.current) * Math.PI * 1.2;
       phiRef.current += dphi;
       momentumRef.current = dphi;
-      // Accumulate tilt — counter-rotate: drag right → pin tilts left
+      // Accumulate tilt, counter-rotating so that dragging right makes the pin tilt left
       // dphi is in radians; gain converts to degrees with a subtle range
       tiltRef.current -= dphi * 80; // rad→deg gain: ~25° max for a fast swipe
       // Fire "selection" at every ~15° detent, like a picker wheel
@@ -166,7 +166,7 @@ export function Globe3D({
         momentumRef.current *= 0.93; // friction decay
       }
 
-      // Tilt decay — spring back to upright when not dragging
+      // Tilt decay, which springs back to upright when not dragging
       tiltRef.current *= 0.92;
       // Soft-clamp to ±30° to prevent excessive tilt on long drags
       if (tiltRef.current > 30) tiltRef.current = 30;

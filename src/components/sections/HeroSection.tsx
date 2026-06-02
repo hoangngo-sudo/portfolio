@@ -59,7 +59,6 @@ export function HeroSection() {
             haptic.trigger("medium");
             if (link.href?.startsWith("#")) handleAnchorClick(e);
           }}
-          keycap
         />
       ))}
       {features.searchOverlay && <SearchOverlay />}

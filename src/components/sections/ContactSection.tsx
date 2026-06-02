@@ -36,7 +36,7 @@ export function ContactSection({ data }: Props) {
     return () => document.removeEventListener("click", handler);
   }, []);
 
-  // Mount the WebGL shader when the courses section scrolls into view — avoids
+  // Mount the WebGL shader when the courses section scrolls into view, which avoids
   // the shader competing for GPU resources during the hero entrance animation.
   useEffect(() => {
     const courses = document.getElementById("courses");

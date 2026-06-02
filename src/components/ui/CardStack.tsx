@@ -14,6 +14,7 @@ import { useEffect, useRef, useState } from "react";
 import { useWebHaptics } from "web-haptics/react";
 import Image from "next/image";
 import type { MobilePhoto } from "@/types/config";
+import { useSmoothCorners } from "@lisse/react";
 
 const fanSpring = { type: "spring" as const, stiffness: 260, damping: 20 };
 const snapSpring = { type: "spring" as const, stiffness: 600, damping: 50 };
@@ -87,6 +88,9 @@ function StackImage({
   const zIndex = totalImages - depth;
   const isActive = depth === 0;
 
+  const liRef = useRef<HTMLLIElement>(null);
+  useSmoothCorners(liRef, { radius: 10, smoothing: 0.6 }, { autoEffects: false });
+
   const fanRotation = depth * rotationStep;
   const depthScale = Math.max(0.7, 1 - depth * 0.06);
   const depthOpacity = depth < totalImages * 0.75 ? 1 : 0;
@@ -113,7 +117,8 @@ function StackImage({
 
   return (
     <motion.li
-      className="absolute overflow-hidden rounded-[10px] bg-black/5 drop-shadow-[1px_3px_5px_rgba(0,0,0,0.3)] will-change-[transform,opacity,filter]"
+      ref={liRef}
+      className="absolute overflow-hidden bg-black/5 drop-shadow-[1px_3px_5px_rgba(0,0,0,0.3)] will-change-[transform,opacity,filter]"
       style={{
         width: "100%",
         height: "100%",

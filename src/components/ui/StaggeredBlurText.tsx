@@ -60,7 +60,7 @@ const wordVariants: Variants = {
     transition: {
       type: "tween" as const,
       duration: custom.duration,
-      ease: [0.215, 0.61, 0.355, 1] as const, // ease-out-cubic — entrance
+      ease: [0.215, 0.61, 0.355, 1] as const, // ease-out-cubic, which is an entrance easing
     },
   }),
 };

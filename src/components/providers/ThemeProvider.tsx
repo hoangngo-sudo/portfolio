@@ -40,7 +40,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   // hydration mismatch because the server rendered the default theme.
   const [theme, setThemeState] = useState<ThemeName>(config.themes.default);
 
-  // No cookies/localStorage on the server — lazy initializer returns the
+  // No cookies/localStorage on the server, so the lazy initializer returns the
   // default. After hydration, correct the state to match what localStorage
   // actually holds. Do NOT call applyThemeToDOM here: <ThemeScript> in
   // layout.tsx already applied the right CSS variables before first paint,

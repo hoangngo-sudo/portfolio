@@ -3,6 +3,7 @@
 import React, { useRef, useCallback, useEffect } from "react";
 import { useTheme } from "@/components/providers/ThemeProvider";
 import { hexToRgb } from "@/lib/color";
+import { useSmoothCorners, type SmoothCornerOptions } from "@lisse/react";
 
 type AsProp<T extends React.ElementType> = { as?: T };
 
@@ -10,6 +11,9 @@ type SpotlightCardProps<T extends React.ElementType = "div"> = AsProp<T> &
   Omit<React.ComponentPropsWithoutRef<T>, keyof AsProp<T> | "children"> & {
     spotlightColor?: string;
     spotlightSize?: number;
+    /** When set, applies Figma-style squircle corners via @lisse/react.
+     *  Uses the hook internally, which means no wrapper div and CSS shadows stay native. */
+    smoothCorners?: SmoothCornerOptions;
     children?: React.ReactNode;
   };
 
@@ -23,6 +27,7 @@ function SpotlightCardInner<T extends React.ElementType = "div">(
     className: classNameProp,
     spotlightColor,
     spotlightSize = 80,
+    smoothCorners,
     ...rest
   } = props as SpotlightCardProps<"div">;
   const className = classNameProp ?? "";
@@ -33,13 +38,27 @@ function SpotlightCardInner<T extends React.ElementType = "div">(
   const reducedMotionRef = useRef(false);
   const isTouchRef = useRef(false);
   const accentColorRef = useRef<string | null>(null);
-  // rAF handle — ensures at most one pending write per frame
+  // rAF handle, which ensures at most one pending write per frame
   const rafRef = useRef<number | null>(null);
 
   const { colors } = useTheme();
 
   // Resolve ref: forward ref takes priority, fallback to internal
   const rootRef = (ref as React.RefObject<HTMLElement>) ?? internalRef;
+
+  // Apply squircle corners via the hook when smoothCorners is configured.
+  // Uses autoEffects:false so CSS box-shadows (dm-elevation-2) stay native
+  // and are simply clipped to the squircle shape. No wrapper div injected.
+  useSmoothCorners(
+    rootRef as React.RefObject<HTMLElement>,
+    smoothCorners ?? { radius: 0, smoothing: 0 },
+    { autoEffects: false },
+  );
+
+  // Strip rounded-* when squircle corners are active (clip-path handles it)
+  const finalClassName = smoothCorners
+    ? className.replace(/\brounded-\S+/g, "")
+    : className;
 
   // Cache prefers-reduced-motion + touch detection once on mount
   useEffect(() => {
@@ -111,7 +130,7 @@ function SpotlightCardInner<T extends React.ElementType = "div">(
       const x = e.clientX - rectRef.current.left;
       const y = e.clientY - rectRef.current.top;
 
-      // Batch all writes into one rAF — caps to one repaint per vsync frame
+      // Batch all writes into one rAF, which caps to one repaint per vsync frame
       if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
       rafRef.current = requestAnimationFrame(() => {
         rafRef.current = null;
@@ -135,7 +154,7 @@ function SpotlightCardInner<T extends React.ElementType = "div">(
       {...rest}
       ref={rootRef}
       data-spotlight-card
-      className={`relative overflow-hidden ${className}`}
+      className={`relative overflow-hidden ${finalClassName}`}
       onMouseMove={handleMouseMove}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
