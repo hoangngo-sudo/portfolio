@@ -183,7 +183,7 @@ async function fetchContributionsForYear(
 /** Fetch contributions for all years from startYear to current year.
  *  Auto-detects startYear via fetchGitHubStartYear() if not provided.
  *  Runs requests in parallel via Promise.all.
- *  Does NOT filter out years with zero contributions — empty years stay navigable. */
+ *  Does NOT filter out years with zero contributions; empty years stay navigable. */
 export async function fetchAllYearContributions(
   username: string,
   startYear?: number
@@ -202,7 +202,7 @@ export async function fetchAllYearContributions(
     })
   );
 
-  // Keep all years — even zero-contribution ones — for consistent navigation
+  // Keep all years, even zero-contribution ones, for consistent navigation
   return results.filter((r): r is YearContributionData => r.data !== null);
 }
 
@@ -219,7 +219,7 @@ function seededRandom(seed: number) {
 
 /** Generate placeholder heatmap data for all years (fallback when API fails).
  *  Generates 52 full weeks per year anchored at Jan 1 with per-year varied seeds.
- *  Simple approach — visually close enough for placeholder data. */
+ *  Simple approach, visually close enough for placeholder data. */
 export function generateYearPlaceholderData(startYear?: number): YearContributionData[] {
   const firstYear = startYear ?? 2024;
   const currentYear = new Date().getFullYear();

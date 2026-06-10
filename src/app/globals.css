@@ -37,7 +37,7 @@
   --chip-border: color-mix(in srgb, var(--accent) 25%, rgb(0 0 0 / 0.01));
   --chip-hover-bg: color-mix(in srgb, var(--accent) 10%, rgb(0 0 0 / 0.01));
 
-  /* Keycap gradient tokens — accent-aware via color-mix */
+  /* Keycap gradient tokens, accent-aware via color-mix */
   --keycap-cap-from: color-mix(in srgb, var(--accent) 18%, #525252);
   --keycap-cap-to:   color-mix(in srgb, var(--accent) 8%, #444444);
   --keycap-surface-from: color-mix(in srgb, var(--accent) 30%, #3d3d3d);
@@ -210,4 +210,27 @@ html {
   .rainbow-shell::before {
     animation-play-state: paused;
   }
+}
+
+/* ── Vertical Wipe Theme Transition ── */
+/* Uses View Transitions API: clip-path reveal top → bottom */
+/* Gated by .vertical-wipe-transition class on <html> */
+@keyframes vertical-wipe {
+  0%   { clip-path: inset(0 0 100% 0); }
+  100% { clip-path: inset(0 0 0 0); }
+}
+
+html.vertical-wipe-transition::view-transition-old(root),
+html.vertical-wipe-transition::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+html.vertical-wipe-transition::view-transition-old(root) {
+  z-index: 1;
+}
+
+html.vertical-wipe-transition::view-transition-new(root) {
+  z-index: 2;
+  animation: vertical-wipe 0.5s cubic-bezier(0.65, 0.01, 0.8, 1) forwards;
 }

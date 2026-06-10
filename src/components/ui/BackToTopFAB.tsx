@@ -43,13 +43,12 @@ export function BackToTopFAB() {
             smoothScrollTo(0, { duration: 0.6, bounce: 0.05 });
           }}
           aria-label="Back to top"
-          className="fixed right-6 bottom-[calc(1.5rem+env(safe-area-inset-bottom,0px))] z-50 cursor-pointer rounded-full bg-dark-bg-alt dm-elevation-2 px-6 py-2.5 text-sm font-medium text-text-primary focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-dark-bg focus-visible:outline-none select-none"
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: visible ? 0.5 : 0, y: 0, transition: springTransition }}
-          exit={{ opacity: 0, y: 16, transition: exitTransition }}
-          whileHover={shouldReduceMotion ? undefined : { opacity: 1 }}
+          exit={{ opacity: 0, transition: exitTransition }}
           whileTap={shouldReduceMotion ? undefined : { scale: 0.97 }}
           transition={springTransition}
+          className="fixed right-6 bottom-[calc(1.5rem+env(safe-area-inset-bottom,0px))] z-50 cursor-pointer rounded-full bg-dark-bg-alt dm-elevation-2 px-6 py-2.5 text-sm font-medium text-text-primary hover:opacity-100! focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-dark-bg focus-visible:outline-none select-none"
         >
           Back to top
         </motion.button>

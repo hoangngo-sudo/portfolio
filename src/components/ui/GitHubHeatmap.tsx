@@ -237,7 +237,7 @@ export function GitHubHeatmap({ years }: GitHubHeatmapProps) {
       </AnimatePresence>
 
       <div className="flex flex-col gap-2">
-        {/* Year navigation header — label on left, nav buttons on right */}
+        {/* Year navigation header: label on left, nav buttons on right */}
         <div className="flex items-center justify-between">
           <span className="flex items-center gap-2 text-xl font-bold" style={{ color: "var(--text-primary)" }}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
