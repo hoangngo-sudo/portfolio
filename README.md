@@ -39,13 +39,13 @@ flowchart TB
 - **GitHub heatmap** Contribution graph with year navigation, `AnimateNumber` digit-flip tooltips, and skillicons.dev GitHub brand icon; fetched from GitHub GraphQL API with ISR caching; placeholder fallback when no token is set
 - **Fuzzy search overlay** Cmd+K / Ctrl+K triggers Fuse.js-powered search across all sections with action links; tags indexed separately from display text
 - **Project commit sparklines** Per-project GitHub commit activity for the last 12 weeks
-- **2 color themes** Black and Teal, switchable via keycap-styled toggle with `layoutId` morph ring animation (squash & stretch spring); flash-free hydration via anti-FOUC inline script
+- **2 color themes** Black and Teal, switchable via chip-style text button with opacity crossfade and vertical wipe page transition (View Transitions API + clip-path); flash-free hydration via anti-FOUC inline script
 - **Scroll progress bar** + **Back-to-top FAB** toggleable via feature flags
 - **Categorized skill pills** Tech stack displayed as a categorized grid of theme-aware pills with hover effects and skillicons.dev CDN icons; inline stack description paragraph with embedded pill buttons; static rendering (no client JavaScript needed)
 - **Sticky footer contact** Pure CSS sticky reveal content sections scroll over with `z-10` while the Contact section sits at `z-0`, pinned to the viewport bottom; decorative "Online" branding text partially cut at the bottom edge
 - **SpotlightCard** Project and coursework cards with a radial-gradient glow that follows the cursor, theme-aware accent color
 - **Shadow elevation** Two-tier depth system: `dm-elevation-2` for dark sections and 3-layer stacked shadow `elevation-2` for light sections
-- **Keycap buttons** Skeuomorphic keyboard-key style for the search trigger, hero nav chips, theme toggle (with animated morph ring), and back-to-top FAB; animated rainbow glow ring on search; colors adapt to the active theme
+- **Keycap buttons** Skeuomorphic keyboard-key style for hero nav chips and back-to-top FAB; animated rainbow glow ring on search overlay trigger; colors adapt to the active theme
 - **Web haptics** Touch feedback on chips, drags, globe rotation and keycap taps
 - **Themed scrollbar** Thin accent-colored scrollbar consistent across all scroll containers
 - **Map pin avatars** SVG map pin markers on the globe with embedded photos and counter-rotation tilt during drag
@@ -232,8 +232,6 @@ Hero photos use `next/image` with `fill` layout for native lazy loading and zero
 │   │       ├── GitHubHeatmap.tsx        # Contribution graph (theme-aware SVG + AnimateNumber tooltip)
 │   │       ├── Globe3D.tsx              # cobe WebGL interactive globe with haptic drag detents
 │   │       ├── GlobeCard.tsx            # Clipped globe card wrapper
-│   │       ├── KeycapButton.tsx         # Skeuomorphic keycap shell + rainbow glow (search trigger)
-│   │       ├── ProjectCommitsWidget.tsx # GitHub commit activity widget
 │   │       ├── Photo.tsx                # Single draggable photo with ArcTooltip
 │   │       ├── PhotoGallery.tsx         # Desktop: staggered spring photo fan-out
 │   │       ├── ProjectCommitsWidget.tsx # Per-project GitHub commit sparkline
@@ -241,7 +239,7 @@ Hero photos use `next/image` with `fill` layout for native lazy loading and zero
 │   │       ├── SearchOverlay.tsx        # Cmd+K fuzzy search (Fuse.js + Base UI Dialog)
 │   │       ├── SectionWrapper.tsx       # Shared section layout (dark / light variants, no animation)
 │   │       ├── SpotlightCard.tsx        # Polymorphic card with cursor-following radial glow
-│   │       └── ThemeToggle.tsx          # Black and Teal theme switcher
+│   │       └── ThemeToggle.tsx          # Theme switcher: chip-style text button + View Transitions API vertical wipe
 │   ├── config/
 │   │   └── portfolio.config.ts     # Single-file site configuration
 │   ├── lib/
