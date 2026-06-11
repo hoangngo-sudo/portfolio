@@ -30,7 +30,7 @@ export function SectionWrapper({
 
 export function Overline({ children }: { children: React.ReactNode }) {
   return (
-    <p className="mb-2 font-mono text-xs tracking-[2px] text-text-muted">
+    <p className="mb-2 text-xs font-medium tracking-[2px] text-ink-muted">
       {children}
     </p>
   );

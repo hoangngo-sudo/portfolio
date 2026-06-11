@@ -95,31 +95,20 @@ export function HeroSection() {
       </motion.div>
 
       <div>
-        {/* Location which replays on scroll-back */}
-        <StaggeredBlurText
-          as="p"
-          text={meta.title}
-          replay
-          delay={0}
-          stagger={0.04}
-          duration={0.5}
-          blurAmount={8}
-          yOffset={10}
-          className="mb-1 font-mono text-xs uppercase tracking-[2px] text-text-secondary"
-        />
+        {/* Clock */}
         {clock && (
-          <StaggeredBlurText
-            as="p"
-            text={clock}
-            replay
-            delay={0.15}
-            stagger={0.03}
-            duration={0.45}
-            blurAmount={6}
-            yOffset={8}
-            targetOpacity={0.7}
-            className="mb-3 font-mono text-xs tracking-[2px] text-text-secondary"
-          />
+          <div className="mb-3 flex items-center justify-center text-xs font-medium tracking-[2px] text-text-secondary">
+            <StaggeredBlurText
+              as="span"
+              text={clock}
+              replay
+              delay={0}
+              stagger={0.03}
+              duration={0.45}
+              blurAmount={6}
+              yOffset={8}
+            />
+          </div>
         )}
 
         {/* Headline: most important, appears first with the most screen time */}

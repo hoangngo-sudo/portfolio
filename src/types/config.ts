@@ -26,7 +26,6 @@ export interface MobilePhoto {
 export interface PortfolioConfig {
   meta: {
     name: string;
-    title: string;
     headline: string;
     description: string;
     siteUrl: string;

@@ -63,6 +63,7 @@ export function Globe3D({
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const avatarRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const pinColor = `color-mix(in srgb, ${atmosphereColor} 60%, black)`;
   const phiRef = useRef(0);
   // Cache container dimensions read once (+ ResizeObserver), never in rAF
   const wRef = useRef(0);
@@ -106,14 +107,14 @@ export function Globe3D({
       height: hRef.current * 2,
       phi: phiRef.current,
       theta: THETA,
-      dark: 1,
+      dark: 0,
       diffuse: 1.3,
       mapSamples: 20000,
       mapBrightness: 7,
       mapBaseBrightness: 0.00,
-      baseColor: [atmo[0] * 0.15, atmo[1] * 0.15, atmo[2] * 0.15],
-      markerColor: [atmo[0], atmo[1], atmo[2]],
-      glowColor: [atmo[0] * 0.55, atmo[1] * 0.55, atmo[2] * 0.55],
+      baseColor: [atmo[0] * 0.08 + 0.92, atmo[1] * 0.08 + 0.92, atmo[2] * 0.08 + 0.92],
+      markerColor: [0.184, 0.384, 0.365],
+      glowColor: [atmo[0] * 0.55 + 0.45, atmo[1] * 0.55 + 0.45, atmo[2] * 0.55 + 0.45],
     });
 
     // Drag handlers
@@ -277,6 +278,7 @@ export function Globe3D({
             src={m.src}
             alt={m.label}
             size={36}
+            color={pinColor}
             style={{
               // Pin tip at viewBox (12, 30). At size=36, tip is at physical (18, 45).
               // Offset so tip lands on the projected globe surface point.

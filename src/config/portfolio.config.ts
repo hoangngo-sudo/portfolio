@@ -3,9 +3,8 @@ import type { PortfolioConfig } from "@/types/config";
 const config: PortfolioConfig = {
   meta: {
     name: "Hoang Minh Ngo",
-    title: "Chicago, Illinois",
     headline: "Hey there, I am Hoang",
-    description: "I am an aspiring web developer who enjoys building good-looking things on web.",
+    description: "I am an aspiring web developer who enjoys building websites.",
     siteUrl: "https://hoaangngo.com",
     ogImage: "/og.png",
   },
@@ -64,7 +63,7 @@ const config: PortfolioConfig = {
       enabled: true,
       overline: "b. 2003",
       heading: "About me",
-      body: "I grew up in Ho Chi Minh City (HCMC), Vietnam, and now I am studying Computer Science in Chicago. I got into software because I like building things that help people.\n\nMost of my time goes into web development. I care a lot about how things feel. A good interface should feel like second nature, where you do not have to think about what to click next.\n\nOutside of code, I am always trying to get better. I pick up new skills wherever I can, read to absorb things, and keep figuring out what it actually means to build something worth building. My faith in God keeps me grounded through all of it. It reminds me that there is more to this than just shipping features, that the people using what I build matter more than the code itself, and that I am not doing any of this alone.",
+      body: "My name is Hoang Ngo. I grew up in Ho Chi Minh City (HCMC), Vietnam, and now I am studying Computer Science in Chicago, Illinois. I got into CS because I like building things that help people.\n\nMost of my time goes into web development. I care a lot about how things feel. A good interface should feel like second nature, where you do not have to think about what to click next.\n\nLately I have been spending more time on the backend side too. How data gets stored and served, how APIs connect different pieces, and how to make sure everything stays up and running. A website that looks nice but breaks when you use it is not very useful. I want to build things that work well all the way through, from the database to the screen and to user experience.\n\nOutside of code, I read bible and study bible daily to know more about Jesus, my savior. My faith in God keeps me grounded through all of the work I do.",
       github: {
         username: "hoangngo-sudo",
       },
@@ -90,14 +89,14 @@ const config: PortfolioConfig = {
           title: "drincatuic",
             description: "Student retreat event page",
           repo: "hoangngo-sudo/drincatuic",
-          tags: ["HTML", "CSS", "Javascript", "GSAP", "webpack", "Supabase"],
+          tags: ["HTML", "CSS", "Javascript", "Supabase"],
           href: "https://github.com/hoangngo-sudo/drincatuic",
         },
         {
           title: "purpleit",
             description: "A Reddit inspired web application that empowers users to create posts, browse through a dynamic feed, leave comments, and upvote posts.",
           repo: "hoangngo-sudo/purpleit",
-          tags: ["React", "React Router", "Vite", "Javascript", "Supabase", "Bootstrap"],
+          tags: ["React", "Vite", "Javascript", "Supabase", "Bootstrap"],
           href: "https://github.com/hoangngo-sudo/purpleit",
         },
         {
@@ -119,7 +118,7 @@ const config: PortfolioConfig = {
         { type: "pill", name: "React", icon: "react" },
         { type: "text", content: " and " },
         { type: "pill", name: "Next.js", icon: "nextjs" },
-        { type: "text", content: " for building full-stack applications, with " },
+        { type: "text", content: " for building full-stack website, with " },
         { type: "pill", name: "JavaScript", icon: "javascript" },
         { type: "text", content: " as my language. Everything is version-controlled with " },
         { type: "pill", name: "Git", icon: "git" },
@@ -130,7 +129,7 @@ const config: PortfolioConfig = {
         { type: "pill", name: "Supabase", icon: "supabase" },
         { type: "text", content: " (I am learning backend so bear with me of what I could do right now is using service *smiling face*). At last, but not least, I use " },
         { type: "pill", name: "VSCode", icon: "vscode" },
-        { type: "text", content: " IDE with AI assisted agent to create awesome projects." },
+        { type: "text", content: " IDE with assisted from AI agent to create awesome projects." },
       ],
       categories: [
         {

@@ -71,6 +71,7 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
+        <link rel="preload" as="image" href="/flower.webp" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
