@@ -2,6 +2,7 @@
 
 import { useCallback } from "react";
 import { motion, useReducedMotion, type Variants } from "motion/react";
+import { usePathname } from "next/navigation";
 import config from "@/config/portfolio.config";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { Chip } from "@/components/ui/Chip";
@@ -47,6 +48,8 @@ export function HeroSection() {
   const haptic = useWebHaptics();
   const clock = useLocalClock();
 
+  const pathname = usePathname();
+
   const handleAnchorClick = useCallback(
     (e: React.MouseEvent<HTMLAnchorElement>) => {
       const href = e.currentTarget.getAttribute("href");
@@ -78,7 +81,9 @@ export function HeroSection() {
   );
 
   return (
-    <section className="relative flex min-h-screen flex-col items-center justify-center bg-dark-bg px-[5%] py-16 text-center">
+    <section
+      key={pathname}
+      className="relative flex min-h-screen flex-col items-center justify-center bg-dark-bg px-[5%] py-16 text-center">
       {/* ThemeToggle */}
       <motion.div
         className="absolute right-4 top-4 z-10"
