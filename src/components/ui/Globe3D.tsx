@@ -5,6 +5,8 @@ import createGlobe from "cobe";
 import { useReducedMotion } from "motion/react";
 import { MapPinAvatar } from "@/components/ui/MapPinAvatar";
 import { useWebHaptics } from "web-haptics/react";
+import { useSound } from "@web-kits/audio/react";
+import { click, pop, hover } from "@/../lib/audio/minimal";
 import type { GlobeMarker } from "@/types/config";
 
 const THETA = 0.2; // tilt (radians)
@@ -76,6 +78,16 @@ export function Globe3D({
   const hapticRef = useRef(haptic);
   hapticRef.current = haptic;
 
+  const playClick = useSound(click);
+  const playPop = useSound(pop);
+  const playHover = useSound(hover);
+  const clickRef = useRef(playClick);
+  clickRef.current = playClick;
+  const popRef = useRef(playPop);
+  popRef.current = playPop;
+  const hoverRef = useRef(playHover);
+  hoverRef.current = playHover;
+
   useEffect(() => {
     const canvas = canvasRef.current;
     const container = containerRef.current;
@@ -117,6 +129,7 @@ export function Globe3D({
       el.setPointerCapture(e.pointerId);
       el.style.cursor = "grabbing";
       hapticRef.current.trigger("light");
+      clickRef.current();
     }
     function onPointerMove(e: PointerEvent) {
       if (!isDraggingRef.current) return;
@@ -133,11 +146,13 @@ export function Globe3D({
       hapticAccumRef.current += Math.abs(dphi);
       if (hapticAccumRef.current >= HAPTIC_DETENT) {
         hapticRef.current.trigger("selection");
+        hoverRef.current();
         hapticAccumRef.current -= HAPTIC_DETENT;
       }
     }
     function onPointerUp() {
       if (isDraggingRef.current) hapticRef.current.trigger("light");
+      if (isDraggingRef.current) popRef.current();
       isDraggingRef.current = false;
       el.style.cursor = "grab";
     }

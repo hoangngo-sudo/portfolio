@@ -3,6 +3,8 @@
 import { motion, useReducedMotion } from "motion/react";
 import { useTheme } from "@/components/providers/ThemeProvider";
 import { useWebHaptics } from "web-haptics/react";
+import { useSound } from "@web-kits/audio/react";
+import { toggleOn, toggleOff } from "@/../lib/audio/minimal";
 import { useLayoutEffect, useRef, useState } from "react";
 import { useSmoothCorners } from "@lisse/react";
 
@@ -27,6 +29,8 @@ export function ThemeToggle() {
   const { theme, setTheme } = useTheme();
   const haptic = useWebHaptics();
   const reduced = useReducedMotion();
+  const playToggleOn = useSound(toggleOn);
+  const playToggleOff = useSound(toggleOff);
   const btnRef = useRef<HTMLButtonElement>(null);
   const blackMeasureRef = useRef<HTMLSpanElement>(null);
   const tealMeasureRef = useRef<HTMLSpanElement>(null);
@@ -73,6 +77,10 @@ export function ThemeToggle() {
     haptic.trigger("medium");
 
     const newTheme = theme === "black" ? "teal" : "black";
+
+    // Play toggle sound: ascending for teal, descending for black
+    if (newTheme === "teal") playToggleOn();
+    else playToggleOff();
 
     // Track transition window for double-click detection
     if (!reduced) {

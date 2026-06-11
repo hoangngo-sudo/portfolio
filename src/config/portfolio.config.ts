@@ -44,11 +44,11 @@ const config: PortfolioConfig = {
 
   hero: {
     desktopPhotos: [
-      { src: "/photos/photo-1.jpg", x: "-320px", y: "15px", zIndex: 50, direction: "left", label: "Photo of me 😀" },
-      { src: "/photos/photo-2.jpg", x: "-160px", y: "32px", zIndex: 40, direction: "left", label: "Photo of me 😃" },
-      { src: "/photos/photo-3.jpg", x: "0px", y: "8px", zIndex: 30, direction: "right", label: "Photo of me 😄" },
-      { src: "/photos/photo-4.jpg", x: "160px", y: "22px", zIndex: 20, direction: "right", label: "Photo of me and my friends 😎" },
-      { src: "/photos/photo-5.jpg", x: "320px", y: "44px", zIndex: 10, direction: "left", label: "Photo of me 😍" },
+      { src: "/photos/photo-1.jpg", x: "-320px", y: "15px", zIndex: 50, direction: "left", label: "Taken in Frankfurt, Germany 🌍" },
+      { src: "/photos/photo-2.jpg", x: "-160px", y: "32px", zIndex: 40, direction: "left", label: "Taken at Evanston High School 😃" },
+      { src: "/photos/photo-3.jpg", x: "0px", y: "8px", zIndex: 30, direction: "right", label: "Taken at the McCormick Place 😄" },
+      { src: "/photos/photo-4.jpg", x: "160px", y: "22px", zIndex: 20, direction: "right", label: "Taken at Loyola University 😎" },
+      { src: "/photos/photo-5.jpg", x: "320px", y: "44px", zIndex: 10, direction: "left", label: "Taken at Starved Rock State Park 😍" },
     ],
     mobilePhotos: [
       { src: "/photos/photo-1.jpg" },

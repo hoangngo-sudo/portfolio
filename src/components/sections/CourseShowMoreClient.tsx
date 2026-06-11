@@ -3,6 +3,8 @@
 import { useState, useMemo, useCallback, useRef } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useWebHaptics } from "web-haptics/react";
+import { useSound } from "@web-kits/audio/react";
+import { expand, collapse } from "@/../lib/audio/minimal";
 import type { CoursesConfig } from "@/types/config";
 import SpotlightCard from "@/components/ui/SpotlightCard";
 import { ShowMoreButton } from "@/components/ui/ShowMoreButton";
@@ -17,6 +19,8 @@ export function CourseShowMoreClient({ data }: Props) {
   const [expanded, setExpanded] = useState(false);
   const reduced = useReducedMotion();
   const haptic = useWebHaptics();
+  const playExpand = useSound(expand);
+  const playCollapse = useSound(collapse);
   const gridRef = useRef<HTMLDivElement>(null);
   const shouldScrollRef = useRef(false);
 
@@ -58,10 +62,13 @@ export function CourseShowMoreClient({ data }: Props) {
   const handleToggle = useCallback(() => {
     haptic.trigger("light");
     if (expanded) {
+      playCollapse();
       shouldScrollRef.current = true;
+    } else {
+      playExpand();
     }
     setExpanded((prev) => !prev);
-  }, [expanded, haptic]);
+  }, [expanded, haptic, playExpand, playCollapse]);
 
   const renderCourseCard = useCallback(
     (course: (typeof allItems)[number]) => (

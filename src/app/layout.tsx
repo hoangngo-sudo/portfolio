@@ -11,6 +11,7 @@ import {
 import config from "@/config/portfolio.config";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { ThemeScript } from "@/components/providers/ThemeScript";
+import { AudioProvider } from "@/components/providers/AudioProvider";
 import "./globals.css";
 
 function colorsToProps(c: typeof config.themes.black): Record<string, string> {
@@ -94,7 +95,9 @@ export default function RootLayout({
           Skip to content
         </a>
         <ThemeProvider>
-          {children}
+          <AudioProvider>
+            {children}
+          </AudioProvider>
         </ThemeProvider>
       </body>
     </html>

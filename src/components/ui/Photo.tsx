@@ -3,6 +3,8 @@
 import { useMemo, useRef, useState } from "react";
 import { motion, useMotionValue, useReducedMotion } from "motion/react";
 import { useWebHaptics } from "web-haptics/react";
+import { useSound } from "@web-kits/audio/react";
+import { pop } from "@/../lib/audio/minimal";
 import Image from "next/image";
 import type { Direction } from "@/types/config";
 import { ArcTooltip } from "@/components/ui/ArcTooltip";
@@ -36,6 +38,7 @@ export function Photo({
   );
   const x = useMotionValue(0);
   const haptic = useWebHaptics();
+  const playPop = useSound(pop);
   const [isHovered, setIsHovered] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const animationFrameRef = useRef<number | null>(null);
@@ -62,6 +65,7 @@ export function Photo({
       onDragStart={() => setIsDragging(true)}
       onDragEnd={() => {
         haptic.trigger("light");
+        playPop();
         setIsDragging(false);
       }}
       whileTap={shouldReduceMotion ? undefined : { scale: 1.1, zIndex: 9999 }}

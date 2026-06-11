@@ -1,18 +1,22 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
 import { Dialog } from "@base-ui/react/dialog";
 import { FiSearch } from "react-icons/fi";
 import { searchItems, type SearchItem } from "@/lib/search";
 import { smoothScrollToId } from "@/lib/scroll";
 import { useWebHaptics } from "web-haptics/react";
+import { useSound } from "@web-kits/audio/react";
+import { expand, collapse } from "@/../lib/audio/minimal";
 
 export function SearchOverlay() {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
   const shouldReduceMotion = useReducedMotion();
   const haptic = useWebHaptics();
+  const playExpand = useSound(expand);
+  const playCollapse = useSound(collapse);
 
   const springTransition = shouldReduceMotion
     ? { duration: 0 }
@@ -45,6 +49,14 @@ export function SearchOverlay() {
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
+
+  // Sound: expand on open, collapse on close
+  const prevOpen = useRef(open);
+  useEffect(() => {
+    if (open && !prevOpen.current) playExpand();
+    if (!open && prevOpen.current) playCollapse();
+    prevOpen.current = open;
+  }, [open, playExpand, playCollapse]);
 
   const handleSelect = useCallback(
     (item: SearchItem) => {

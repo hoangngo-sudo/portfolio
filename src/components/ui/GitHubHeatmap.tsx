@@ -13,6 +13,8 @@ import {
 import { AnimateNumber } from "motion-plus/react";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { useWebHaptics } from "web-haptics/react";
+import { useSound } from "@web-kits/audio/react";
+import { click } from "@/../lib/audio/minimal";
 
 // ease-out-cubic; same blueprint used in Globe3D depth fade
 const EASE_OUT_CUBIC: [number, number, number, number] = [0.215, 0.61, 0.355, 1];
@@ -61,6 +63,7 @@ export function GitHubHeatmap({ years }: GitHubHeatmapProps) {
   const weeks = data.weeks;
   const shouldReduceMotion = useReducedMotion();
   const haptic = useWebHaptics();
+  const playClick = useSound(click);
 
   // Read the accent colour directly from the CSS variable so we always match
   // whatever <ThemeScript> applied before first paint.
@@ -259,10 +262,11 @@ export function GitHubHeatmap({ years }: GitHubHeatmapProps) {
               onClick={() => {
                 setCurrentYearIndex((i) => i - 1);
                 haptic.trigger("light");
+                playClick();
               }}
-              className="flex h-7 w-7 items-center justify-center rounded-full border border-white/5 bg-dark-bg-alt dm-elevation-2 transition-colors duration-150 hover:bg-accent/10 focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-30"
+              className="flex size-8 items-center justify-center rounded-full border border-white/5 bg-dark-bg-alt dm-elevation-2 motion-safe:transition-[background-color,border-color,transform] motion-safe:duration-150 motion-safe:ease-out hover:bg-accent/10 active:scale-90 focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-30"
             >
-              <FiChevronLeft size={12} />
+              <FiChevronLeft size={14} />
             </button>
             <button
               type="button"
@@ -271,10 +275,11 @@ export function GitHubHeatmap({ years }: GitHubHeatmapProps) {
               onClick={() => {
                 setCurrentYearIndex((i) => i + 1);
                 haptic.trigger("light");
+                playClick();
               }}
-              className="flex h-7 w-7 items-center justify-center rounded-full border border-white/5 bg-dark-bg-alt dm-elevation-2 transition-colors duration-150 hover:bg-accent/10 focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-30"
+              className="flex size-8 items-center justify-center rounded-full border border-white/5 bg-dark-bg-alt dm-elevation-2 motion-safe:transition-[background-color,border-color,transform] motion-safe:duration-150 motion-safe:ease-out hover:bg-accent/10 active:scale-90 focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-30"
             >
-              <FiChevronRight size={12} />
+              <FiChevronRight size={14} />
             </button>
           </div>
         </div>

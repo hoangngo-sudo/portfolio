@@ -3,6 +3,8 @@
 import { useRef } from "react";
 import type { MouseEventHandler, ReactNode } from "react";
 import { useSmoothCorners } from "@lisse/react";
+import { useSound } from "@web-kits/audio/react";
+import { tap } from "@/../lib/audio/minimal";
 
 interface ChipProps {
   label: string;
@@ -18,6 +20,7 @@ interface ChipProps {
 export function Chip({ label, href, external, icon, className = "", id, download, onClick }: ChipProps) {
   const linkRef = useRef<HTMLAnchorElement>(null);
   const spanRef = useRef<HTMLSpanElement>(null);
+  const playTap = useSound(tap);
 
   // Apply squircle corners on whichever element renders; the hook is a no-op
   // when ref.current is null (the other branch).
@@ -34,7 +37,10 @@ export function Chip({ label, href, external, icon, className = "", id, download
         id={id}
         href={href}
         download={download}
-        onClick={onClick}
+        onClick={(e) => {
+          playTap();
+          onClick?.(e);
+        }}
         className={`${baseClasses} ${className} outline-offset-2`}
         {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
       >

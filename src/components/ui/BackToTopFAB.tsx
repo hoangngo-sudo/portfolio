@@ -4,11 +4,14 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { smoothScrollTo } from "@/lib/scroll";
 import { useWebHaptics } from "web-haptics/react";
+import { useSound } from "@web-kits/audio/react";
+import { send } from "@/../lib/audio/minimal";
 
 export function BackToTopFAB() {
   const [visible, setVisible] = useState(false);
   const shouldReduceMotion = useReducedMotion();
   const haptic = useWebHaptics();
+  const playSend = useSound(send);
 
   const springTransition = shouldReduceMotion
     ? { duration: 0 }
@@ -40,6 +43,7 @@ export function BackToTopFAB() {
         <motion.button
           onClick={() => {
             haptic.trigger("medium");
+            playSend();
             smoothScrollTo(0, { duration: 0.6, bounce: 0.05 });
           }}
           aria-label="Back to top"
