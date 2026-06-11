@@ -127,12 +127,13 @@ graph TD
 | [Motion 12](https://motion.dev/) | Spring animations from `motion/react` + `motion` for vanilla scroll utility |
 | [Motion Plus](https://motion.dev/) | `AnimateNumber` for animated digit-flip counters |
 | [Fuse.js](https://www.fusejs.io/) | Client-side fuzzy search |
-| [Geist](https://vercel.com/font) | Sans, Mono, and Pixel font families via `next/font` |
+| [Geist](https://vercel.com/font) | Sans, Mono, and Pixel font families via the `geist` package |
 | [react-icons](https://react-icons.github.io/react-icons/) | Feather (Fi) icons for navigation arrows and search |
 | [skillicons.dev](https://skillicons.dev/) | CDN brand icons for skill pills, theme toggle, and GitHub logo |
 | [web-haptics](https://haptics.lochie.me/) | Touch haptic feedback |
 | [@web-kits/audio](https://audio.raphaelsalaja.com/) | Declarative Web Audio synthesis for UI sound feedback |
 | [COBE](https://cobe.vercel.app/) | WebGL globe renderer |
+| [@lisse/react](https://www.npmjs.com/package/@lisse/react) | Figma-style squircle corners (Chip, ThemeToggle, SpotlightCard, CardStack) |
 | [Paper Shaders](https://shaders.paper.design/) | WebGL fluted glass background effect |
 | [sharp](https://sharp.pixelplumbing.com/) | Image optimization at build time |
 | Vercel | Recommended hosting with ISR support |
@@ -166,7 +167,7 @@ cd my-portfolio
 # Install
 npm install
 
-# Configure — edit with your info
+# Configure edit with your info
 # src/config/portfolio.config.ts
 
 # Dev
@@ -226,30 +227,36 @@ Hero photos use `next/image` with `fill` layout for native lazy loading and zero
 │   │   └── globals.css             # Tailwind v4 + CSS custom properties + scrollbar
 │   ├── components/
 │   │   ├── providers/
-|   │   │   ├── AudioProvider.tsx     # Audio context + localStorage persistence   │   │   ├── ThemeProvider.tsx    # Theme context + localStorage sync
-│   │   │   └── ThemeScript.tsx      # Inline script for flash-free theme init
+│   │   │   ├── AudioProvider.tsx     # Audio context + localStorage persistence
+│   │   │   ├── ThemeProvider.tsx     # Theme context + localStorage sync
+│   │   │   └── ThemeScript.tsx       # Inline script for flash-free theme init
 │   │   ├── sections/
 │   │   │   ├── HeroSection.tsx                 # Photo gallery + headline + stagger entrance
 │   │   │   ├── SynopsisSection.tsx             # About + GitHub heatmap + globe
 │   │   │   ├── ProjectsSection.tsx             # SpotlightCard project cards (dark)
 │   │   │   ├── SkillsSection.tsx               # Categorized pill grid with skillicons.dev CDN
 │   │   │   ├── CoursesSection.tsx              # SpotlightCard coursework (dark)
+│   │   │   ├── CourseShowMoreClient.tsx        # Client expand/collapse with staggered entrance
 │   │   │   └── ContactSection.tsx              # Social link Chips with react-icons (light)
 │   │   └── ui/
 │   │       ├── ArcTooltip.tsx           # Spring-animated arc tooltip for photo labels
 │   │       ├── BackToTopFAB.tsx         # Keycap-styled floating action button
 │   │       ├── CardStack.tsx            # Mobile: swipeable photo card stack with 3D tilt
 │   │       ├── Chip.tsx                 # Tag / link chip (flat CSS + keycap variant)
+│   │       ├── FlutedGlassBackground.tsx # WebGL fluted glass shader (ContactSection)
 │   │       ├── GitHubHeatmap.tsx        # Contribution graph (theme-aware SVG + AnimateNumber tooltip)
 │   │       ├── Globe3D.tsx              # cobe WebGL interactive globe with haptic drag detents
-│   │       ├── GlobeCard.tsx            # Clipped globe card wrapper
+│   │       ├── GlobeCard.tsx            # Clipped globe card wrapper (dynamic import + skeleton)
+│   │       ├── MapPinAvatar.tsx         # SVG map pin marker with embedded photo
 │   │       ├── Photo.tsx                # Single draggable photo with ArcTooltip
 │   │       ├── PhotoGallery.tsx         # Desktop: staggered spring photo fan-out
 │   │       ├── ProjectCommitsWidget.tsx # Per-project GitHub commit sparkline
 │   │       ├── ScrollProgressBar.tsx    # Fixed top scroll indicator
 │   │       ├── SearchOverlay.tsx        # Cmd+K fuzzy search (Fuse.js + Base UI Dialog)
 │   │       ├── SectionWrapper.tsx       # Shared section layout (dark / light variants, no animation)
+│   │       ├── ShowMoreButton.tsx       # Expand/collapse toggle button
 │   │       ├── SpotlightCard.tsx        # Polymorphic card with cursor-following radial glow
+│   │       ├── StaggeredBlurText.tsx    # Staggered word-by-word blur entrance animation
 │   │       └── ThemeToggle.tsx          # Theme switcher: chip-style text button + View Transitions API vertical wipe
 │   ├── config/
 │   │   └── portfolio.config.ts     # Single-file site configuration
@@ -259,10 +266,12 @@ Hero photos use `next/image` with `fill` layout for native lazy loading and zero
 │   |   ├── github.ts              # GitHub GraphQL client (ISR cached)
 │   |   ├── scroll.ts              # Spring-animated scroll utilities
 │   |   └── search.ts              # Fuse.js search index builder
+│   ├── types/
+│   │   └── config.ts               # TypeScript config interfaces
 ├── lib/
-│   └── audio/                     # Generated @web-kits/audio sound patch (do not edit)
-│   └── types/
-│       └── config.ts               # TypeScript config interfaces
+│   └── audio/
+│       ├── index.ts               # @web-kits/audio generated patch
+│       └── minimal.ts             # Minimal audio patch reference
 └── public/
     ├── photos/                     # Hero gallery images
     ├── og.png                      # Open Graph image (1200×630)
