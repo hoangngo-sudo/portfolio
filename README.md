@@ -13,6 +13,8 @@ flowchart TB
     HERO --> |Scroll| COURSES["CoursesSection<br/>SpotlightCard coursework"]
     HERO --> |Scroll| CONTACT["ContactSection<br/>Sticky footer — 'Online' text + social chips"]
 
+    HAPTICS -.->|paired 1:1| AUDIO
+
     USER --> |Cmd+K| SEARCH["SearchOverlay<br/>Fuse.js fuzzy search"]
 
     PROJECTS --> |GraphQL| GITHUB[("GitHub API<br/>Contribution data")]
@@ -26,6 +28,7 @@ flowchart TB
     THEME --> |localStorage| USER
 
     USER --> |Drag / Tap| HAPTICS["web-haptics<br/>Detent + light + medium"]
+    USER --> |Click / Drag / Toggle| AUDIO["@web-kits/audio<br/>Synthesized UI sounds"]
 
     USER --> |Scroll| PROGRESS["ScrollProgressBar"]
     USER --> |Scroll down| FAB["BackToTopFAB"]
@@ -47,6 +50,7 @@ flowchart TB
 - **Shadow elevation** Two-tier depth system: `dm-elevation-2` for dark sections and 3-layer stacked shadow `elevation-2` for light sections
 - **Keycap buttons** Skeuomorphic keyboard-key style for hero nav chips and back-to-top FAB; animated rainbow glow ring on search overlay trigger; colors adapt to the active theme
 - **Web haptics** Touch feedback on chips, drags, globe rotation and keycap taps
+- **Synthesized audio** Dual-channel haptic+sound feedback on every interaction; ultra-subtle sine-wave tones from `@web-kits/audio` Minimal patch (9 sounds across 10 components); auto-respects `prefers-reduced-motion`
 - **Themed scrollbar** Thin accent-colored scrollbar consistent across all scroll containers
 - **Map pin avatars** SVG map pin markers on the globe with embedded photos and counter-rotation tilt during drag
 - **Motion-optimized** Full-project animation audit — 83% of 28 animations are S or A-tier; zero layout thrashing
@@ -91,6 +95,10 @@ graph TD
         WH["web-haptics<br/>Touch feedback"]
     end
 
+    subgraph Audio
+        WKA["@web-kits/audio<br/>Declarative Web Audio synthesis"]
+    end
+
     subgraph Globe
         COBE["COBE<br/>WebGL globe renderer"]
         PAPER["Paper Shaders<br/>Fluted glass background"]
@@ -106,6 +114,7 @@ graph TD
     NEXT --> GEIST
     NEXT --> RI
     NEXT --> WH
+    NEXT --> WKA
     NEXT --> COBE
     NEXT --> PAPER
 ```
@@ -122,6 +131,7 @@ graph TD
 | [react-icons](https://react-icons.github.io/react-icons/) | Feather (Fi) icons for navigation arrows and search |
 | [skillicons.dev](https://skillicons.dev/) | CDN brand icons for skill pills, theme toggle, and GitHub logo |
 | [web-haptics](https://haptics.lochie.me/) | Touch haptic feedback |
+| [@web-kits/audio](https://audio.raphaelsalaja.com/) | Declarative Web Audio synthesis for UI sound feedback |
 | [COBE](https://cobe.vercel.app/) | WebGL globe renderer |
 | [Paper Shaders](https://shaders.paper.design/) | WebGL fluted glass background effect |
 | [sharp](https://sharp.pixelplumbing.com/) | Image optimization at build time |
@@ -132,6 +142,7 @@ graph TD
 This project would not be possible without the following open-source projects:
 
 - Haptic feedback from [web-haptics](https://haptics.lochie.me/)
+- UI sound synthesis from [@web-kits/audio](https://audio.raphaelsalaja.com/)
 - Fuzzy search from [Fuse.js](https://www.fusejs.io/)
 - Accessible UI primitives from [Base UI](https://base-ui.com/)
 - Clipped WebGL globe card aesthetic from [COBE](https://cobe.vercel.app/)
@@ -215,7 +226,7 @@ Hero photos use `next/image` with `fill` layout for native lazy loading and zero
 │   │   └── globals.css             # Tailwind v4 + CSS custom properties + scrollbar
 │   ├── components/
 │   │   ├── providers/
-│   │   │   ├── ThemeProvider.tsx    # Theme context + localStorage sync
+|   │   │   ├── AudioProvider.tsx     # Audio context + localStorage persistence   │   │   ├── ThemeProvider.tsx    # Theme context + localStorage sync
 │   │   │   └── ThemeScript.tsx      # Inline script for flash-free theme init
 │   │   ├── sections/
 │   │   │   ├── HeroSection.tsx                 # Photo gallery + headline + stagger entrance
@@ -248,6 +259,8 @@ Hero photos use `next/image` with `fill` layout for native lazy loading and zero
 │   |   ├── github.ts              # GitHub GraphQL client (ISR cached)
 │   |   ├── scroll.ts              # Spring-animated scroll utilities
 │   |   └── search.ts              # Fuse.js search index builder
+├── lib/
+│   └── audio/                     # Generated @web-kits/audio sound patch (do not edit)
 │   └── types/
 │       └── config.ts               # TypeScript config interfaces
 └── public/
