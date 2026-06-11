@@ -13,19 +13,31 @@ import { smoothScrollToId } from "@/lib/scroll";
 import { useLocalClock } from "@/lib/clock";
 import { useWebHaptics } from "web-haptics/react";
 
-const heroBlockVariants: Variants = {
-  hidden: {},
+// Hierarchical entrance: each element's delay reflects its visual importance.
+// Title → most screen time, appears first. Subtitle/CTAs follow.
+// ThemeToggle fades last.
+// All elements fade only (no slide) for a calm, unified entrance.
+const fadeOnly: Variants = {
+  hidden: { opacity: 0 },
   visible: {
-    transition: { staggerChildren: 0.07, delayChildren: 0.3 },
+    opacity: 1,
+    transition: { duration: 0.5, delay: 1.0, ease: [0.215, 0.61, 0.355, 1] },
   },
 };
 
-const heroItemVariants: Variants = {
-  hidden: { opacity: 0, y: 12 },
+const fadeInEarly: Variants = {
+  hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    y: 0,
-    transition: { duration: 0.45, ease: [0.215, 0.61, 0.355, 1] },
+    transition: { duration: 0.45, delay: 0.15, ease: [0.215, 0.61, 0.355, 1] },
+  },
+};
+
+const fadeInLate: Variants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { duration: 0.5, delay: 0.35, ease: [0.215, 0.61, 0.355, 1] },
   },
 };
 
@@ -68,9 +80,14 @@ export function HeroSection() {
   return (
     <section className="relative flex min-h-screen flex-col items-center justify-center bg-dark-bg px-[5%] py-16 text-center">
       {/* ThemeToggle */}
-      <div className="absolute right-4 top-4 z-10">
+      <motion.div
+        className="absolute right-4 top-4 z-10"
+        variants={fadeOnly}
+        initial={shouldReduceMotion ? false : "hidden"}
+        animate="visible"
+      >
         <ThemeToggle />
-      </div>
+      </motion.div>
 
       <div>
         {/* Location which replays on scroll-back */}
@@ -100,7 +117,7 @@ export function HeroSection() {
           />
         )}
 
-        {/* replays on scroll-back */}
+        {/* Headline: most important, appears first with the most screen time */}
         <StaggeredBlurText
           as="h1"
           text={meta.headline}
@@ -113,32 +130,33 @@ export function HeroSection() {
           className="mb-4 max-w-2xl text-balance font-heading text-4xl font-bold text-white md:text-6xl"
         />
 
-        {/* Nav + gallery + card stack to be in a single staggered parent */}
+        {/* Nav chips: follow headline */}
         <motion.div
-          variants={heroBlockVariants}
+          variants={fadeInEarly}
+          initial={shouldReduceMotion ? false : "hidden"}
+          animate="visible"
+          className="flex flex-wrap items-center justify-center gap-3 text-text-secondary"
+        >
+          {navContent}
+        </motion.div>
+
+        {/* Desktop photo gallery: follows nav */}
+        <motion.div
+          variants={fadeInLate}
           initial={shouldReduceMotion ? false : "hidden"}
           animate="visible"
         >
-          {/* Nav buttons */}
-          <motion.div
-            variants={heroItemVariants}
-            className="flex flex-wrap items-center justify-center gap-3 text-text-secondary"
-          >
-            {navContent}
-          </motion.div>
+          <PhotoGallery photos={hero.desktopPhotos} animationDelay={0} />
+        </motion.div>
 
-          {/* Desktop photo gallery */}
-          <motion.div variants={heroItemVariants}>
-            <PhotoGallery photos={hero.desktopPhotos} animationDelay={0} />
-          </motion.div>
-
-          {/* Mobile card stack */}
-          <motion.div
-            variants={heroItemVariants}
-            className="mt-8 flex items-center justify-center lg:hidden"
-          >
-            <CardStack images={hero.mobilePhotos} />
-          </motion.div>
+        {/* Mobile card stack: same tier as gallery */}
+        <motion.div
+          variants={fadeInLate}
+          initial={shouldReduceMotion ? false : "hidden"}
+          animate="visible"
+          className="mt-8 flex items-center justify-center lg:hidden"
+        >
+          <CardStack images={hero.mobilePhotos} />
         </motion.div>
       </div>
     </section>

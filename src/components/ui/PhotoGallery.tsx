@@ -41,7 +41,7 @@ export function PhotoGallery({
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1,
+        staggerChildren: 0.15,
         delayChildren: 0.05,
       },
     },
@@ -61,10 +61,10 @@ export function PhotoGallery({
       scale: 1,
       transition: {
         type: "spring" as const,
-        stiffness: 110,
-        damping: 15,
+        stiffness: 90,
+        damping: 18,
         mass: 1,
-        delay: custom.order * 0.1,
+        delay: custom.order * 0.15,
       },
     }),
   };
