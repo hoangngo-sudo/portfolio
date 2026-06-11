@@ -13,6 +13,7 @@
     "@lisse/react": "^0.4.0",
     "@paper-design/shaders-react": "^0.0.76",
     "@types/three": "^0.184.0",
+    "@web-kits/audio": "^0.1.0",
     "cobe": "^2.0.1",
     "fuse.js": "^7.1.0",
     "geist": "^1.7.0",
