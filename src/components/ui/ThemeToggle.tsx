@@ -20,7 +20,7 @@ const SHAKE_TRANSITION = {
 
 const SHAKE_KEYFRAMES = [0, -4, 4, -4, 4, 0];
 
-const CROSSFADE_DURATION_MS = 300;
+const CROSSFADE_DURATION_MS = 500;
 const DOUBLE_CLICK_THRESHOLD_MS = 300;
 
 export function ThemeToggle() {
@@ -133,7 +133,7 @@ export function ThemeToggle() {
           width: wordWidths
             ? wordWidths[theme === "black" ? "teal" : "black"]
             : "auto",
-          transition: reduced ? "none" : "width 300ms ease",
+          transition: reduced ? "none" : "width 500ms ease",
         }}
       >
         {/* Measurement-only: absolute but unconstrained (no inset), so
@@ -151,7 +151,8 @@ export function ThemeToggle() {
           className="absolute inset-0"
           style={{
             opacity: theme === "teal" ? 1 : 0,
-            transition: reduced ? "none" : "opacity 300ms ease",
+            filter: theme === "teal" ? "blur(0px)" : "blur(2px)",
+            transition: reduced ? "none" : "opacity 500ms ease, filter 500ms ease",
           }}
         >
           Black
@@ -162,7 +163,8 @@ export function ThemeToggle() {
           className="absolute inset-0"
           style={{
             opacity: theme === "black" ? 1 : 0,
-            transition: reduced ? "none" : "opacity 300ms ease",
+            filter: theme === "black" ? "blur(0px)" : "blur(2px)",
+            transition: reduced ? "none" : "opacity 500ms ease, filter 500ms ease",
           }}
         >
           Teal
