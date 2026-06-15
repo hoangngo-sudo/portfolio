@@ -14,6 +14,7 @@ import { AnimateNumber } from "motion-plus/react";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { useWebHaptics } from "web-haptics/react";
 import { useSound } from "@web-kits/audio/react";
+import { useSmoothCorners } from "@lisse/react";
 import { click } from "@/../lib/audio/minimal";
 
 // ease-out-cubic; same blueprint used in Globe3D depth fade
@@ -64,6 +65,10 @@ export function GitHubHeatmap({ years }: GitHubHeatmapProps) {
   const shouldReduceMotion = useReducedMotion();
   const haptic = useWebHaptics();
   const playClick = useSound(click);
+  const leftBtnRef = useRef<HTMLButtonElement>(null);
+  const rightBtnRef = useRef<HTMLButtonElement>(null);
+  useSmoothCorners(leftBtnRef, { radius: 8, smoothing: 0.6 }, { autoEffects: false });
+  useSmoothCorners(rightBtnRef, { radius: 8, smoothing: 0.6 }, { autoEffects: false });
 
   // Read the accent colour directly from the CSS variable so we always match
   // whatever <ThemeScript> applied before first paint.
@@ -184,12 +189,11 @@ export function GitHubHeatmap({ years }: GitHubHeatmapProps) {
             {/* Inner: CSS translate for centering (compositor) + enter/exit animation */}
             <motion.div
               role="tooltip"
-              className="rounded-lg px-2.5 py-1.5 text-xs dm-elevation-2"
+              className="flex flex-col items-center text-xs text-text-primary"
               style={{
                 // CSS `translate` is compositor-only and independent from Motion's `transform`
                 translate: "-50% -100%",
-                background: "var(--dark-bg-alt)",
-                color: "var(--text-primary)",
+                filter: "drop-shadow(0 4px 8px rgba(0,0,0,0.25))",
               }}
               initial={{ opacity: 0, scale: 0.94 }}
               animate={{
@@ -203,37 +207,41 @@ export function GitHubHeatmap({ years }: GitHubHeatmapProps) {
                 transition: { ease: EASE_OUT_CUBIC, duration: 0.13 },
               }}
             >
-              <span style={{ fontVariantNumeric: "tabular-nums" }}>
-                <AnimateNumber
-                  transition={{
-                    y: { type: "spring", visualDuration: 0.3, bounce: 0.1 },
-                    opacity: { ease: "linear", duration: 0.15 },
-                  }}
-                >
-                  {tooltipData.count}
-                </AnimateNumber>
-                {tooltipData.count === 1 ? " contribution on " : " contributions on "}
-                <span className="font-medium">
-                  {(() => {
-                    const p = getDateParts(tooltipData.date);
-                    return (
-                      <>
-                        {p.weekday}, {p.month}{" "}
-                        <AnimateNumber
-                          transition={{
-                            y: { type: "spring", visualDuration: 0.3, bounce: 0.1 },
-                            opacity: { ease: "linear", duration: 0.15 },
-                          }}
-                        >
-                          {p.day}
-                        </AnimateNumber>
-                        ,{" "}
-                        {p.year}
-                      </>
-                    );
-                  })()}
+              <div className="rounded-md bg-dark-bg-alt px-2.5 py-1.5">
+                <span style={{ fontVariantNumeric: "tabular-nums" }}>
+                  <AnimateNumber
+                    transition={{
+                      y: { type: "spring", visualDuration: 0.3, bounce: 0.1 },
+                      opacity: { ease: "linear", duration: 0.15 },
+                    }}
+                  >
+                    {tooltipData.count}
+                  </AnimateNumber>
+                  {tooltipData.count === 1 ? " contribution on " : " contributions on "}
+                  <span className="font-medium">
+                    {(() => {
+                      const p = getDateParts(tooltipData.date);
+                      return (
+                        <>
+                          {p.weekday}, {p.month}{" "}
+                          <AnimateNumber
+                            transition={{
+                              y: { type: "spring", visualDuration: 0.3, bounce: 0.1 },
+                              opacity: { ease: "linear", duration: 0.15 },
+                            }}
+                          >
+                            {p.day}
+                          </AnimateNumber>
+                          ,{" "}
+                          {p.year}
+                        </>
+                      );
+                    })()}
+                  </span>
                 </span>
-              </span>
+              </div>
+              {/* Triangle tip */}
+              <div className="-mt-px h-0 w-0 border-l-[8px] border-r-[8px] border-t-[8px] border-l-transparent border-r-transparent border-t-dark-bg-alt" />
             </motion.div>
           </motion.div>
         )}
@@ -256,6 +264,7 @@ export function GitHubHeatmap({ years }: GitHubHeatmapProps) {
           </span>
           <div className="flex items-center gap-1.5">
             <button
+              ref={leftBtnRef}
               type="button"
               aria-label={currentYearIndex > 0 ? `View ${years[currentYearIndex - 1].year}` : "No earlier year"}
               disabled={currentYearIndex === 0}
@@ -264,11 +273,12 @@ export function GitHubHeatmap({ years }: GitHubHeatmapProps) {
                 haptic.trigger("light");
                 playClick();
               }}
-              className="flex size-8 items-center justify-center rounded-full border border-white/5 bg-dark-bg-alt dm-elevation-2 motion-safe:transition-[background-color,border-color,transform] motion-safe:duration-150 motion-safe:ease-out hover:bg-accent/10 active:scale-90 focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-30"
+              className="flex items-center justify-center rounded-lg bg-dark-bg-alt dm-elevation-2 px-4 py-2 text-text-primary transition-[colors,transform] duration-150 ease-out hover:bg-accent/10 active:scale-[0.97] focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-30"
             >
               <FiChevronLeft size={14} />
             </button>
             <button
+              ref={rightBtnRef}
               type="button"
               aria-label={currentYearIndex < years.length - 1 ? `View ${years[currentYearIndex + 1].year}` : "No later year"}
               disabled={currentYearIndex === years.length - 1}
@@ -277,7 +287,7 @@ export function GitHubHeatmap({ years }: GitHubHeatmapProps) {
                 haptic.trigger("light");
                 playClick();
               }}
-              className="flex size-8 items-center justify-center rounded-full border border-white/5 bg-dark-bg-alt dm-elevation-2 motion-safe:transition-[background-color,border-color,transform] motion-safe:duration-150 motion-safe:ease-out hover:bg-accent/10 active:scale-90 focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-30"
+              className="flex items-center justify-center rounded-lg bg-dark-bg-alt dm-elevation-2 px-4 py-2 text-text-primary transition-[colors,transform] duration-150 ease-out hover:bg-accent/10 active:scale-[0.97] focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-30"
             >
               <FiChevronRight size={14} />
             </button>

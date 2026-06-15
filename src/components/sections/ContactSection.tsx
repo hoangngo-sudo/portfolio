@@ -52,7 +52,7 @@ export function ContactSection({ data }: Props) {
           className="pointer-events-none absolute bottom-0 left-[5vw] translate-y-1/8 select-none font-heading text-4xl font-bold tracking-tight leading-none text-text-primary"
           aria-hidden="true"
         >
-          God bless you. Have a nice day!
+          God bless you.
         </h6>
       </div>
     </section>

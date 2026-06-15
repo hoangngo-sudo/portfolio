@@ -5,7 +5,7 @@ export function FlutedGlassBackground() {
       aria-hidden="true"
     >
       <img
-        src="/flower.webp"
+        src="/skyline.webp"
         alt=""
         className="h-full w-full object-cover"
       />

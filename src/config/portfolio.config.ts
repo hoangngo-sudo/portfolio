@@ -3,7 +3,7 @@ import type { PortfolioConfig } from "@/types/config";
 const config: PortfolioConfig = {
   meta: {
     name: "Hoang Minh Ngo",
-    headline: "Hey there, I am Hoang",
+    headline: "Hey, I am Hoang",
     description: "I am an aspiring web developer who enjoys building websites.",
     siteUrl: "https://hoaangngo.com",
     ogImage: "/og.png",
@@ -63,7 +63,7 @@ const config: PortfolioConfig = {
       enabled: true,
       overline: "b. 2003",
       heading: "About me",
-      body: "My name is Hoang Ngo. I grew up in Ho Chi Minh City (HCMC), Vietnam, and now I am studying Computer Science in Chicago, Illinois. I got into CS because I like building things that help people.\n\nMost of my time goes into web development. I care a lot about how things feel. A good interface should feel like second nature, where you do not have to think about what to click next.\n\nLately I have been spending more time on the backend side too. How data gets stored and served, how APIs connect different pieces, and how to make sure everything stays up and running. A website that looks nice but breaks when you use it is not very useful. I want to build things that work well all the way through, from the database to the screen and to user experience.\n\nOutside of code, I read bible and study bible daily to know more about Jesus, my savior. My faith in God keeps me grounded through all of the work I do.",
+      body: "My name is Hoang Ngo. I grew up in Ho Chi Minh City (HCMC), Vietnam, and now I am studying Computer Science in Chicago, Illinois. I got into CS because I like learning to build things on web.\n\nMost of my time goes into web development. I care a lot about how things feel. A good interface should feel like second nature, where you do not have to think about what to click next.\n\nLately I have been spending more time on the backend side too. How data gets stored and served, how APIs connect different pieces, and how to make sure everything stays up and running. A website that looks nice but breaks when you use it is not very useful. I want to build things that work well all the way through, from the database to frontend and to user-centered interaction.\n\nOutside of code, I read bible and study bible daily to know more about Jesus, my savior. My faith in God keeps me grounded through all of the work I do.",
       github: {
         username: "hoangngo-sudo",
       },
