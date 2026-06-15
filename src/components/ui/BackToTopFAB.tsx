@@ -16,7 +16,7 @@ function BackToTopButton({
   exitTransition,
 }: {
   onClick: () => void;
-  shouldReduceMotion: boolean;
+  shouldReduceMotion: boolean | null;
   springTransition: { type: "spring"; stiffness: number; damping: number } | { duration: number };
   exitTransition: { type: "tween"; duration: number; ease: readonly [number, number, number, number] } | { duration: number };
 }) {

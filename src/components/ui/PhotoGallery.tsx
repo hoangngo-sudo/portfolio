@@ -70,7 +70,7 @@ export function PhotoGallery({
   };
 
   return (
-    <div className="relative mb-8 hidden h-[350px] w-full items-center justify-center lg:flex">
+    <div className="relative mb-8 hidden h-87.5 w-full items-center justify-center lg:flex">
       <motion.div
         className="relative mx-auto flex w-full max-w-6xl justify-center"
         initial={shouldReduceMotion ? false : { opacity: 0 }}
@@ -83,7 +83,7 @@ export function PhotoGallery({
           initial={shouldReduceMotion ? false : "hidden"}
           animate={shouldReduceMotion ? "visible" : (isLoaded ? "visible" : "hidden")}
         >
-          <div className="relative h-[220px] w-[220px]">
+          <div className="relative h-55 w-55">
             {[...photos].reverse().map((photo, reverseIndex) => {
               const order = photos.length - 1 - reverseIndex;
               return (

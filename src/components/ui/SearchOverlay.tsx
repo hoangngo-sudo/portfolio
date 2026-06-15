@@ -119,7 +119,7 @@ export function SearchOverlay() {
               className="flex-1 bg-transparent text-base text-text-primary outline-none placeholder:text-text-muted"
               autoFocus
             />
-            <Dialog.Close className="rounded px-2 py-1 text-xs text-text-muted transition-colors hover:bg-card-hover hover:text-text-primary">
+            <Dialog.Close className="rounded px-2 py-1 text-xs text-text-muted transition-colors duration-150 ease-out hover:bg-card-hover hover:text-text-primary">
               ESC
             </Dialog.Close>
           </div>
@@ -143,10 +143,12 @@ export function SearchOverlay() {
                   {section}
                 </p>
                 {items.map((item, i) => (
-                  <button
+                  <motion.button
                     key={`${item.title}-${i}`}
                     onClick={() => handleSelect(item)}
-                    className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left transition-colors hover:bg-card-hover"
+                    whileTap={shouldReduceMotion ? undefined : { scale: 0.97 }}
+                    transition={shouldReduceMotion ? { duration: 0 } : springTransition}
+                    className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left transition-colors duration-150 ease-out hover:bg-card-hover"
                   >
                     <div className="min-w-0 flex-1">
                       <p className="truncate text-sm font-medium text-text-primary">
@@ -158,7 +160,7 @@ export function SearchOverlay() {
                         </p>
                       )}
                     </div>
-                  </button>
+                  </motion.button>
                 ))}
               </div>
             ))}
