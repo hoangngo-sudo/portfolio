@@ -142,7 +142,7 @@ function StackImage({
         scale: depthScale,
         opacity: depthOpacity,
       }}
-      whileTap={isActive ? { scale: 0.98 } : {}}
+      whileTap={isActive ? { scale: 0.97 } : {}}
       transition={shouldReduceMotion ? { duration: 0 } : fanSpring}
       drag={isActive ? "x" : false}
       onDrag={isActive ? onDrag : undefined}

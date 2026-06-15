@@ -1,11 +1,44 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { smoothScrollTo } from "@/lib/scroll";
 import { useWebHaptics } from "web-haptics/react";
 import { useSound } from "@web-kits/audio/react";
 import { send } from "@/../lib/audio/minimal";
+import { useSmoothCorners } from "@lisse/react";
+
+/** Inner component so useSmoothCorners runs after the button mounts into DOM */
+function BackToTopButton({
+  onClick,
+  shouldReduceMotion,
+  springTransition,
+  exitTransition,
+}: {
+  onClick: () => void;
+  shouldReduceMotion: boolean;
+  springTransition: { type: "spring"; stiffness: number; damping: number } | { duration: number };
+  exitTransition: { type: "tween"; duration: number; ease: readonly [number, number, number, number] } | { duration: number };
+}) {
+  const btnRef = useRef<HTMLButtonElement>(null);
+  useSmoothCorners(btnRef, { radius: 20, smoothing: 0.6 }, { autoEffects: false });
+
+  return (
+    <motion.button
+      ref={btnRef}
+      onClick={onClick}
+      aria-label="Back to top"
+      initial={{ opacity: 0, y: 16 }}
+      animate={{ opacity: 0.5, y: 0, transition: springTransition }}
+      exit={{ opacity: 0, transition: exitTransition }}
+      whileTap={shouldReduceMotion ? undefined : { scale: 0.97 }}
+      transition={springTransition}
+      className="fixed right-6 bottom-[calc(1.5rem+env(safe-area-inset-bottom,0px))] z-50 cursor-pointer bg-dark-bg-alt dm-elevation-2 px-6 py-2.5 text-sm font-medium text-text-primary hover:opacity-100! focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-dark-bg focus-visible:outline-none select-none"
+    >
+      Back to top
+    </motion.button>
+  );
+}
 
 export function BackToTopFAB() {
   const [visible, setVisible] = useState(false);
@@ -40,22 +73,16 @@ export function BackToTopFAB() {
   return (
     <AnimatePresence>
       {visible && (
-        <motion.button
+        <BackToTopButton
           onClick={() => {
             haptic.trigger("medium");
             playSend();
             smoothScrollTo(0, { duration: 0.6, bounce: 0.05 });
           }}
-          aria-label="Back to top"
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: visible ? 0.5 : 0, y: 0, transition: springTransition }}
-          exit={{ opacity: 0, transition: exitTransition }}
-          whileTap={shouldReduceMotion ? undefined : { scale: 0.97 }}
-          transition={springTransition}
-          className="fixed right-6 bottom-[calc(1.5rem+env(safe-area-inset-bottom,0px))] z-50 cursor-pointer rounded-full bg-dark-bg-alt dm-elevation-2 px-6 py-2.5 text-sm font-medium text-text-primary hover:opacity-100! focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-dark-bg focus-visible:outline-none select-none"
-        >
-          Back to top
-        </motion.button>
+          shouldReduceMotion={shouldReduceMotion}
+          springTransition={springTransition}
+          exitTransition={exitTransition}
+        />
       )}
     </AnimatePresence>
   );

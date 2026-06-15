@@ -1,3 +1,7 @@
+"use client";
+
+import { useRef } from "react";
+import { useSmoothCorners } from "@lisse/react";
 import type { SkillsConfig, StackDescriptionPart } from "@/types/config";
 import {
   SectionWrapper,
@@ -33,9 +37,12 @@ const skillIconId: Record<string, string> = {
 /** Inline pill used inside the stack description paragraph */
 function InlinePill({ name, icon }: { name: string; icon?: string }) {
   const iconId = icon ? skillIconId[icon] : null;
+  const ref = useRef<HTMLSpanElement>(null);
+  useSmoothCorners(ref, { radius: 6, smoothing: 0.6 }, { autoEffects: false });
   return (
     <span
-      className="mx-0.5 inline-flex h-6.5 cursor-default items-center gap-1.5 rounded-md border-0 bg-light-bg-alt px-1.5 py-0.5 text-xs font-medium text-ink-muted elevation-2 [@media(hover:hover)]:hover:bg-chip-hover-bg [@media(hover:hover)]:hover:text-ink-body [&_img]:pointer-events-none [&_img]:shrink-0"
+      ref={ref}
+      className="mx-0.5 inline-flex h-6.5 cursor-default items-center gap-1.5 border-0 bg-light-bg-alt px-1.5 py-0.5 text-xs font-medium text-ink-muted elevation-2 [@media(hover:hover)]:hover:bg-chip-hover-bg [@media(hover:hover)]:hover:text-ink-body [&_img]:pointer-events-none [&_img]:shrink-0"
       style={{ transition: "background-color 150ms cubic-bezier(0.215,0.61,0.355,1), color 150ms cubic-bezier(0.215,0.61,0.355,1)" }}
     >
       {iconId && (
@@ -58,9 +65,12 @@ function InlinePill({ name, icon }: { name: string; icon?: string }) {
 /** Skill pill used in the category grid */
 function SkillPill({ name, icon }: { name: string; icon?: string }) {
   const iconId = icon ? skillIconId[icon] : null;
+  const ref = useRef<HTMLSpanElement>(null);
+  useSmoothCorners(ref, { radius: 6, smoothing: 0.6 }, { autoEffects: false });
   return (
     <span
-      className="inline-flex h-6.5 cursor-default items-center gap-1.5 rounded-md border-0 bg-light-bg-alt px-1.5 py-0.5 text-xs font-medium text-ink-muted elevation-2 [@media(hover:hover)]:hover:bg-chip-hover-bg [@media(hover:hover)]:hover:text-ink-body [&_img]:pointer-events-none [&_img]:shrink-0"
+      ref={ref}
+      className="inline-flex h-6.5 cursor-default items-center gap-1.5 border-0 bg-light-bg-alt px-1.5 py-0.5 text-xs font-medium text-ink-muted elevation-2 [@media(hover:hover)]:hover:bg-chip-hover-bg [@media(hover:hover)]:hover:text-ink-body [&_img]:pointer-events-none [&_img]:shrink-0"
       style={{ transition: "background-color 150ms cubic-bezier(0.215,0.61,0.355,1), color 150ms cubic-bezier(0.215,0.61,0.355,1)" }}
     >
       {iconId && (

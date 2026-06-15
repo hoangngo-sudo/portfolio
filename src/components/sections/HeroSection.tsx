@@ -94,7 +94,7 @@ export function HeroSection() {
         <ThemeToggle />
       </motion.div>
 
-      <div>
+      <div className="flex w-full flex-col items-center">
         {/* Clock */}
         {clock && (
           <div className="mb-3 flex items-center justify-center text-xs font-medium tracking-[2px] text-text-secondary">
@@ -121,7 +121,7 @@ export function HeroSection() {
           duration={0.55}
           blurAmount={10}
           yOffset={14}
-          className="mb-4 max-w-2xl text-balance font-heading text-4xl font-bold text-white md:text-6xl"
+          className="mb-4 max-w-2xl text-center font-heading text-4xl font-bold text-white md:text-6xl"
         />
 
         {/* Nav chips: follow headline */}

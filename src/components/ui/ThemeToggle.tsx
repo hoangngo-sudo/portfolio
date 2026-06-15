@@ -40,7 +40,6 @@ export function ThemeToggle() {
   const [isShaking, setIsShaking] = useState(false);
   const [wordWidths, setWordWidths] = useState<{ black: number; teal: number } | null>(null);
 
-  // Squircle corners matching Chip component
   useSmoothCorners(btnRef, { radius: 8, smoothing: 0.6 }, { autoEffects: false });
 
   // Measure the natural text width of each word. We use dedicated

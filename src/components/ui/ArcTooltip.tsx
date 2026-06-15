@@ -63,7 +63,7 @@ export function ArcTooltip({ label, isHovered, x }: ArcTooltipProps) {
               </div>
             </div>
             {/* Triangle tip */}
-            <div className="-mt-px h-0 w-0 border-l-[8px] border-r-[8px] border-t-[8px] border-l-transparent border-r-transparent border-t-dark-bg-alt" />
+            <div className="-mt-px h-0 w-0 border-l-8 border-r-8 border-t-8 border-l-transparent border-r-transparent border-t-dark-bg-alt" />
           </div>
         </motion.div>
       )}

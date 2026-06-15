@@ -11,8 +11,6 @@ type SpotlightCardProps<T extends React.ElementType = "div"> = AsProp<T> &
   Omit<React.ComponentPropsWithoutRef<T>, keyof AsProp<T> | "children"> & {
     spotlightColor?: string;
     spotlightSize?: number;
-    /** When set, applies Figma-style squircle corners via @lisse/react.
-     *  Uses the hook internally, which means no wrapper div and CSS shadows stay native. */
     smoothCorners?: SmoothCornerOptions;
     children?: React.ReactNode;
   };
@@ -46,16 +44,12 @@ function SpotlightCardInner<T extends React.ElementType = "div">(
   // Resolve ref: forward ref takes priority, fallback to internal
   const rootRef = (ref as React.RefObject<HTMLElement>) ?? internalRef;
 
-  // Apply squircle corners via the hook when smoothCorners is configured.
-  // Uses autoEffects:false so CSS box-shadows (dm-elevation-2) stay native
-  // and are simply clipped to the squircle shape. No wrapper div injected.
   useSmoothCorners(
     rootRef as React.RefObject<HTMLElement>,
     smoothCorners ?? { radius: 0, smoothing: 0 },
     { autoEffects: false },
   );
 
-  // Strip rounded-* when squircle corners are active (clip-path handles it)
   const finalClassName = smoothCorners
     ? className.replace(/\brounded-\S+/g, "")
     : className;
