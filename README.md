@@ -39,7 +39,7 @@ flowchart TB
 - **Config-driven** Edit a single `portfolio.config.ts`
 - **Photo gallery hero** Desktop fanned layout with spring arc tooltip labels; mobile swipeable card stack; staggered entrance animations
 - **Interactive 3D globe** `cobe` WebGL globe in the about section with drag rotation and haptic detents (picks up every ~15° like a scroll wheel)
-- **GitHub heatmap** Contribution graph with year navigation, `AnimateNumber` digit-flip tooltips, and skillicons.dev GitHub brand icon; fetched from GitHub GraphQL API with ISR caching; placeholder fallback when no token is set
+- **GitHub heatmap** Contribution graph with year navigation, `AnimateNumber` digit-flip tooltips, physical stagger entrance (distance-based spring ripple from top-left), and skillicons.dev GitHub brand icon; fetched from GitHub GraphQL API with ISR caching; placeholder fallback when no token is set
 - **Fuzzy search overlay** Cmd+K / Ctrl+K triggers Fuse.js-powered search across all sections with action links; tags indexed separately from display text
 - **Project commit sparklines** Per-project GitHub commit activity for the last 12 weeks
 - **2 color themes** Black and Teal, switchable via chip-style text button with opacity crossfade and vertical wipe page transition (View Transitions API + clip-path); flash-free hydration via anti-FOUC inline script
