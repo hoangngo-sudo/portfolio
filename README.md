@@ -44,7 +44,7 @@ flowchart TB
 - **Project commit sparklines** Per-project GitHub commit activity for the last 12 weeks
 - **2 color themes** Black and Teal, switchable via chip-style text button with opacity crossfade and vertical wipe page transition (View Transitions API + clip-path); flash-free hydration via anti-FOUC inline script
 - **Scroll progress bar** + **Back-to-top FAB** toggleable via feature flags
-- **Categorized skill pills** Tech stack displayed as a categorized grid of theme-aware pills with hover effects and skillicons.dev CDN icons; inline stack description paragraph with embedded pill buttons; static rendering (no client JavaScript needed)
+- **Categorized skill pills** Tech stack displayed as a categorized grid of theme-aware pills with hover effects and skillicons.dev CDN icons; inline stack description paragraph with embedded pill buttons; squircle corners via `@lisse/react` smoothCorners
 - **Sticky footer contact** Pure CSS sticky reveal content sections scroll over with `z-10` while the Contact section sits at `z-0`, pinned to the viewport bottom; decorative "Online" branding text partially cut at the bottom edge
 - **SpotlightCard** Project and coursework cards with a radial-gradient glow that follows the cursor, theme-aware accent color
 - **Shadow elevation** Two-tier depth system: `dm-elevation-2` for dark sections and 3-layer stacked shadow `elevation-2` for light sections
@@ -148,6 +148,7 @@ This project would not be possible without the following open-source projects:
 - Accessible UI primitives from [Base UI](https://base-ui.com/)
 - Clipped WebGL globe card aesthetic from [COBE](https://cobe.vercel.app/)
 - Fluted glass shader from [Paper](https://shaders.paper.design/)
+- Theme toggle effect from [theme-toggle.rdsx.dev](https://theme-toggle.rdsx.dev/) using View Transition API
 
 This project has been inspired by the following websites and designs:
 
