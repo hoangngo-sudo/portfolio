@@ -113,7 +113,7 @@ export interface ProjectsConfig {
 
 export type StackDescriptionPart =
   | { type: "text"; content: string }
-  | { type: "pill"; name: string; icon?: string };
+  | { type: "pill"; name: string; icon?: string; href?: string };
 
 export interface SkillsConfig {
   enabled: boolean;

@@ -37,6 +37,9 @@
   --chip-border: color-mix(in srgb, var(--accent) 25%, rgb(0 0 0 / 0.01));
   --chip-hover-bg: color-mix(in srgb, var(--accent) 10%, rgb(0 0 0 / 0.01));
 
+  /* Easing tokens */
+  --expo-out: cubic-bezier(0.16, 1, 0.3, 1);
+
   /* Keycap gradient tokens, accent-aware via color-mix */
   --keycap-cap-from: color-mix(in srgb, var(--accent) 18%, #525252);
   --keycap-cap-to:   color-mix(in srgb, var(--accent) 8%, #444444);
@@ -212,25 +215,46 @@ html {
   }
 }
 
-/* ── Vertical Wipe Theme Transition ── */
-/* Uses View Transitions API: clip-path reveal top → bottom */
-/* Gated by .vertical-wipe-transition class on <html> */
-@keyframes vertical-wipe {
-  0%   { clip-path: inset(0 0 100% 0); }
-  100% { clip-path: inset(0 0 0 0); }
+/* ── Diagonal Wipe Theme Transition ── */
+/* Uses View Transitions API with 45° clip-path polygon reveal.
+   Direction: black expands from top-right, teal expands from bottom-left.
+   Gated by .diagonal-wipe-transition class on <html>. */
+html.diagonal-wipe-transition::view-transition-group(root) {
+  animation-duration: 0.7s;
+  animation-timing-function: var(--expo-out);
 }
 
-html.vertical-wipe-transition::view-transition-old(root),
-html.vertical-wipe-transition::view-transition-new(root) {
+html.diagonal-wipe-transition::view-transition-new(root) {
+  animation-name: reveal-teal;
+  animation-fill-mode: both;
+}
+
+html.diagonal-wipe-transition::view-transition-old(root),
+html[data-theme="black"].diagonal-wipe-transition::view-transition-old(root) {
   animation: none;
-  mix-blend-mode: normal;
+  animation-fill-mode: both;
+  z-index: -1;
 }
 
-html.vertical-wipe-transition::view-transition-old(root) {
-  z-index: 1;
+html[data-theme="black"].diagonal-wipe-transition::view-transition-new(root) {
+  animation-name: reveal-black;
+  animation-fill-mode: both;
 }
 
-html.vertical-wipe-transition::view-transition-new(root) {
-  z-index: 2;
-  animation: vertical-wipe 0.5s cubic-bezier(0.65, 0.01, 0.8, 1) forwards;
+@keyframes reveal-black {
+  from {
+    clip-path: polygon(50% -71%, -50% 71%, -50% 71%, 50% -71%);
+  }
+  to {
+    clip-path: polygon(50% -71%, -50% 71%, 50% 171%, 171% 50%);
+  }
+}
+
+@keyframes reveal-teal {
+  from {
+    clip-path: polygon(171% 50%, 50% 171%, 50% 171%, 171% 50%);
+  }
+  to {
+    clip-path: polygon(171% 50%, 50% 171%, -50% 71%, 50% -71%);
+  }
 }

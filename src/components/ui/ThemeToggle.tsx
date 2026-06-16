@@ -95,9 +95,9 @@ export function ThemeToggle() {
       return;
     }
 
-    // Animated path: vertical wipe via View Transitions API
+    // Animated path: diagonal wipe via View Transitions API
     wipeRef.current = true;
-    document.documentElement.classList.add("vertical-wipe-transition");
+    document.documentElement.classList.add("diagonal-wipe-transition");
     try {
       const transition = document.startViewTransition(() => {
         setTheme(newTheme);
@@ -108,7 +108,7 @@ export function ThemeToggle() {
       // Fall back to instant switch so the user isn't stuck on the old theme.
       setTheme(newTheme);
     } finally {
-      document.documentElement.classList.remove("vertical-wipe-transition");
+      document.documentElement.classList.remove("diagonal-wipe-transition");
       wipeRef.current = false;
     }
   };

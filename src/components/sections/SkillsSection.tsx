@@ -8,84 +8,44 @@ import {
   Overline,
   SectionHeading,
 } from "@/components/ui/SectionWrapper";
+import { getSkillIconId, getCustomIcon, buildSkillIconUrl } from "@/lib/icons";
 
-/** Maps config icon key to skillicons.dev icon ID */
-const skillIconId: Record<string, string> = {
-  python: "python",
-  cpp: "cpp",
-  java: "java",
-  html: "html",
-  css: "css",
-  javascript: "js",
-  typescript: "ts",
-  sqlite: "sqlite",
-  bash: "bash",
-  react: "react",
-  nodejs: "nodejs",
-  p5js: "p5js",
-  nextjs: "nextjs",
-  git: "git",
-  github: "github",
-  linux: "linux",
-  docker: "docker",
-  vscode: "vscode",
-  figma: "figma",
-  intellij: "idea",
-  supabase: "supabase",
-};
-
-/** Inline pill used inside the stack description paragraph */
-function InlinePill({ name, icon }: { name: string; icon?: string }) {
-  const iconId = icon ? skillIconId[icon] : null;
-  const ref = useRef<HTMLSpanElement>(null);
+/** Skill pill used in both category grid and inline stack descriptions */
+function SkillPill({ name, icon, href, inline }: { name: string; icon?: string; href?: string; inline?: boolean }) {
+  const iconId = icon ? getSkillIconId(icon) : null;
+  const customIcon = icon ? getCustomIcon(icon) : null;
+  const ref = useRef<HTMLAnchorElement>(null);
   useSmoothCorners(ref, { radius: 6, smoothing: 0.6 }, { autoEffects: false });
-  return (
-    <span
-      ref={ref}
-      className="mx-0.5 inline-flex h-6.5 cursor-default items-center gap-1.5 border-0 bg-light-bg-alt px-1.5 py-0.5 text-xs font-medium text-ink-muted elevation-2 [@media(hover:hover)]:hover:bg-chip-hover-bg [@media(hover:hover)]:hover:text-ink-body [&_img]:pointer-events-none [&_img]:shrink-0"
-      style={{ transition: "background-color 150ms cubic-bezier(0.215,0.61,0.355,1), color 150ms cubic-bezier(0.215,0.61,0.355,1)" }}
-    >
-      {iconId && (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          src={`https://skillicons.dev/icons?i=${iconId}&theme=dark`}
-          alt=""
-          aria-hidden="true"
-          width={16}
-          height={16}
-          loading="lazy"
-          className="size-4"
-        />
-      )}
-      {name}
-    </span>
-  );
-}
+  const className = `${inline ? "mx-0.5 " : ""}inline-flex h-6.5 items-center gap-1.5 border-0 bg-light-bg-alt px-1.5 py-0.5 text-xs font-medium text-ink-muted elevation-2 [@media(hover:hover)]:hover:bg-chip-hover-bg [@media(hover:hover)]:hover:text-ink-body [&_img]:pointer-events-none [&_img]:shrink-0`;
+  const style = { transition: "background-color 150ms cubic-bezier(0.215,0.61,0.355,1), color 150ms cubic-bezier(0.215,0.61,0.355,1)" };
+  const iconEl = iconId ? (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src={buildSkillIconUrl(iconId, "light")}
+      alt=""
+      aria-hidden="true"
+      width={16}
+      height={16}
+      loading="lazy"
+      className="size-4"
+    />
+  ) : customIcon ? (
+    customIcon
+  ) : null;
 
-/** Skill pill used in the category grid */
-function SkillPill({ name, icon }: { name: string; icon?: string }) {
-  const iconId = icon ? skillIconId[icon] : null;
-  const ref = useRef<HTMLSpanElement>(null);
-  useSmoothCorners(ref, { radius: 6, smoothing: 0.6 }, { autoEffects: false });
+  const content = <>{iconEl}{name}</>;
+
+  if (href) {
+    return (
+      <a ref={ref} href={href} target="_blank" rel="noopener noreferrer" className={className} style={style}>
+        {content}
+      </a>
+    );
+  }
+
   return (
-    <span
-      ref={ref}
-      className="inline-flex h-6.5 cursor-default items-center gap-1.5 border-0 bg-light-bg-alt px-1.5 py-0.5 text-xs font-medium text-ink-muted elevation-2 [@media(hover:hover)]:hover:bg-chip-hover-bg [@media(hover:hover)]:hover:text-ink-body [&_img]:pointer-events-none [&_img]:shrink-0"
-      style={{ transition: "background-color 150ms cubic-bezier(0.215,0.61,0.355,1), color 150ms cubic-bezier(0.215,0.61,0.355,1)" }}
-    >
-      {iconId && (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          src={`https://skillicons.dev/icons?i=${iconId}&theme=dark`}
-          alt=""
-          aria-hidden="true"
-          width={16}
-          height={16}
-          loading="lazy"
-          className="size-4"
-        />
-      )}
-      {name}
+    <span ref={ref as unknown as React.Ref<HTMLSpanElement>} className={className} style={style}>
+      {content}
     </span>
   );
 }
@@ -107,7 +67,7 @@ export function SkillsSection({ data }: Props) {
             part.type === "text" ? (
               <span key={i}>{part.content}</span>
             ) : (
-              <InlinePill key={i} name={part.name} icon={part.icon} />
+              <SkillPill key={i} name={part.name} icon={part.icon} href={part.href} inline />
             )
           )}
         </p>
@@ -126,7 +86,7 @@ export function SkillsSection({ data }: Props) {
             {/* Pill row */}
             <div className="flex flex-wrap gap-3">
               {category.items.map((skill) => (
-                <SkillPill key={skill.name} name={skill.name} icon={skill.icon} />
+                <SkillPill key={skill.name} name={skill.name} icon={skill.icon} href={skill.href} />
               ))}
             </div>
           </div>

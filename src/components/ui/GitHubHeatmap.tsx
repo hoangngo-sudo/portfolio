@@ -14,10 +14,9 @@ import { AnimateNumber } from "motion-plus/react";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { useWebHaptics } from "web-haptics/react";
 import { useSound } from "@web-kits/audio/react";
-import { useSmoothCorners } from "@lisse/react";
 import { click } from "@/../lib/audio/minimal";
 
-// ease-out-cubic; same blueprint used in Globe3D depth fade
+// ease-out-cubic
 const EASE_OUT_CUBIC: [number, number, number, number] = [0.215, 0.61, 0.355, 1];
 
 interface GitHubHeatmapProps {
@@ -67,8 +66,6 @@ export function GitHubHeatmap({ years }: GitHubHeatmapProps) {
   const playClick = useSound(click);
   const leftBtnRef = useRef<HTMLButtonElement>(null);
   const rightBtnRef = useRef<HTMLButtonElement>(null);
-  useSmoothCorners(leftBtnRef, { radius: 8, smoothing: 0.6 }, { autoEffects: false });
-  useSmoothCorners(rightBtnRef, { radius: 8, smoothing: 0.6 }, { autoEffects: false });
 
   // Read the accent colour directly from the CSS variable so we always match
   // whatever <ThemeScript> applied before first paint.
@@ -273,7 +270,7 @@ export function GitHubHeatmap({ years }: GitHubHeatmapProps) {
                 haptic.trigger("light");
                 playClick();
               }}
-              className="flex items-center justify-center rounded-lg bg-dark-bg-alt dm-elevation-2 px-4 py-2 text-text-primary transition-[colors,transform] duration-150 ease-out hover:bg-accent/10 active:scale-[0.97] focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-30"
+              className="flex items-center justify-center rounded-full size-8 bg-dark-bg-alt dm-elevation-2 text-text-primary transition-[colors,transform] duration-150 ease-out hover:bg-accent/10 active:scale-[0.97] focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-30"
             >
               <FiChevronLeft size={14} />
             </button>
@@ -287,7 +284,7 @@ export function GitHubHeatmap({ years }: GitHubHeatmapProps) {
                 haptic.trigger("light");
                 playClick();
               }}
-              className="flex items-center justify-center rounded-lg bg-dark-bg-alt dm-elevation-2 px-4 py-2 text-text-primary transition-[colors,transform] duration-150 ease-out hover:bg-accent/10 active:scale-[0.97] focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-30"
+              className="flex items-center justify-center rounded-full size-8 bg-dark-bg-alt dm-elevation-2 text-text-primary transition-[colors,transform] duration-150 ease-out hover:bg-accent/10 active:scale-[0.97] focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-30"
             >
               <FiChevronRight size={14} />
             </button>

@@ -51,7 +51,10 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       stored === "black" || stored === "teal" ? stored : config.themes.default;
     // Defer to avoid the synchronous-setState-in-effect lint warning while
     // still correcting the state in the same microtask flush as the first paint.
-    const raf = requestAnimationFrame(() => setThemeState(resolved));
+    const raf = requestAnimationFrame(() => {
+      setThemeState(resolved);
+      document.documentElement.setAttribute("data-theme", resolved);
+    });
     return () => cancelAnimationFrame(raf);
   }, []);
 
@@ -59,6 +62,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     setThemeState(next);
     localStorage.setItem(STORAGE_KEY, next);
     applyThemeToDOM(config.themes[next]);
+    document.documentElement.setAttribute("data-theme", next);
   }, []);
 
   return (

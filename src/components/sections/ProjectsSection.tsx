@@ -8,23 +8,9 @@ import SpotlightCard from "@/components/ui/SpotlightCard";
 import { ProjectCommitsWidget } from "@/components/ui/ProjectCommitsWidget";
 import { GitHubHeatmap } from "@/components/ui/GitHubHeatmap";
 import { TagPill } from "@/components/ui/TagPill";
+import { getSkillIconId, getCustomIcon } from "@/lib/icons";
 import { fetchAllYearContributions, generateYearPlaceholderData, type YearContributionData } from "@/lib/github";
 import config from "@/config/portfolio.config";
-
-/** Maps a project tag name to skillicons.dev icon ID */
-function tagToIconId(tag: string): string | null {
-  const normalized = tag.toLowerCase().replace(/[.\s]/g, "");
-  const iconMap: Record<string, string> = {
-    python: "python", cpp: "cpp", java: "java", html: "html", css: "css",
-    javascript: "js", typescript: "ts", sqlite: "sqlite", bash: "bash",
-    react: "react", nodejs: "nodejs", p5js: "p5js", nextjs: "nextjs",
-    git: "git", github: "github", linux: "linux", docker: "docker",
-    vscode: "vscode", figma: "figma", intellij: "idea",
-    vite: "vite", supabase: "supabase", bootstrap: "bootstrap",
-    express: "express", mongodb: "mongodb",
-  };
-  return iconMap[normalized] ?? null;
-}
 
 interface Props {
   data: ProjectsConfig;
@@ -79,16 +65,14 @@ export async function ProjectsSection({ data }: Props) {
             </p>
             {project.tags && project.tags.length > 0 && (
               <div className="flex flex-wrap gap-2">
-                {project.tags.map((tag) => {
-                  const iconId = tagToIconId(tag);
-                  return (
-                    <TagPill
-                      key={tag}
-                      tag={tag}
-                      iconId={iconId}
-                    />
-                  );
-                })}
+                {project.tags.map((tag) => (
+                  <TagPill
+                    key={tag}
+                    tag={tag}
+                    iconId={getSkillIconId(tag)}
+                    customIcon={getCustomIcon(tag)}
+                  />
+                ))}
               </div>
             )}
           </SpotlightCard>
