@@ -30,6 +30,10 @@ const CELL_STEP = CELL_SIZE + CELL_GAP;
 const DAY_LABEL_WIDTH = 26;
 // Space reserved on top for month name labels
 const MONTH_LABEL_HEIGHT = 16;
+// Physical stagger: base delay per unit Euclidean distance from top-left origin.
+// 0.008s/unit gives ~0.42s max delay across a full 52-week year — slow enough
+// to see the ripple spread organically without feeling sluggish.
+const BASE_DELAY = 0.012;
 
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
@@ -66,6 +70,9 @@ export function GitHubHeatmap({ years }: GitHubHeatmapProps) {
   const playClick = useSound(click);
   const leftBtnRef = useRef<HTMLButtonElement>(null);
   const rightBtnRef = useRef<HTMLButtonElement>(null);
+  // Track which cells have finished their stagger entrance so the tooltip
+  // only appears for settled cells (prevents tooltip on invisible cells).
+  const settledCellsRef = useRef<Set<string>>(new Set());
 
   // Read the accent colour directly from the CSS variable so we always match
   // whatever <ThemeScript> applied before first paint.
@@ -382,27 +389,53 @@ export function GitHubHeatmap({ years }: GitHubHeatmapProps) {
               </text>
             ))}
 
-            {/* Contribution cells */}
-            {weeks.map((week, wi) =>
-              week.contributionDays.map((day, di) => (
-                <rect
-                  key={`${wi}-${di}`}
-                  x={DAY_LABEL_WIDTH + wi * CELL_STEP}
-                  y={MONTH_LABEL_HEIGHT + di * CELL_STEP}
-                  width={CELL_SIZE}
-                  height={CELL_SIZE}
-                  rx={3}
-                  fill={getShade(day.contributionCount)}
-                  style={{ cursor: "default" }}
-                  onPointerEnter={(e) => {
-                    if (e.pointerType === "touch") return;
-                    rawX.set(e.clientX);
-                    rawY.set(e.clientY - 10);
-                    setTooltipData({ date: day.date, count: day.contributionCount });
-                  }}
-                />
-              ))
-            )}
+            {/* Contribution cells — physical stagger from top-left */}
+            <g key={year}>
+            {(() => {
+              const cellKey = (wi: number, di: number) => `${wi}-${di}`;
+              return weeks.map((week, wi) =>
+                week.contributionDays.map((day, di) => {
+                  const distance = Math.sqrt(wi * wi + di * di);
+                  const delay = distance * BASE_DELAY;
+                  return (
+                    <motion.rect
+                      key={cellKey(wi, di)}
+                      x={DAY_LABEL_WIDTH + wi * CELL_STEP}
+                      y={MONTH_LABEL_HEIGHT + di * CELL_STEP}
+                      width={CELL_SIZE}
+                      height={CELL_SIZE}
+                      rx={3}
+                      fill={getShade(day.contributionCount)}
+                      style={{
+                        cursor: "default",
+                        transformBox: "fill-box",
+                        transformOrigin: "center",
+                      }}
+                      initial={shouldReduceMotion ? {} : { opacity: 0, scale: 0.5 }}
+                      animate={shouldReduceMotion ? {} : { opacity: 1, scale: 1 }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 600,
+                        damping: 20,
+                        delay,
+                      }}
+                      onAnimationComplete={() => {
+                        settledCellsRef.current.add(cellKey(wi, di));
+                      }}
+                      onPointerEnter={(e) => {
+                        if (e.pointerType === "touch") return;
+                        // Only show tooltip for cells that have finished animating
+                        if (!settledCellsRef.current.has(cellKey(wi, di))) return;
+                        rawX.set(e.clientX);
+                        rawY.set(e.clientY - 10);
+                        setTooltipData({ date: day.date, count: day.contributionCount });
+                      }}
+                    />
+                  );
+                })
+              );
+            })()}
+            </g>
           </svg>
         </div>
         </div>
