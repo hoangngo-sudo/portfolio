@@ -42,19 +42,20 @@ flowchart TB
 - **GitHub heatmap** Contribution graph with year navigation, `AnimateNumber` digit-flip tooltips, physical stagger entrance (distance-based spring ripple from top-left), and skillicons.dev GitHub brand icon; fetched from GitHub GraphQL API with ISR caching; placeholder fallback when no token is set
 - **Fuzzy search overlay** Cmd+K / Ctrl+K triggers Fuse.js-powered search across all sections with action links; tags indexed separately from display text
 - **Project commit sparklines** Per-project GitHub commit activity for the last 12 weeks
-- **2 color themes** Black and Teal, switchable via chip-style text button with opacity crossfade and vertical wipe page transition (View Transitions API + clip-path); flash-free hydration via anti-FOUC inline script
+- **2 color themes** Black and Teal, switchable via chip-style text button with opacity crossfade and diagonal wipe page transition (View Transitions API + clip-path, 350ms); flash-free hydration via anti-FOUC inline script
 - **Scroll progress bar** + **Back-to-top FAB** toggleable via feature flags
 - **Categorized skill pills** Tech stack displayed as a categorized grid of theme-aware pills with hover effects and skillicons.dev CDN icons; inline stack description paragraph with embedded pill buttons; squircle corners via `@lisse/react` smoothCorners
-- **Sticky footer contact** Pure CSS sticky reveal content sections scroll over with `z-10` while the Contact section sits at `z-0`, pinned to the viewport bottom; decorative "Online" branding text partially cut at the bottom edge
+- **Sticky footer contact** Pure CSS sticky reveal content sections scroll over with `z-10` while the Contact section sits at `z-0`, pinned to the viewport bottom; decorative "God bless you." branding text at the bottom edge
 - **SpotlightCard** Project and coursework cards with a radial-gradient glow that follows the cursor, theme-aware accent color
 - **Shadow elevation** Two-tier depth system: `dm-elevation-2` for dark sections and 3-layer stacked shadow `elevation-2` for light sections
-- **Keycap buttons** Skeuomorphic keyboard-key style for hero nav chips and back-to-top FAB; animated rainbow glow ring on search overlay trigger; colors adapt to the active theme
-- **Web haptics** Touch feedback on chips, drags, globe rotation and keycap taps
+- **Variant-aware typography** `SectionWrapper` provides a React context so `Overline` and `SectionHeading` automatically adapt their color to dark/light backgrounds, ensuring WCAG AA contrast compliance on every section
+- **Chip-style buttons** Squircle-corned (`@lisse/react`) interactive chips for nav, contact, and back-to-top; animated rainbow glow ring on search overlay trigger; colors adapt to the active theme
+- **Web haptics** Touch feedback on chips, drags, globe rotation and button taps
 - **Synthesized audio** Dual-channel haptic+sound feedback on every interaction; ultra-subtle sine-wave tones from `@web-kits/audio` Minimal patch (9 sounds across 10 components); auto-respects `prefers-reduced-motion`
 - **Themed scrollbar** Thin accent-colored scrollbar consistent across all scroll containers
 - **Map pin avatars** SVG map pin markers on the globe with embedded photos and counter-rotation tilt during drag
-- **Motion-optimized** Full-project animation audit — 83% of 28 animations are S or A-tier; zero layout thrashing
-- **Accessible** Skip-to-content link, semantic HTML, keyboard navigation, `prefers-reduced-motion` support
+- **Motion-optimized** Full-project animation audit — 83% of 28 animations are S or A-tier; zero layout thrashing; standardized hover easing (ease-out-cubic) across Chip, ShowMoreButton, and TagPill for consistent micro-interaction feel; theme crossfade tuned to 350ms (within Emil's 400ms page-transition ceiling)
+- **Accessible** Skip-to-content link, semantic HTML, keyboard navigation, `prefers-reduced-motion` support; dark-section overline contrast passes WCAG AA (4.58:1)
 - **SEO** Open Graph tags, JSON-LD Person schema, semantic heading hierarchy
 - **Performance** Static generation, Geist font family via `next/font` for zero-FOUT, Tailwind v4
 
@@ -101,7 +102,6 @@ graph TD
 
     subgraph Globe
         COBE["COBE<br/>WebGL globe renderer"]
-        PAPER["Paper Shaders<br/>Fluted glass background"]
     end
 
     NEXT --> TW
@@ -116,7 +116,6 @@ graph TD
     NEXT --> WH
     NEXT --> WKA
     NEXT --> COBE
-    NEXT --> PAPER
 ```
 
 | Dependency | Purpose |
@@ -135,7 +134,6 @@ graph TD
 | [COBE](https://cobe.vercel.app/) | WebGL globe renderer |
 | [@lisse/react](https://www.npmjs.com/package/@lisse/react) | Figma-style squircle corners (Chip, ThemeToggle, SpotlightCard, CardStack) |
 | [Paper Shaders](https://shaders.paper.design/) | WebGL fluted glass background effect |
-| [sharp](https://sharp.pixelplumbing.com/) | Image optimization at build time |
 | Vercel | Recommended hosting with ISR support |
 
 ## <a name="credits">Acknowledgment</a>
@@ -147,7 +145,6 @@ This project would not be possible without the following open-source projects:
 - Fuzzy search from [Fuse.js](https://www.fusejs.io/)
 - Accessible UI primitives from [Base UI](https://base-ui.com/)
 - Clipped WebGL globe card aesthetic from [COBE](https://cobe.vercel.app/)
-- Fluted glass shader from [Paper](https://shaders.paper.design/)
 - Theme toggle effect from [theme-toggle.rdsx.dev](https://theme-toggle.rdsx.dev/) using View Transition API
 
 This project has been inspired by the following websites and designs:
@@ -155,7 +152,6 @@ This project has been inspired by the following websites and designs:
 - [braydoncoyer.dev](https://www.braydoncoyer.dev/): hero section gallery images display with spring-animated photo fan-out
 - [anirudhkuppili.com](https://anirudhkuppili.com): layout structure, section hierarchy, color theming system, and overall visual language
 - [Aceternity UI](https://ui.aceternity.com/): `ArcTooltip` animated tooltip pattern, and `SpotlightCard` cursor-following radial gradient
-- [Keycap Button](https://dribbble.com/shots/25117095--Keycap-Button): Skeuomorphic keycap button CSS
 
 
 ## Quick Start
@@ -238,13 +234,13 @@ Hero photos use `next/image` with `fill` layout for native lazy loading and zero
 │   │   │   ├── SkillsSection.tsx               # Categorized pill grid with skillicons.dev CDN
 │   │   │   ├── CoursesSection.tsx              # SpotlightCard coursework (dark)
 │   │   │   ├── CourseShowMoreClient.tsx        # Client expand/collapse with staggered entrance
-│   │   │   └── ContactSection.tsx              # Social link Chips with react-icons (light)
+│   │   │   └── ContactSection.tsx              # Social link Chips with react-icons
 │   │   └── ui/
 │   │       ├── ArcTooltip.tsx           # Spring-animated arc tooltip for photo labels
 │   │       ├── BackToTopFAB.tsx         # Keycap-styled floating action button
 │   │       ├── CardStack.tsx            # Mobile: swipeable photo card stack with 3D tilt
-│   │       ├── Chip.tsx                 # Tag / link chip (flat CSS + keycap variant)
-│   │       ├── FlutedGlassBackground.tsx # WebGL fluted glass shader (ContactSection)
+│   │       ├── Chip.tsx                 # Tag / link chip (squircle corners + dm-elevation-2)
+│   │       ├── FlutedGlassBackground.tsx # Background image (ContactSection)
 │   │       ├── GitHubHeatmap.tsx        # Contribution graph (theme-aware SVG + AnimateNumber tooltip)
 │   │       ├── Globe3D.tsx              # cobe WebGL interactive globe with haptic drag detents
 │   │       ├── GlobeCard.tsx            # Clipped globe card wrapper (dynamic import + skeleton)
