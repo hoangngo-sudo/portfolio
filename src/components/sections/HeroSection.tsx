@@ -64,17 +64,18 @@ export function HeroSection() {
   const navContent = (
     <>
       {nav.links.map((link) => (
-        <Chip
-          key={link.label}
-          label={link.label}
-          href={link.href}
-          external={link.external}
-          download={link.download}
-          onClick={(e) => {
-            haptic.trigger("medium");
-            if (link.href?.startsWith("#")) handleAnchorClick(e);
-          }}
-        />
+        <div key={link.label} className="button-group__item">
+          <Chip
+            label={link.label}
+            href={link.href}
+            external={link.external}
+            download={link.download}
+            onClick={(e) => {
+              haptic.trigger("medium");
+              if (link.href?.startsWith("#")) handleAnchorClick(e);
+            }}
+          />
+        </div>
       ))}
       {features.searchOverlay && <SearchOverlay />}
     </>
@@ -121,7 +122,7 @@ export function HeroSection() {
           duration={0.55}
           blurAmount={10}
           yOffset={14}
-          className="mb-4 max-w-2xl text-center font-heading text-4xl font-bold text-white md:text-6xl"
+          className="mb-4 max-w-2xl text-center font-heading text-4xl font-bold tracking-tight text-white md:text-6xl"
         />
 
         {/* Nav chips: follow headline */}
@@ -129,9 +130,10 @@ export function HeroSection() {
           variants={fadeInEarly}
           initial={shouldReduceMotion ? false : "hidden"}
           animate="visible"
-          className="flex flex-wrap items-center justify-center gap-3 text-text-secondary"
         >
-          {navContent}
+          <div className="button-group flex flex-wrap items-center justify-center gap-3 text-text-secondary">
+            {navContent}
+          </div>
         </motion.div>
 
         {/* Desktop photo gallery: follows nav */}

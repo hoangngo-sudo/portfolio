@@ -40,12 +40,6 @@
   /* Easing tokens */
   --expo-out: cubic-bezier(0.16, 1, 0.3, 1);
 
-  /* Keycap gradient tokens, accent-aware via color-mix */
-  --keycap-cap-from: color-mix(in srgb, var(--accent) 18%, #525252);
-  --keycap-cap-to:   color-mix(in srgb, var(--accent) 8%, #444444);
-  --keycap-surface-from: color-mix(in srgb, var(--accent) 30%, #3d3d3d);
-  --keycap-surface-to:   color-mix(in srgb, var(--accent) 15%, #292929);
-
   /* Shadow elevation tokens */
   --dm-hi-mid:    rgba(255, 255, 255, 0.05);
   --dm-ring-base: rgba(255, 255, 255, 0.02);
@@ -73,18 +67,9 @@
   --color-card-hover: var(--card-hover);
   --color-chip-border: var(--chip-border);
   --color-chip-hover-bg: var(--chip-hover-bg);
-  --color-keycap-cap-from: var(--keycap-cap-from);
-  --color-keycap-cap-to: var(--keycap-cap-to);
-  --color-keycap-surface-from: var(--keycap-surface-from);
-  --color-keycap-surface-to: var(--keycap-surface-to);
   --font-heading: var(--font-geist-sans);
   --font-body: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-  --font-pixel-square: var(--font-geist-pixel-square);
-  --font-pixel-grid: var(--font-geist-pixel-grid);
-  --font-pixel-circle: var(--font-geist-pixel-circle);
-  --font-pixel-triangle: var(--font-geist-pixel-triangle);
-  --font-pixel-line: var(--font-geist-pixel-line);
 }
 
 /* Chip border brightens on dark backgrounds */
@@ -98,7 +83,6 @@ body {
   color: var(--ink-body);
   font-family: var(--font-body), sans-serif;
   -webkit-font-smoothing: antialiased;
-  font-smoothing: antialiased;
 }
 
 /* Smooth scroll for anchor navigation */
@@ -215,7 +199,71 @@ html {
   }
 }
 
-/* ── Diagonal Wipe Theme Transition ── */
+/* Button Group Bloom-Focus */
+/* Hovering any .button-group__item blurs siblings via CSS cascade.
+   Higher-specificity :hover on the hovered child overrides the group blur.
+   Focus-visible provides a subtler 2px blur for keyboard navigation.
+   Subtle values (3px/2px) per Emil's "Speed Over Delight" principle. */
+
+.button-group {
+  isolation: isolate;
+}
+
+.button-group__item {
+  display: inline-block;
+  transition:
+    filter 150ms ease-out,
+    transform 150ms ease-out;
+  will-change: filter, transform;
+}
+
+/* Hover: blur siblings only when an item is actually hovered.
+   Uses :has() so gaps and padding don't trigger the blur. */
+.button-group:has(.button-group__item:hover) .button-group__item:not(:hover) {
+  filter: blur(3px);
+}
+
+/* Un-blur the actually-hovered item and scale it up */
+.button-group .button-group__item:hover {
+  filter: none;
+  transform: scale(1.02);
+}
+
+/* Focus-visible: subtler blur for keyboard navigation.
+   Wrapper uses :focus-within since the focusable element is a child. */
+.button-group:focus-within .button-group__item:not(:focus-within) {
+  filter: blur(2px);
+}
+
+.button-group:focus-within .button-group__item:focus-within {
+  filter: none;
+  transform: scale(1.02);
+}
+
+/* Touch devices: disable all hover-based bloom-focus effects.
+   :hover on mobile can get stuck after a tap, so reset both
+   the group blur and the individual hovered-item un-blur + scale. */
+@media (hover: none) and (pointer: coarse) {
+  .button-group:has(.button-group__item:hover) .button-group__item,
+  .button-group .button-group__item:hover {
+    filter: none;
+    transform: none;
+  }
+}
+
+/* Reduced motion: disable all bloom-focus transitions and effects */
+@media (prefers-reduced-motion: reduce) {
+  .button-group__item {
+    transition: none;
+  }
+  .button-group:has(.button-group__item:hover) .button-group__item,
+  .button-group:focus-within .button-group__item:not(:focus-within) {
+    filter: none;
+    transform: none;
+  }
+}
+
+/* Diagonal Wipe Theme Transition */
 /* Uses View Transitions API with 45° clip-path polygon reveal.
    Direction: black expands from top-right, teal expands from bottom-left.
    Gated by .diagonal-wipe-transition class on <html>. */

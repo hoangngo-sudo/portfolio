@@ -28,7 +28,7 @@ export function ShowMoreButton({ expanded, onClick }: ShowMoreButtonProps) {
         transition={reduced ? { duration: 0 } : PRESS_SPRING}
         className="inline-flex items-center bg-dark-bg-alt px-6 py-2.5 text-sm font-medium text-text-primary dm-elevation-2 cursor-pointer focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-dark-bg focus-visible:outline-none select-none"
         style={{
-          transition: "background-color 150ms ease",
+          transition: "background-color 150ms cubic-bezier(0.215,0.61,0.355,1)",
         }}
       >
         {expanded ? "Show less" : "Show all courses"}

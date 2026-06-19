@@ -22,7 +22,7 @@ const SHAKE_TRANSITION = {
 
 const SHAKE_KEYFRAMES = [0, -4, 4, -4, 4, 0];
 
-const CROSSFADE_DURATION_MS = 500;
+const CROSSFADE_DURATION_MS = 350;
 const DOUBLE_CLICK_THRESHOLD_MS = 300;
 
 export function ThemeToggle() {

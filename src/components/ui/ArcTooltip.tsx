@@ -21,38 +21,44 @@ const springConfig = { stiffness: 70, damping: 12 };
 export function ArcTooltip({ label, isHovered, x }: ArcTooltipProps) {
   const shouldReduceMotion = useReducedMotion();
   const rotate = useSpring(
-    useTransform(x, [-100, 100], [-45, 45]),
+    useTransform(x, [0, 200], [-35, 35]),
     springConfig,
   );
   const translateX = useSpring(
-    useTransform(x, [-100, 100], [-50, 50]),
+    useTransform(x, [0, 200], [-40, 40]),
     springConfig,
   );
 
   return (
     <AnimatePresence>
       {isHovered && (
-        <motion.div
-          initial={shouldReduceMotion ? false : { opacity: 0, y: 20, scale: 0.93 }}
-          animate={{
-            opacity: 1,
-            y: 0,
-            scale: 1,
-            transition: {
-              type: "spring",
-              stiffness: 260,
-              damping: 20,
-            },
-          }}
-          exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 20, scale: 0.93 }}
-          style={{
-            translateX,
-            rotate,
-            whiteSpace: "nowrap",
-            willChange: "transform",
-          }}
-          className="pointer-events-none absolute -top-16 left-1/2 z-50 flex -translate-x-1/2 flex-col items-center"
-        >
+        <>
+          {/* Flexbox wrapper handles pure centering (no transform
+              conflict with Motion's x/rotate below) */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-x-0 -top-16 z-50 flex justify-center"
+          >
+            <motion.div
+              initial={shouldReduceMotion ? false : { opacity: 0, y: 20, scale: 0.93 }}
+              animate={{
+                opacity: 1,
+                y: 0,
+                scale: 1,
+                transition: {
+                  type: "spring",
+                  stiffness: 260,
+                  damping: 20,
+                },
+              }}
+              exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 20, scale: 0.93 }}
+              style={{
+                x: translateX,
+                rotate,
+                whiteSpace: "nowrap",
+                willChange: "transform",
+              }}
+            >
           <div
             className="flex flex-col items-center"
             style={{ filter: "drop-shadow(0 4px 8px rgba(0,0,0,0.25))" }}
@@ -65,7 +71,9 @@ export function ArcTooltip({ label, isHovered, x }: ArcTooltipProps) {
             {/* Triangle tip */}
             <div className="-mt-px h-0 w-0 border-l-8 border-r-8 border-t-8 border-l-transparent border-r-transparent border-t-dark-bg-alt" />
           </div>
-        </motion.div>
+            </motion.div>
+          </div>
+        </>
       )}
     </AnimatePresence>
   );

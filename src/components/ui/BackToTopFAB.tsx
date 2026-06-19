@@ -29,7 +29,7 @@ function BackToTopButton({
       onClick={onClick}
       aria-label="Back to top"
       initial={{ opacity: 0, y: 16 }}
-      animate={{ opacity: 0.5, y: 0, transition: springTransition }}
+      animate={{ opacity: 0.85, y: 0, transition: springTransition }}
       exit={{ opacity: 0, transition: exitTransition }}
       whileTap={shouldReduceMotion ? undefined : { scale: 0.97 }}
       transition={springTransition}

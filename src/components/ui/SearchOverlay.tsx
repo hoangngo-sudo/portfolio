@@ -85,7 +85,7 @@ export function SearchOverlay() {
           onDragOver: _do,
           ...safeProps
         }) => (
-          <div className="rainbow-shell">
+          <div className="rainbow-shell button-group__item">
             <motion.button
               {...safeProps}
               onClick={(e) => {

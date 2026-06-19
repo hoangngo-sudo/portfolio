@@ -30,24 +30,25 @@ export function ContactSection({ data }: Props) {
 
       <div className="relative z-10 mx-auto flex min-h-screen w-full max-w-6xl flex-col justify-center">
         {/* Chips column */}
-        <div className="flex flex-col items-end gap-3 px-[5vw] pt-20">
+        <div className="button-group flex flex-col items-end gap-3 px-[5vw] pt-20">
           {data.links.map((link) => {
             const Icon = iconMap[link.icon];
             return (
-              <Chip
-                key={link.platform}
-                label={link.label}
-                href={link.href}
-                external
-                icon={Icon ? <Icon className="h-4 w-4" /> : undefined}
-                onClick={() => haptic.trigger("light")}
-                className="bg-dark-bg-alt dm-elevation-2 border-0"
-              />
+              <div key={link.platform} className="button-group__item w-fit">
+                <Chip
+                  label={link.label}
+                  href={link.href}
+                  external
+                  icon={Icon ? <Icon className="h-4 w-4" /> : undefined}
+                  onClick={() => haptic.trigger("light")}
+                  className="bg-dark-bg-alt dm-elevation-2 border-0"
+                />
+              </div>
             );
           })}
         </div>
 
-        {/* "Online" text */}
+        {/* Footer text */}
         <h6
           className="pointer-events-none absolute bottom-0 left-[5vw] translate-y-1/8 select-none font-heading text-4xl font-bold tracking-tight leading-none text-text-primary"
           aria-hidden="true"

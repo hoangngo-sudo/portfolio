@@ -32,7 +32,10 @@ export function Chip({ label, href, external, icon, className = "", id, download
   useSmoothCorners(spanRef, { radius: 8, smoothing: 0.6 }, { autoEffects: false });
 
   const baseClasses =
-    "inline-flex cursor-pointer items-center gap-2 bg-dark-bg-alt dm-elevation-2 px-6 py-2.5 text-sm font-medium text-text-primary transition-[colors] duration-150 ease-out";
+    "inline-flex cursor-pointer items-center gap-2 bg-dark-bg-alt dm-elevation-2 px-6 py-2.5 text-sm font-medium text-text-primary";
+
+// ease-out-cubic, matches ShowMoreButton + TagPill for consistent hover easing
+const CHIP_TRANSITION = "background-color 150ms cubic-bezier(0.215,0.61,0.355,1), color 150ms cubic-bezier(0.215,0.61,0.355,1)";
 
   if (href) {
     return (
@@ -48,6 +51,7 @@ export function Chip({ label, href, external, icon, className = "", id, download
         whileTap={reduced ? undefined : { scale: 0.97 }}
         transition={reduced ? { duration: 0 } : PRESS_SPRING}
         className={`${baseClasses} ${className} outline-offset-2`}
+        style={{ transition: CHIP_TRANSITION }}
         {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
       >
         {icon}
@@ -63,6 +67,7 @@ export function Chip({ label, href, external, icon, className = "", id, download
       whileTap={reduced ? undefined : { scale: 0.97 }}
       transition={reduced ? { duration: 0 } : PRESS_SPRING}
       className={`${baseClasses} ${className}`}
+      style={{ transition: CHIP_TRANSITION }}
     >
       {icon}
       {label}
