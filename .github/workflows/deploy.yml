@@ -30,7 +30,7 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
         env:
-          MOTION_PLUS_TOKEN: ${{ secrets.MOTION_PLUS_TOKEN }}
+          MOTION_TOKEN: ${{ secrets.MOTION_TOKEN }}
 
       - run: pnpm build
         env:
