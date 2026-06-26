@@ -11,7 +11,8 @@ import {
   useSpring,
 } from "motion/react";
 import { AnimateNumber } from "motion-plus/react";
-import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
+import { IconUTurnToLeftFillDuo18 } from "nucleo-ui-fill-duo-18";
+import { IconUTurnToRightFillDuo18 } from "nucleo-ui-fill-duo-18";
 import { useWebHaptics } from "web-haptics/react";
 import { useSound } from "@web-kits/audio/react";
 import { click } from "@/../lib/audio/minimal";
@@ -279,7 +280,7 @@ export function GitHubHeatmap({ years }: GitHubHeatmapProps) {
               }}
               className="flex items-center justify-center rounded-full size-8 bg-dark-bg-alt dm-elevation-2 text-text-primary transition-[colors,transform] duration-150 ease-out hover:bg-accent/10 active:scale-[0.97] focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-30"
             >
-              <FiChevronLeft size={14} />
+              <IconUTurnToLeftFillDuo18 size={14} />
             </button>
             <button
               ref={rightBtnRef}
@@ -293,7 +294,7 @@ export function GitHubHeatmap({ years }: GitHubHeatmapProps) {
               }}
               className="flex items-center justify-center rounded-full size-8 bg-dark-bg-alt dm-elevation-2 text-text-primary transition-[colors,transform] duration-150 ease-out hover:bg-accent/10 active:scale-[0.97] focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-30"
             >
-              <FiChevronRight size={14} />
+              <IconUTurnToRightFillDuo18 size={14} />
             </button>
           </div>
         </div>

@@ -151,7 +151,7 @@ export interface ContactConfig {
   links: Array<{
     platform: string;
     label: string;
-    href: string;
+    href?: string;
     icon: string;
   }>;
 }

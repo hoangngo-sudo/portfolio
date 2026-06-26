@@ -4,6 +4,7 @@ import {
   Overline,
   SectionHeading,
 } from "@/components/ui/SectionWrapper";
+import { IconArrowFromCornerBottomRightFillDuo18 } from "nucleo-ui-fill-duo-18";
 import SpotlightCard from "@/components/ui/SpotlightCard";
 import { ProjectCommitsWidget } from "@/components/ui/ProjectCommitsWidget";
 import { GitHubHeatmap } from "@/components/ui/GitHubHeatmap";
@@ -38,9 +39,10 @@ export async function ProjectsSection({ data }: Props) {
             href={data.viewAllUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-sm text-accent hover:underline"
+            className="inline-flex items-center gap-1 text-sm text-accent hover:underline"
           >
-            View all &rarr;
+            View all
+            <IconArrowFromCornerBottomRightFillDuo18 size={14} /> 
           </a>
         )}
       </div>

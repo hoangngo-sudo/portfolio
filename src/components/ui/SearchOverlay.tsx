@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
 import { Dialog } from "@base-ui/react/dialog";
-import { FiSearch } from "react-icons/fi";
+import { IconMagnifierSparkle2FillDuo18 } from "nucleo-ui-fill-duo-18";
 import { searchItems, type SearchItem } from "@/lib/search";
 import { smoothScrollToId } from "@/lib/scroll";
 import { useWebHaptics } from "web-haptics/react";
@@ -92,11 +92,11 @@ export function SearchOverlay() {
                 haptic.trigger("medium");
                 setOpen(true);
               }}
-              className="inline-flex cursor-pointer items-center gap-2 rounded-full bg-dark-bg-alt dm-elevation-2 px-6 py-2.5 text-sm font-medium text-text-primary focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-dark-bg focus-visible:outline-none select-none"
+              className="inline-flex cursor-pointer items-center gap-2 rounded-full bg-dark-bg-alt dm-elevation-2 px-4 py-2 text-sm font-medium text-text-primary focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-dark-bg focus-visible:outline-none select-none"
               whileTap={shouldReduceMotion ? undefined : { scale: 0.97 }}
               transition={springTransition}
             >
-              <FiSearch size={14} />
+              <IconMagnifierSparkle2FillDuo18 size={14} />
               Search
               <kbd className="hidden items-center justify-center rounded-md bg-white/10 px-1.5 py-1 text-[10px] font-medium leading-none text-text-secondary sm:inline-flex">
                 Ctrl K
@@ -110,7 +110,7 @@ export function SearchOverlay() {
         <Dialog.Backdrop className="fixed inset-0 z-100 bg-black/60 backdrop-blur-sm" />
         <Dialog.Popup className="fixed top-[15%] left-1/2 z-101 w-[calc(100vw-2rem)] max-w-lg -translate-x-1/2 rounded-xl border border-card-border bg-dark-bg-alt p-0 shadow-2xl">
           <div className="flex items-center gap-3 border-b border-card-border px-4 py-3">
-            <FiSearch size={18} className="shrink-0 text-text-muted" />
+            <IconMagnifierSparkle2FillDuo18 size={18} className="shrink-0 text-text-muted" />
             <input
               type="text"
               value={query}

@@ -83,7 +83,7 @@ const config: PortfolioConfig = {
       enabled: true,
       overline: "",
       heading: "Featured Projects",
-      viewAllUrl: "https://github.com/hoangngo-sudo",
+      viewAllUrl: "https://github.com/hoangngo-sudo?tab=repositories",
       items: [
         {
           title: "drincatuic",
@@ -211,26 +211,25 @@ const config: PortfolioConfig = {
         {
           platform: "email",
           label: "mngo12332@gmail.com",
-          href: "mailto:mngo12332@gmail.com",
-          icon: "FiMail",
-        },
-        {
-          platform: "instagram",
-          label: "@hoaang.ngo",
-          href: "https://www.instagram.com/hoaang.ngo/",
-          icon: "FiInstagram",
+          icon: "email",
         },
         {
           platform: "linkedin",
           label: "/in/hoang-minh-ngo/",
           href: "https://www.linkedin.com/in/hoang-minh-ngo/",
-          icon: "FiLinkedin",
+          icon: "linkedin",
         },
         {
           platform: "github",
           label: "/hoangngo-sudo",
           href: "https://github.com/hoangngo-sudo",
-          icon: "FiGithub",
+          icon: "github",
+        },
+        {
+          platform: "instagram",
+          label: "@hoaang.ngo",
+          href: "https://www.instagram.com/hoaang.ngo/",
+          icon: "instagram",
         },
       ],
     },

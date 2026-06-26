@@ -22,7 +22,7 @@ const SHAKE_TRANSITION = {
 
 const SHAKE_KEYFRAMES = [0, -4, 4, -4, 4, 0];
 
-const CROSSFADE_DURATION_MS = 350;
+const CROSSFADE_DURATION_MS = 250;
 const DOUBLE_CLICK_THRESHOLD_MS = 300;
 
 export function ThemeToggle() {
@@ -128,7 +128,7 @@ export function ThemeToggle() {
           ? { x: SHAKE_KEYFRAMES, transition: SHAKE_TRANSITION }
           : { x: 0 }
       }
-      className="inline-flex cursor-pointer items-center gap-1 rounded-md bg-dark-bg-alt px-6 py-2.5 text-sm font-medium text-text-primary dm-elevation-2 select-none
+      className="inline-flex cursor-pointer items-center gap-1 rounded-md bg-dark-bg-alt px-4 py-2 text-sm font-medium text-text-primary dm-elevation-2 select-none
         focus-visible:ring-2 focus-visible:ring-accent/50
         focus-visible:ring-offset-2 focus-visible:ring-offset-dark-bg
         focus-visible:outline-none"
@@ -140,7 +140,7 @@ export function ThemeToggle() {
           width: wordWidths
             ? wordWidths[theme === "black" ? "teal" : "black"]
             : "auto",
-          transition: reduced ? "none" : "width 500ms ease",
+          transition: reduced ? "none" : "width 250ms ease-out",
         }}
       >
         {/* Measurement-only: absolute but unconstrained (no inset), so
@@ -159,7 +159,7 @@ export function ThemeToggle() {
           style={{
             opacity: theme === "teal" ? 1 : 0,
             filter: theme === "teal" ? "blur(0px)" : "blur(2px)",
-            transition: reduced ? "none" : "opacity 500ms ease, filter 500ms ease",
+            transition: reduced ? "none" : "opacity 250ms ease-out, filter 250ms ease-out",
           }}
         >
           Black
@@ -171,7 +171,7 @@ export function ThemeToggle() {
           style={{
             opacity: theme === "black" ? 1 : 0,
             filter: theme === "black" ? "blur(0px)" : "blur(2px)",
-            transition: reduced ? "none" : "opacity 500ms ease, filter 500ms ease",
+            transition: reduced ? "none" : "opacity 250ms ease-out, filter 250ms ease-out",
           }}
         >
           Teal
