@@ -42,7 +42,7 @@ flowchart TB
 - **GitHub heatmap** Contribution graph with year navigation, `AnimateNumber` digit-flip tooltips, physical stagger entrance (distance-based spring ripple from top-left), and skillicons.dev GitHub brand icon; fetched from GitHub GraphQL API with ISR caching; placeholder fallback when no token is set
 - **Fuzzy search overlay** Cmd+K / Ctrl+K triggers Fuse.js-powered search across all sections with action links; tags indexed separately from display text
 - **Project commit sparklines** Per-project GitHub commit activity for the last 12 weeks
-- **2 color themes** Black and Teal, switchable via chip-style text button with opacity crossfade and diagonal wipe page transition (View Transitions API + clip-path, 350ms); flash-free hydration via anti-FOUC inline script
+- **2 color themes** Black and Teal, switchable via chip-style text button with opacity crossfade and vertical wipe page transition (View Transitions API + clip-path, 350ms); flash-free hydration via anti-FOUC inline script
 - **Scroll progress bar** + **Back-to-top FAB** toggleable via feature flags
 - **Categorized skill pills** Tech stack displayed as a categorized grid of theme-aware pills with hover effects and skillicons.dev CDN icons; inline stack description paragraph with embedded pill buttons; squircle corners via `@lisse/react` smoothCorners
 - **Sticky footer contact** Pure CSS sticky reveal content sections scroll over with `z-10` while the Contact section sits at `z-0`, pinned to the viewport bottom; decorative "God bless you." branding text at the bottom edge
@@ -84,7 +84,7 @@ graph TD
     end
 
     subgraph Fonts
-        GEIST["Geist<br/>Sans + Mono + Pixel families"]
+        GEIST["Geist<br/>Sans + Mono families"]
     end
 
     subgraph Icons
@@ -126,14 +126,17 @@ graph TD
 | [Motion 12](https://motion.dev/) | Spring animations from `motion/react` + `motion` for vanilla scroll utility |
 | [Motion Plus](https://motion.dev/) | `AnimateNumber` for animated digit-flip counters |
 | [Fuse.js](https://www.fusejs.io/) | Client-side fuzzy search |
-| [Geist](https://vercel.com/font) | Sans, Mono, and Pixel font families via the `geist` package |
+| [Geist](https://vercel.com/font) | Sans and Mono font families via the `geist` package and `next/font` |
 | [react-icons](https://react-icons.github.io/react-icons/) | Feather (Fi) icons for navigation arrows and search |
 | [skillicons.dev](https://skillicons.dev/) | CDN brand icons for skill pills, theme toggle, and GitHub logo |
 | [web-haptics](https://haptics.lochie.me/) | Touch haptic feedback |
 | [@web-kits/audio](https://audio.raphaelsalaja.com/) | Declarative Web Audio synthesis for UI sound feedback |
 | [COBE](https://cobe.vercel.app/) | WebGL globe renderer |
 | [@lisse/react](https://www.npmjs.com/package/@lisse/react) | Figma-style squircle corners (Chip, ThemeToggle, SpotlightCard, CardStack) |
-| [Paper Shaders](https://shaders.paper.design/) | WebGL fluted glass background effect |
+| [nucleo-social-media](https://www.npmjs.com/package/nucleo-social-media) | Social media icon SVGs (used in ContactSection chips) |
+| [nucleo-ui-fill-duo-18](https://www.npmjs.com/package/nucleo-ui-fill-duo-18) | UI icon set for chip decorations |
+| [interface-kit](https://www.npmjs.com/package/interface-kit) | Dev-mode UI inspection panel (InterfaceKit, dev only) |
+| [vitest](https://vitest.dev/) + [Testing Library](https://testing-library.com/) | Unit and component testing |
 | Vercel | Recommended hosting with ISR support |
 
 ## <a name="credits">Acknowledgment</a>
