@@ -31,6 +31,7 @@ jobs:
       - run: pnpm install --frozen-lockfile
         env:
           MOTION_TOKEN: ${{ secrets.MOTION_TOKEN }}
+          NUCLEO_LICENSE_KEY: ${{ secrets.NUCLEO_LICENSE_KEY }}
 
       - run: pnpm build
         env:
