@@ -7,6 +7,7 @@ import { MapPinAvatar } from "@/components/ui/MapPinAvatar";
 import { useWebHaptics } from "web-haptics/react";
 import { useSound } from "@web-kits/audio/react";
 import { click, pop, hover } from "@/../lib/audio/minimal";
+import { hexToRgb } from "@/lib/color";
 import type { GlobeMarker } from "@/types/config";
 
 const THETA = 0.2; // tilt (radians)
@@ -44,9 +45,10 @@ function project(
   };
 }
 
-function hexToRgb(hex: string): [number, number, number] {
-  const n = parseInt(hex.replace("#", ""), 16);
-  return [(n >> 16 & 255) / 255, (n >> 8 & 255) / 255, (n & 255) / 255];
+function hexToGl(hex: string): [number, number, number] {
+  const rgb = hexToRgb(hex);
+  if (!rgb) return [0, 0, 0];
+  return [rgb.r / 255, rgb.g / 255, rgb.b / 255];
 }
 
 interface Props {
@@ -94,7 +96,7 @@ export function Globe3D({
     const container = containerRef.current;
     if (!canvas || !container) return;
 
-    const atmo = hexToRgb(atmosphereColor);
+    const atmo = hexToGl(atmosphereColor);
     const speed = autoRotateSpeed * 0.003;
     const el = container!;
 

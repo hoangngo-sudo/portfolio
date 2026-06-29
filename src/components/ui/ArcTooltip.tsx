@@ -63,7 +63,7 @@ export function ArcTooltip({ label, isHovered, x }: ArcTooltipProps) {
             className="flex flex-col items-center"
             style={{ filter: "drop-shadow(0 4px 8px rgba(0,0,0,0.25))" }}
           >
-            <div className="rounded-md bg-dark-bg-alt px-4 py-2 text-xs">
+            <div className="rounded-md bg-dark-bg-alt px-2.5 py-1.5 text-xs">
               <div className="text-base font-bold text-text-primary">
                 {label}
               </div>
