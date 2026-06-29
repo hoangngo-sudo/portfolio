@@ -88,8 +88,9 @@ graph TD
     end
 
     subgraph Icons
-        RI["react-icons<br/>Feather set"]
         SKILL["skillicons.dev<br/>Brand & skill icons"]
+        NUCLEO["nucleo-ui-fill-duo-18<br/>UI icons"]
+        NUCSOCIAL["nucleo-social-media<br/>Social icons"]
     end
 
     subgraph Haptics
@@ -112,7 +113,6 @@ graph TD
     NEXT --> GHAPI
     NEXT --> GHREST
     NEXT --> GEIST
-    NEXT --> RI
     NEXT --> WH
     NEXT --> WKA
     NEXT --> COBE
@@ -127,7 +127,6 @@ graph TD
 | [Motion Plus](https://motion.dev/) | `AnimateNumber` for animated digit-flip counters |
 | [Fuse.js](https://www.fusejs.io/) | Client-side fuzzy search |
 | [Geist](https://vercel.com/font) | Sans and Mono font families via the `geist` package and `next/font` |
-| [react-icons](https://react-icons.github.io/react-icons/) | Feather (Fi) icons for navigation arrows and search |
 | [skillicons.dev](https://skillicons.dev/) | CDN brand icons for skill pills, theme toggle, and GitHub logo |
 | [web-haptics](https://haptics.lochie.me/) | Touch haptic feedback |
 | [@web-kits/audio](https://audio.raphaelsalaja.com/) | Declarative Web Audio synthesis for UI sound feedback |
@@ -208,7 +207,8 @@ Place images in the `public/` directory:
 public/
 ├── photos/          # Hero gallery photos
 ├── og.png           # Open Graph image (1200×630 recommended)
-├── resume.pdf       # Downloadable resume
+├── resume.docx      # Downloadable resume (DOCX)
+├── resume.html      # Web-rendered resume
 └── favicon.ico
 ```
 
@@ -275,7 +275,8 @@ Hero photos use `next/image` with `fill` layout for native lazy loading and zero
 └── public/
     ├── photos/                     # Hero gallery images
     ├── og.png                      # Open Graph image (1200×630)
-    └── resume.pdf                  # Downloadable resume
+    ├── resume.docx                 # Downloadable resume
+    └── resume.html                 # Web-rendered resume
 ```
 
 ## Deployment
