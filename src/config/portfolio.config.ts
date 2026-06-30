@@ -210,7 +210,7 @@ const config: PortfolioConfig = {
       links: [
         {
           platform: "email",
-          label: "mngo12332@gmail.com",
+          label: "work@hoaangngo.com",
           icon: "email",
         },
         {
