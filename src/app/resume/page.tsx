@@ -38,7 +38,7 @@ export default function ResumePage() {
     let cancelled = false;
     (async () => {
       try {
-        const res = await fetch("/resume.html");
+        const res = await fetch("/my-resume.html");
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const text = await res.text();
         if (!cancelled) setHtml(text);
