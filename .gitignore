@@ -36,6 +36,7 @@ yarn-error.log*
 .fallow
 .vscode
 .vercel
+.github/prompts
 .next
 docs
 
