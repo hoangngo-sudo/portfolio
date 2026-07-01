@@ -92,41 +92,30 @@ export default function ResumePage() {
             </motion.div>
           </div>
 
-          {/* A4: 210mm × 297mm. Scales down to fit mobile viewports while preserving A4 ratio. */}
-          <style>{`
-            @page { size: A4; margin: 0; }
-            .resume-a4 {
-              width: min(210mm, calc(100vw - 10%));
-              aspect-ratio: 210 / 297;
-              min-height: auto;
-            }
-          `}</style>
+          {/* A4: 210mm × 297mm — locked ratio, no inner scroll.
+               Fonts scale proportionally: at 210mm preview width they're full size;
+               on smaller viewports they shrink with the same ratio via vw-based calc. */}
+          <style>{`@page { size: A4; margin: 0; }`}</style>
           <div
-            className="mx-auto w-[210mm] min-h-[297mm] max-w-full rounded-sm bg-white
+            style={{ width: "min(210mm, calc(100vw - 10%))", aspectRatio: "210 / 297" }}
+            className="mx-auto rounded-sm bg-white
               shadow-[0_1px_3px_rgba(0,0,0,0.12),0_4px_16px_rgba(0,0,0,0.08)]
-              px-[20mm] py-[18mm] overflow-auto
-              max-sm:w-[calc(100vw-10%)] max-sm:min-h-[calc((100vw-10%)*297/210)]
+              px-[20mm] py-[18mm]
               max-sm:px-[12mm] max-sm:py-[10mm]
               font-[Cambria,serif] text-black leading-[1.12]
-              max-sm:text-[6.5pt]
-              [&_h1]:text-[9pt] [&_h1]:font-bold [&_h1]:border-b [&_h1]:border-black [&_h1]:pb-[1pt] [&_h1]:mt-[10pt] [&_h1]:mb-[4pt]
-              max-sm:[&_h1]:text-[7pt] max-sm:[&_h1]:mt-[7pt] max-sm:[&_h1]:mb-[3pt]
-              [&_p]:text-[9pt] [&_p]:m-0 [&_p]:mb-[1pt]
-              max-sm:[&_p]:text-[6.5pt]
+              text-[min(9pt,1.36vw)]
+              [&_h1]:text-[min(9pt,1.36vw)] [&_h1]:font-bold [&_h1]:border-b [&_h1]:border-black
+              [&_h1]:pb-[min(1pt,0.15vw)] [&_h1]:mt-[min(10pt,1.5vw)] [&_h1]:mb-[min(4pt,0.6vw)]
+              [&_p]:text-[min(9pt,1.36vw)] [&_p]:m-0 [&_p]:mb-[min(1pt,0.15vw)]
               [&_a]:text-[#467886]
               [&_table]:w-full [&_table]:border-collapse
-              [&_td]:p-0 [&_td]:align-top [&_td]:text-[9pt]
-              max-sm:[&_td]:text-[6.5pt]
+              [&_td]:p-0 [&_td]:align-top [&_td]:text-[min(9pt,1.36vw)]
               [&_.right]:text-right
               [&_ul]:m-0 [&_ul]:pl-6 [&_ul]:list-disc
-              [&_li]:text-[9pt] [&_li]:mb-[1pt]
-              max-sm:[&_li]:text-[6.5pt] max-sm:[&_li]:mb-[0.5pt]
-              [&_.header-name]:text-[20pt] [&_.header-name]:font-bold
-              max-sm:[&_.header-name]:text-[14pt]
-              [&_.header-loc]:text-[9pt] [&_.header-loc]:font-bold
-              max-sm:[&_.header-loc]:text-[6.5pt]
-              [&_.header-contact]:text-[9pt]
-              max-sm:[&_.header-contact]:text-[6.5pt]
+              [&_li]:text-[min(9pt,1.36vw)] [&_li]:mb-[min(1pt,0.15vw)]
+              [&_.header-name]:text-[min(20pt,3vw)] [&_.header-name]:font-bold
+              [&_.header-loc]:text-[min(9pt,1.36vw)] [&_.header-loc]:font-bold
+              [&_.header-contact]:text-[min(9pt,1.36vw)]
               [&_.center]:text-center
               [&_.skill-line]:ml-3"
             dangerouslySetInnerHTML={{ __html: html }}
