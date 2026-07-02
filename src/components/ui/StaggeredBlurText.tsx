@@ -2,6 +2,7 @@
 
 import { useMemo } from "react";
 import { motion, useReducedMotion, type Variants } from "motion/react";
+import { EASE_OUT_CUBIC } from "@/lib/motion-tokens";
 
 /**
  * Splits text into individual words, each wrapped in a motion.span.
@@ -60,7 +61,7 @@ const wordVariants: Variants = {
     transition: {
       type: "tween" as const,
       duration: custom.duration,
-      ease: [0.215, 0.61, 0.355, 1] as const, // ease-out-cubic, which is an entrance easing
+      ease: EASE_OUT_CUBIC, // ease-out-cubic, which is an entrance easing
     },
   }),
 };

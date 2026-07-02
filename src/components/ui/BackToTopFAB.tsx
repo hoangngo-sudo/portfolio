@@ -2,10 +2,11 @@
 
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { PRESS_SPRING, EASE_OUT_CUBIC } from "@/lib/motion-tokens";
 import { smoothScrollTo } from "@/lib/scroll";
 import { useWebHaptics } from "web-haptics/react";
 import { useSound } from "@web-kits/audio/react";
-import { send } from "@/../lib/audio/minimal";
+import { send } from "@/lib/audio/minimal";
 import { useSmoothCorners } from "@lisse/react";
 
 /** Inner component so useSmoothCorners runs after the button mounts into DOM */
@@ -33,7 +34,7 @@ function BackToTopButton({
       exit={{ opacity: 0, transition: exitTransition }}
       whileTap={shouldReduceMotion ? undefined : { scale: 0.97 }}
       transition={springTransition}
-      className="fixed right-6 bottom-[calc(1.5rem+env(safe-area-inset-bottom,0px))] z-50 cursor-pointer bg-dark-bg-alt dm-elevation-2 px-4 py-2 text-sm font-medium text-text-primary hover:opacity-100! focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-dark-bg focus-visible:outline-none select-none"
+      className="fixed right-6 bottom-[calc(1.5rem+env(safe-area-inset-bottom,0px))] z-50 cursor-pointer bg-dark-bg-alt dm-elevation-2 px-4 py-2 text-sm font-medium text-text-primary hover:opacity-100! focus-ring select-none"
     >
       Back to top
     </motion.button>
@@ -48,11 +49,11 @@ export function BackToTopFAB() {
 
   const springTransition = shouldReduceMotion
     ? { duration: 0 }
-    : { type: "spring" as const, stiffness: 600, damping: 20 };
+    : PRESS_SPRING;
 
   const exitTransition = shouldReduceMotion
     ? { duration: 0 }
-    : { type: "tween" as const, duration: 0.15, ease: [0.215, 0.61, 0.355, 1] as const };
+    : { type: "tween" as const, duration: 0.15, ease: EASE_OUT_CUBIC };
 
   useEffect(() => {
     function handleScroll() {

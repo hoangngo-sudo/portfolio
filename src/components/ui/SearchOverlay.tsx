@@ -8,7 +8,7 @@ import { searchItems, type SearchItem } from "@/lib/search";
 import { smoothScrollToId } from "@/lib/scroll";
 import { useWebHaptics } from "web-haptics/react";
 import { useSound } from "@web-kits/audio/react";
-import { expand, collapse } from "@/../lib/audio/minimal";
+import { expand, collapse } from "@/lib/audio/minimal";
 
 export function SearchOverlay() {
   const [open, setOpen] = useState(false);

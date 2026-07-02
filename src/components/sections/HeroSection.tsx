@@ -12,6 +12,7 @@ import { CardStack } from "@/components/ui/CardStack";
 import { StaggeredBlurText } from "@/components/ui/StaggeredBlurText";
 import { smoothScrollToId } from "@/lib/scroll";
 import { useLocalClock } from "@/lib/clock";
+import { EASE_OUT_CUBIC } from "@/lib/motion-tokens";
 import { useWebHaptics } from "web-haptics/react";
 
 // Hierarchical entrance: each element's delay reflects its visual importance.
@@ -22,7 +23,7 @@ const fadeOnly: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { duration: 0.5, delay: 1.0, ease: [0.215, 0.61, 0.355, 1] },
+    transition: { duration: 0.5, delay: 1.0, ease: EASE_OUT_CUBIC },
   },
 };
 
@@ -30,7 +31,7 @@ const fadeInEarly: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { duration: 0.45, delay: 0.15, ease: [0.215, 0.61, 0.355, 1] },
+    transition: { duration: 0.45, delay: 0.15, ease: EASE_OUT_CUBIC },
   },
 };
 
@@ -38,7 +39,7 @@ const fadeInLate: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { duration: 0.5, delay: 0.35, ease: [0.215, 0.61, 0.355, 1] },
+    transition: { duration: 0.5, delay: 0.35, ease: EASE_OUT_CUBIC },
   },
 };
 

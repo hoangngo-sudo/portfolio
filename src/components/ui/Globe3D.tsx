@@ -6,7 +6,7 @@ import { useReducedMotion } from "motion/react";
 import { MapPinAvatar } from "@/components/ui/MapPinAvatar";
 import { useWebHaptics } from "web-haptics/react";
 import { useSound } from "@web-kits/audio/react";
-import { click, pop, hover } from "@/../lib/audio/minimal";
+import { click, pop, hover } from "@/lib/audio/minimal";
 import { hexToRgb } from "@/lib/color";
 import type { GlobeMarker } from "@/types/config";
 

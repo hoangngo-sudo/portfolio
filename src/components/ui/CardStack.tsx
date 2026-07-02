@@ -28,7 +28,7 @@ import type { PanInfo } from "motion/react";
 import { useRef, useState } from "react";
 import { useWebHaptics } from "web-haptics/react";
 import { useSound } from "@web-kits/audio/react";
-import { pop } from "@/../lib/audio/minimal";
+import { pop } from "@/lib/audio/minimal";
 import Image from "next/image";
 import type { MobilePhoto } from "@/types/config";
 import { useSmoothCorners } from "@lisse/react";

@@ -4,10 +4,11 @@ import { useState, useMemo, useCallback, useRef } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useWebHaptics } from "web-haptics/react";
 import { useSound } from "@web-kits/audio/react";
-import { expand, collapse } from "@/../lib/audio/minimal";
+import { expand, collapse } from "@/lib/audio/minimal";
 import type { CoursesConfig } from "@/types/config";
 import SpotlightCard from "@/components/ui/SpotlightCard";
 import { ShowMoreButton } from "@/components/ui/ShowMoreButton";
+import { EASE_OUT_CUBIC } from "@/lib/motion-tokens";
 
 const INITIAL_COUNT = 10;
 
@@ -97,7 +98,7 @@ export function CourseShowMoreClient({ data }: Props) {
     ? { duration: 0 }
     : {
         duration: 0.25,
-        ease: [0.215, 0.61, 0.355, 1] as const,
+        ease: EASE_OUT_CUBIC,
       };
 
   return (

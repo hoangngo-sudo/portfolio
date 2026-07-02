@@ -42,7 +42,7 @@ const YEAR_QUERY = `
  *  Cached for 24 hours since account creation date never changes. */
 async function fetchGitHubStartYear(username: string): Promise<number> {
   const token = process.env.GITHUB_TOKEN;
-  if (!token) return 2024;
+  if (!token) return new Date().getFullYear();
 
   const query = `query($username: String!) { user(login: $username) { createdAt } }`;
 
@@ -59,20 +59,20 @@ async function fetchGitHubStartYear(username: string): Promise<number> {
 
     if (!res.ok) {
       console.warn(`[github] startYear query returned ${res.status}`);
-      return 2024;
+      return new Date().getFullYear();
     }
 
     const json = await res.json();
     const createdAt = json.data?.user?.createdAt;
     if (!createdAt) {
       console.warn(`[github] No createdAt for user "${username}"`);
-      return 2024;
+      return new Date().getFullYear();
     }
 
     return new Date(createdAt).getFullYear();
   } catch (err) {
     console.warn("[github] Failed to fetch start year:", err);
-    return 2024;
+    return new Date().getFullYear();
   }
 }
 
@@ -156,7 +156,7 @@ function seededRandom(seed: number) {
  *  Generates 52 full weeks per year anchored at Jan 1 with per-year varied seeds.
  *  Simple approach, visually close enough for placeholder data. */
 export function generateYearPlaceholderData(startYear?: number): YearContributionData[] {
-  const firstYear = startYear ?? 2024;
+  const firstYear = startYear ?? new Date().getFullYear();
   const currentYear = new Date().getFullYear();
   const results: YearContributionData[] = [];
 

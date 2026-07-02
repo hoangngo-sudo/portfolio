@@ -5,7 +5,7 @@ import Image, { ImageProps } from "next/image";
 import { motion, useMotionValue, useReducedMotion } from "motion/react";
 import { useWebHaptics } from "web-haptics/react";
 import { useSound } from "@web-kits/audio/react";
-import { pop } from "@/../lib/audio/minimal";
+import { pop } from "@/lib/audio/minimal";
 import type { Direction } from "@/types/config";
 import { ArcTooltip } from "@/components/ui/ArcTooltip";
 

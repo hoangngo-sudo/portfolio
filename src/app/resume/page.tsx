@@ -6,17 +6,16 @@ import { motion, useReducedMotion, type Variants } from "motion/react";
 import { useSmoothCorners } from "@lisse/react";
 import { useWebHaptics } from "web-haptics/react";
 import { useSound } from "@web-kits/audio/react";
-import { tap } from "@/../lib/audio/minimal";
+import { tap } from "@/lib/audio/minimal";
 import { IconFileDownloadFillDuo18, IconUndo2FillDuo18 } from "nucleo-ui-fill-duo-18";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
-
-const PRESS_SPRING = { type: "spring" as const, stiffness: 600, damping: 20 };
+import { PRESS_SPRING, EASE_OUT_CUBIC } from "@/lib/motion-tokens";
 
 const fadeIn: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { duration: 0.5, delay: 0.3, ease: [0.215, 0.61, 0.355, 1] },
+    transition: { duration: 0.5, delay: 0.3, ease: EASE_OUT_CUBIC },
   },
 };
 
@@ -80,10 +79,7 @@ export default function ResumePage() {
                 transition={reduced ? { duration: 0 } : PRESS_SPRING}
                 className="inline-flex cursor-pointer items-center gap-1.5 rounded-md
                   bg-dark-bg-alt px-3 py-2 text-sm font-medium
-                  text-text-primary dm-elevation-2 touch-manipulation
-                  focus-visible:ring-2 focus-visible:ring-accent/50
-                  focus-visible:ring-offset-2 focus-visible:ring-offset-dark-bg
-                  focus-visible:outline-none"
+                  text-text-primary dm-elevation-2 touch-manipulation focus-ring"
                 style={{ transition: "background-color 150ms ease, color 150ms ease" }}
               >
                 <IconUndo2FillDuo18 className="size-4" aria-hidden="true" />
@@ -131,10 +127,7 @@ export default function ResumePage() {
             className="fixed bottom-8 left-1/2 z-20 -translate-x-1/2
               inline-flex cursor-pointer items-center gap-2 rounded-md
               bg-dark-bg-alt dm-elevation-2 px-4 py-2 text-sm font-medium
-              text-text-primary touch-manipulation
-              focus-visible:ring-2 focus-visible:ring-accent/50
-              focus-visible:ring-offset-2 focus-visible:ring-offset-dark-bg
-              focus-visible:outline-none"
+              text-text-primary touch-manipulation focus-ring"
             style={{ transition: "background-color 150ms ease, color 150ms ease" }}
           >
             <IconFileDownloadFillDuo18 className="size-4" aria-hidden="true" />

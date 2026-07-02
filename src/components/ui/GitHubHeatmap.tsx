@@ -14,10 +14,8 @@ import { AnimateNumber } from "motion-plus/react";
 import { IconCaretLeftFillDuo18, IconCaretRightFillDuo18 } from "nucleo-ui-fill-duo-18";
 import { useWebHaptics } from "web-haptics/react";
 import { useSound } from "@web-kits/audio/react";
-import { click } from "@/../lib/audio/minimal";
-
-// ease-out-cubic
-const EASE_OUT_CUBIC: [number, number, number, number] = [0.215, 0.61, 0.355, 1];
+import { click } from "@/lib/audio/minimal";
+import { EASE_OUT_CUBIC } from "@/lib/motion-tokens";
 
 interface GitHubHeatmapProps {
   years: YearContributionData[];

@@ -29,16 +29,22 @@ export function smoothScrollTo(targetY: number, options?: { duration?: number; b
   const visualDuration = options?.duration ?? 0.4;
   const bounce = options?.bounce ?? (atBoundary ? 0 : 0.2);
 
-  activeScroll = animate(window.scrollY, targetY, {
+  const animation = animate(window.scrollY, targetY, {
     onUpdate: (value) => window.scrollTo(0, value),
     onComplete: () => {
       html.style.scrollBehavior = prev;
-      activeScroll = null;
+      // Only clear if this animation is still the active one.
+      // Prevents a stopped animation's onComplete from wiping
+      // the reference to a newer animation started after it.
+      if (activeScroll === animation) {
+        activeScroll = null;
+      }
     },
     type: "spring",
     visualDuration,
     bounce,
   });
+  activeScroll = animation;
 }
 
 /**

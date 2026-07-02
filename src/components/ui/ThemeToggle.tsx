@@ -4,12 +4,10 @@ import { motion, useReducedMotion } from "motion/react";
 import { useTheme } from "@/components/providers/ThemeProvider";
 import { useWebHaptics } from "web-haptics/react";
 import { useSound } from "@web-kits/audio/react";
-import { toggleOn, toggleOff } from "@/../lib/audio/minimal";
+import { toggleOn, toggleOff } from "@/lib/audio/minimal";
 import { useLayoutEffect, useRef, useState } from "react";
 import { useSmoothCorners } from "@lisse/react";
-
-// Press spring: matches ShowMoreButton/Chip pattern
-const PRESS_SPRING = { type: "spring" as const, stiffness: 600, damping: 20 };
+import { PRESS_SPRING } from "@/lib/motion-tokens";
 
 // Shake: on-screen movement uses ease-in-out per Easing Blueprint.
 // Spring only supports 2 keyframes; tween with ease-in-out-cubic
@@ -128,10 +126,7 @@ export function ThemeToggle() {
           ? { x: SHAKE_KEYFRAMES, transition: SHAKE_TRANSITION }
           : { x: 0 }
       }
-      className="inline-flex cursor-pointer items-center gap-1 rounded-md bg-dark-bg-alt px-4 py-2 text-sm font-medium text-text-primary dm-elevation-2 select-none
-        focus-visible:ring-2 focus-visible:ring-accent/50
-        focus-visible:ring-offset-2 focus-visible:ring-offset-dark-bg
-        focus-visible:outline-none"
+      className="inline-flex cursor-pointer items-center gap-1 rounded-md bg-dark-bg-alt px-4 py-2 text-sm font-medium text-text-primary dm-elevation-2 focus-ring select-none"
     >
       <span>Switch</span>
       <span

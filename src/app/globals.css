@@ -278,6 +278,16 @@ html {
   }
 }
 
+/* Shared focus-visible ring — use on all interactive elements */
+.focus-ring {
+  @apply focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-dark-bg focus-visible:outline-none;
+}
+
+/* Shared hover transition — use as inline style value or CSS variable */
+:root {
+  --hover-transition: background-color 150ms cubic-bezier(0.215, 0.61, 0.355, 1), color 150ms cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
 /* Diagonal Wipe Theme Transition */
 /* Uses View Transitions API with 45° clip-path polygon reveal.
    Direction: black expands from top-right, teal expands from bottom-left.

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "motion/react";
+import { EASE_OUT_CUBIC } from "@/lib/motion-tokens";
 
 interface Props {
   repo: string; // "owner/slug"
@@ -72,7 +73,7 @@ function CommitList({ commits }: { commits: RecentCommit[] }) {
             animate={{ opacity: 1, y: 0 }}
             transition={{
               duration: 0.25,
-              ease: [0.215, 0.61, 0.355, 1],
+              ease: EASE_OUT_CUBIC,
               delay: reducedMotion ? 0 : i * 0.06,
             }}
           >

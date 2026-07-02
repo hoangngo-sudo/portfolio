@@ -1,6 +1,6 @@
 /** Parse 3- or 6-digit hex to {r,g,b}. Returns null on invalid input. */
 export function hexToRgb(hex: string): { r: number; g: number; b: number } | null {
-  const m = /^#?([0-9a-f]{3,6})$/i.exec(hex);
+  const m = /^#?([0-9a-f]{3}(?:[0-9a-f]{3})?)$/i.exec(hex);
   if (!m) return null;
   const h =
     m[1].length === 3

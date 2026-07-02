@@ -5,9 +5,8 @@ import type { MouseEventHandler, ReactNode } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useSmoothCorners } from "@lisse/react";
 import { useSound } from "@web-kits/audio/react";
-import { tap } from "@/../lib/audio/minimal";
-
-const PRESS_SPRING = { type: "spring" as const, stiffness: 600, damping: 20 };
+import { tap } from "@/lib/audio/minimal";
+import { PRESS_SPRING } from "@/lib/motion-tokens";
 
 interface ChipProps {
   label: string;
@@ -132,10 +131,10 @@ export function Chip({ label, href, external, icon, className = "", id, download
   useSmoothCorners(spanRef, { radius: 8, smoothing: 0.6 }, { autoEffects: false });
 
   const baseClasses =
-    "inline-flex cursor-pointer items-center gap-2 bg-dark-bg-alt dm-elevation-2 px-4 py-2 text-sm font-medium text-text-primary";
+    "inline-flex cursor-pointer items-center gap-2 bg-dark-bg-alt dm-elevation-2 px-4 py-2 text-sm font-medium text-text-primary focus-ring";
 
 // ease-out-cubic, matches ShowMoreButton + TagPill for consistent hover easing
-const CHIP_TRANSITION = "background-color 150ms cubic-bezier(0.215,0.61,0.355,1), color 150ms cubic-bezier(0.215,0.61,0.355,1)";
+const CHIP_TRANSITION = "var(--hover-transition)";
 
   if (href) {
     return (
