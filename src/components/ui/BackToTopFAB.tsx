@@ -32,7 +32,7 @@ function BackToTopButton({
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 0.85, y: 0, transition: springTransition }}
       exit={{ opacity: 0, transition: exitTransition }}
-      whileTap={shouldReduceMotion ? undefined : { scale: 0.97 }}
+      whileTap={shouldReduceMotion ? undefined : { scale: 0.96 }}
       transition={springTransition}
       className="fixed right-6 bottom-[calc(1.5rem+env(safe-area-inset-bottom,0px))] z-50 cursor-pointer bg-dark-bg-alt dm-elevation-2 px-4 py-2 text-sm font-medium text-text-primary hover:opacity-100! focus-ring select-none"
     >

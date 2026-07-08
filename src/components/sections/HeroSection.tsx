@@ -99,7 +99,7 @@ export function HeroSection() {
       <div className="flex w-full flex-col items-center">
         {/* Clock */}
         {clock && (
-          <div className="mb-3 flex items-center justify-center text-xs font-medium tracking-[2px] text-text-secondary">
+          <div className="mb-3 flex items-center justify-center text-xs font-medium tracking-[2px] text-text-secondary tabular-nums">
             <StaggeredBlurText
               as="span"
               text={clock}

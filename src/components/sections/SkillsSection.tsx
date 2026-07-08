@@ -62,7 +62,7 @@ export function SkillsSection({ data }: Props) {
 
       {/* Stack description paragraph */}
       {data.stackDescription && data.stackDescription.length > 0 && (
-        <p className="mb-6 leading-relaxed text-ink-muted">
+        <p className="mb-6 text-pretty leading-relaxed text-ink-muted">
           {data.stackDescription.map((part: StackDescriptionPart, i: number) =>
             part.type === "text" ? (
               <span key={i}>{part.content}</span>

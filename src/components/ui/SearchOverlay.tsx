@@ -93,7 +93,7 @@ export function SearchOverlay() {
                 setOpen(true);
               }}
               className="inline-flex cursor-pointer items-center gap-2 rounded-full bg-dark-bg-alt dm-elevation-2 px-4 py-2 text-sm font-medium text-text-primary focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-dark-bg focus-visible:outline-none select-none"
-              whileTap={shouldReduceMotion ? undefined : { scale: 0.97 }}
+              whileTap={shouldReduceMotion ? undefined : { scale: 0.96 }}
               transition={springTransition}
             >
               <IconMagnifierSparkle2FillDuo18 size={14} />
@@ -146,7 +146,7 @@ export function SearchOverlay() {
                   <motion.button
                     key={`${item.title}-${i}`}
                     onClick={() => handleSelect(item)}
-                    whileTap={shouldReduceMotion ? undefined : { scale: 0.97 }}
+                    whileTap={shouldReduceMotion ? undefined : { scale: 0.96 }}
                     transition={shouldReduceMotion ? { duration: 0 } : springTransition}
                     className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left transition-colors duration-150 ease-out hover:bg-card-hover"
                   >

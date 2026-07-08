@@ -343,7 +343,7 @@ export function GitHubHeatmap({ years }: GitHubHeatmapProps) {
         <div
           ref={scrollRef}
           className="overflow-x-auto"
-          style={{ scrollbarWidth: "thin", scrollbarColor: "var(--accent) transparent", willChange: "transform" }}
+          style={{ scrollbarWidth: "thin", scrollbarColor: "var(--accent) transparent" }}
           onScroll={updateEdges}
           onPointerMove={(e) => {
             if (e.pointerType === "touch") return;

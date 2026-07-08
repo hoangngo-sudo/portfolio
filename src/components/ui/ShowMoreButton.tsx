@@ -23,7 +23,7 @@ export function ShowMoreButton({ expanded, onClick }: ShowMoreButtonProps) {
         onClick={onClick}
         aria-expanded={expanded}
         aria-controls="courses-grid"
-        whileTap={reduced ? undefined : { scale: 0.97 }}
+        whileTap={reduced ? undefined : { scale: 0.96 }}
         transition={reduced ? { duration: 0 } : PRESS_SPRING}
         className="inline-flex items-center bg-dark-bg-alt px-4 py-2 text-sm font-medium text-text-primary dm-elevation-2 cursor-pointer focus-ring select-none"
         style={{

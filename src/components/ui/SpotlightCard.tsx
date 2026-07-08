@@ -159,7 +159,6 @@ function SpotlightCardInner<T extends React.ElementType = "div">(
         ref={overlayRef}
         aria-hidden
         className="pointer-events-none absolute inset-0 z-0 opacity-0 transition-opacity duration-200"
-        style={{ willChange: "transform" }}
       />
       <div className="relative z-1">{children}</div>
     </Tag>

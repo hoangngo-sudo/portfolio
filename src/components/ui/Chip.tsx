@@ -13,10 +13,34 @@ interface ChipProps {
   href?: string;
   external?: boolean;
   icon?: ReactNode;
+  iconKey?: string;
   className?: string;
   id?: string;
   download?: string;
   onClick?: MouseEventHandler<HTMLAnchorElement>;
+}
+
+/**
+ * Icon crossfade with blur + scale + opacity spring.
+ * Follows principle #7: scale 0.25→1, opacity 0→1, blur 4px→0px,
+ * spring duration 0.3, bounce 0.
+ */
+function AnimatedIcon({ icon, iconKey, reduced }: { icon: ReactNode; iconKey?: string; reduced: boolean }) {
+  if (!icon) return null;
+  return (
+    <AnimatePresence initial={false} mode="popLayout">
+      <motion.span
+        key={iconKey}
+        initial={reduced ? false : { opacity: 0, scale: 0.25, filter: "blur(4px)" }}
+        animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+        exit={reduced ? undefined : { opacity: 0, scale: 0.25, filter: "blur(4px)" }}
+        transition={reduced ? { duration: 0 } : { type: "spring", duration: 0.3, bounce: 0 }}
+        style={{ display: "inline-flex" }}
+      >
+        {icon}
+      </motion.span>
+    </AnimatePresence>
+  );
 }
 
 /*
@@ -119,7 +143,7 @@ function AnimatedLabel({ label, reduced }: { label: string; reduced: boolean }) 
   );
 }
 
-export function Chip({ label, href, external, icon, className = "", id, download, onClick }: ChipProps) {
+export function Chip({ label, href, external, icon, iconKey, className = "", id, download, onClick }: ChipProps) {
   const linkRef = useRef<HTMLAnchorElement>(null);
   const spanRef = useRef<HTMLSpanElement>(null);
   const playTap = useSound(tap);
@@ -147,13 +171,13 @@ const CHIP_TRANSITION = "var(--hover-transition)";
           playTap();
           onClick?.(e);
         }}
-        whileTap={reduced ? undefined : { scale: 0.97 }}
+        whileTap={reduced ? undefined : { scale: 0.96 }}
         transition={reduced ? { duration: 0 } : PRESS_SPRING}
         className={`${baseClasses} ${className} outline-offset-2`}
         style={{ transition: CHIP_TRANSITION }}
         {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
       >
-        {icon}
+        <AnimatedIcon icon={icon} iconKey={iconKey ?? label} reduced={!!reduced} />
         <AnimatedLabel label={label} reduced={!!reduced} />
       </motion.a>
     );
@@ -175,12 +199,12 @@ const CHIP_TRANSITION = "var(--hover-transition)";
         playTap();
         onClick?.(e as unknown as React.MouseEvent<HTMLAnchorElement>);
       }}
-      whileTap={reduced ? undefined : { scale: 0.97 }}
+      whileTap={reduced ? undefined : { scale: 0.96 }}
       transition={reduced ? { duration: 0 } : PRESS_SPRING}
       className={`${baseClasses} cursor-pointer select-none ${className}`}
       style={{ transition: CHIP_TRANSITION }}
     >
-      {icon}
+      <AnimatedIcon icon={icon} iconKey={iconKey ?? label} reduced={!!reduced} />
       <AnimatedLabel label={label} reduced={!!reduced} />
     </motion.span>
   );

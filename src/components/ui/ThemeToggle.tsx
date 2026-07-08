@@ -119,7 +119,7 @@ export function ThemeToggle() {
       aria-label={`Switch ${theme === "black" ? "to teal" : "to black"} theme`}
       suppressHydrationWarning
       onClick={handleClick}
-      whileTap={reduced ? undefined : { scale: 0.97 }}
+      whileTap={reduced ? undefined : { scale: 0.96 }}
       transition={reduced ? { duration: 0 } : PRESS_SPRING}
       animate={
         isShaking

@@ -75,7 +75,7 @@ export default function ResumePage() {
                 href="/"
                 aria-label="Back to home"
                 onClick={() => { haptic.trigger("medium"); playTap(); }}
-                whileTap={reduced ? undefined : { scale: 0.97 }}
+                whileTap={reduced ? undefined : { scale: 0.96 }}
                 transition={reduced ? { duration: 0 } : PRESS_SPRING}
                 className="inline-flex cursor-pointer items-center gap-1.5 rounded-md
                   bg-dark-bg-alt px-3 py-2 text-sm font-medium
@@ -122,7 +122,7 @@ export default function ResumePage() {
             href="/resume.docx"
             download="Hoang_Minh_Ngo_Resume.docx"
             onClick={() => { haptic.trigger("medium"); playTap(); }}
-            whileTap={reduced ? undefined : { scale: 0.97 }}
+            whileTap={reduced ? undefined : { scale: 0.96 }}
             transition={reduced ? { duration: 0 } : PRESS_SPRING}
             className="fixed bottom-8 left-1/2 z-20 -translate-x-1/2
               inline-flex cursor-pointer items-center gap-2 rounded-md

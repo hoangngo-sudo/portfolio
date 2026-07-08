@@ -11,8 +11,9 @@ import { ArcTooltip } from "@/components/ui/ArcTooltip";
 
 /*
  * 
- * Photos respond to drag with zero travel (constraints at
- * origin) and high elasticity (0.8) for a rubber-band feel.
+ * Photos respond to drag by following the cursor freely and
+ * snapping back to origin on release (dragSnapToOrigin).
+ * No momentum, crisp spring return.
  *   whileHover: scale 1.1, rotateZ +/-2 deg, zIndex 9999
  *     → ease transition, 200ms (standard UI, Emil rule #3)
  *   whileTap:   scale 1.2, zIndex 9999
@@ -86,9 +87,9 @@ export function Photo({
   return (
     <motion.div
       drag
-      dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
-      dragElastic={0.8}
-      dragTransition={{ power: 0.1, bounceStiffness: 200 }}
+      dragSnapToOrigin
+      dragMomentum={false}
+      dragTransition={{ power: 0.2, bounceStiffness: 500, bounceDamping: 50 }}
       onDragStart={() => {
         haptic.trigger("light");
       }}
@@ -144,6 +145,7 @@ export function Photo({
         fill
         sizes="220px"
         draggable={false}
+        style={{ outline: "1px solid rgba(255, 255, 255, 0.1)" }}
       />
       {/* Cancel zone: tooltip label does NOT initiate drag */}
       {label && (

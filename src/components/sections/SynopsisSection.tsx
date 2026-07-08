@@ -17,7 +17,7 @@ export function SynopsisSection({ data }: Props) {
         <div>
           <Overline>{data.overline}</Overline>
           <SectionHeading>{data.heading}</SectionHeading>
-          <p className="mb-6 leading-relaxed text-ink-muted">{data.body}</p>
+          <p className="mb-6 text-pretty leading-relaxed text-ink-muted">{data.body}</p>
 
           {data.links && data.links.length > 0 && (
             <div className="flex flex-col gap-2">
