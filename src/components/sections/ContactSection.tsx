@@ -4,7 +4,7 @@ import { useCallback, useState } from "react";
 import type { ContactConfig } from "@/types/config";
 import { Chip } from "@/components/ui/Chip";
 import { FlutedGlassBackground } from "@/components/ui/FlutedGlassBackground";
-import { IconPaperPlaneFastFillDuo18 } from "nucleo-ui-fill-duo-18";
+import { IconEnvelopeFillDuo18 } from "nucleo-ui-fill-duo-18";
 import { IconInstagram } from "nucleo-social-media";
 import { IconGithub } from "nucleo-social-media";
 import { IconLinkedin } from "nucleo-social-media";
@@ -32,7 +32,7 @@ function CheckIcon({ className }: { className?: string }) {
 }
 
 const iconMap: Record<string, React.FC<React.SVGProps<SVGSVGElement>>> = {
-  email: IconPaperPlaneFastFillDuo18,
+  email: IconEnvelopeFillDuo18,
   instagram: IconInstagram,
   linkedin: IconLinkedin,
   github: IconGithub,

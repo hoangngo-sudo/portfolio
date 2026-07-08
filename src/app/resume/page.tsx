@@ -7,7 +7,7 @@ import { useSmoothCorners } from "@lisse/react";
 import { useWebHaptics } from "web-haptics/react";
 import { useSound } from "@web-kits/audio/react";
 import { tap } from "@/lib/audio/minimal";
-import { IconFileDownloadFillDuo18, IconUndo2FillDuo18 } from "nucleo-ui-fill-duo-18";
+import { IconFileDownloadFillDuo18, IconCircleArrowLeftFillDuo18 } from "nucleo-ui-fill-duo-18";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { PRESS_SPRING, EASE_OUT_CUBIC } from "@/lib/motion-tokens";
 
@@ -82,7 +82,7 @@ export default function ResumePage() {
                   text-text-primary dm-elevation-2 touch-manipulation focus-ring"
                 style={{ transition: "background-color 150ms ease, color 150ms ease" }}
               >
-                <IconUndo2FillDuo18 className="size-4" aria-hidden="true" />
+                <IconCircleArrowLeftFillDuo18 className="size-4" aria-hidden="true" />
                 Back
               </MotionLink>
             </motion.div>
