@@ -459,7 +459,7 @@ export function GitHubHeatmap({ years }: GitHubHeatmapProps) {
                 key={i}
                 aria-hidden="true"
                 className="rounded-sm"
-                style={{ width: "12px", height: "12px", background: shade }}
+                style={{ width: "12px", height: "12px", backgroundColor: shade }}
               />
             ))}
             <span>More</span>

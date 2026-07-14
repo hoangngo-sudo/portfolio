@@ -88,32 +88,16 @@ export default function ResumePage() {
             </motion.div>
           </div>
 
-          {/* A4: 210mm × 297mm — locked ratio, no inner scroll.
-               Fonts scale proportionally: at 210mm preview width they're full size;
-               on smaller viewports they shrink with the same ratio via vw-based calc. */}
+          {/* ~A4 ratio (210×297) — locked aspect ratio, scales down via box-border + % padding.
+               Fonts in the HTML CSS use min(pt, vw) to scale proportionally with the container. */}
           <style>{`@page { size: A4; margin: 0; }`}</style>
           <div
-            style={{ width: "min(210mm, calc(100vw - 10%))", aspectRatio: "210 / 297" }}
-            className="mx-auto rounded-sm bg-white
+            style={{ width: "min(793px, 90vw)", aspectRatio: "210 / 297" }}
+            className="mx-auto box-border rounded-sm bg-white
               shadow-[0_1px_3px_rgba(0,0,0,0.12),0_4px_16px_rgba(0,0,0,0.08)]
-              px-[20mm] py-[18mm]
-              max-sm:px-[12mm] max-sm:py-[10mm]
-              font-[Cambria,serif] text-black leading-[1.12]
-              text-[min(9pt,1.36vw)]
-              [&_h1]:text-[min(9pt,1.36vw)] [&_h1]:font-bold [&_h1]:border-b [&_h1]:border-black
-              [&_h1]:pb-[min(1pt,0.15vw)] [&_h1]:mt-[min(10pt,1.5vw)] [&_h1]:mb-[min(4pt,0.6vw)]
-              [&_p]:text-[min(9pt,1.36vw)] [&_p]:m-0 [&_p]:mb-[min(1pt,0.15vw)]
-              [&_a]:text-[#467886]
-              [&_table]:w-full [&_table]:border-collapse
-              [&_td]:p-0 [&_td]:align-top [&_td]:text-[min(9pt,1.36vw)]
-              [&_.right]:text-right
-              [&_ul]:m-0 [&_ul]:pl-6 [&_ul]:list-disc
-              [&_li]:text-[min(9pt,1.36vw)] [&_li]:mb-[min(1pt,0.15vw)]
-              [&_.header-name]:text-[min(20pt,3vw)] [&_.header-name]:font-bold
-              [&_.header-loc]:text-[min(9pt,1.36vw)] [&_.header-loc]:font-bold
-              [&_.header-contact]:text-[min(9pt,1.36vw)]
-              [&_.center]:text-center
-              [&_.skill-line]:ml-3"
+              px-[16mm] py-[18mm]
+              max-sm:px-[10mm] max-sm:py-[12mm]
+              [container-type:inline-size]"
             dangerouslySetInnerHTML={{ __html: html }}
           />
 
