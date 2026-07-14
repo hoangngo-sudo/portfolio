@@ -58,6 +58,17 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     return () => cancelAnimationFrame(raf);
   }, []);
 
+  // Clear stuck :focus/:hover on touch devices when the user scrolls or taps
+  useEffect(() => {
+    function onTouchStart() {
+      if (document.activeElement && document.activeElement !== document.body) {
+        (document.activeElement as HTMLElement).blur();
+      }
+    }
+    document.addEventListener("touchstart", onTouchStart, { passive: true });
+    return () => document.removeEventListener("touchstart", onTouchStart);
+  }, []);
+
   const setTheme = useCallback((next: ThemeName) => {
     setThemeState(next);
     localStorage.setItem(STORAGE_KEY, next);

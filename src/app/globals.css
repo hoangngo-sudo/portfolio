@@ -255,12 +255,14 @@ html {
   transform: none;
 }
 
-/* Touch devices: disable all hover-based bloom-focus effects.
-   :hover on mobile can get stuck after a tap, so reset both
-   the group blur and the individual hovered-item un-blur + scale. */
+/* Touch devices: disable all hover/focus-based bloom-focus effects.
+   :hover and :focus-within on mobile can get stuck after a tap, so reset
+   the group blur and individual un-blur for both states. */
 @media (hover: none) and (pointer: coarse) {
   .button-group:has(.button-group__item:hover) .button-group__item,
-  .button-group .button-group__item:hover {
+  .button-group .button-group__item:hover,
+  .button-group:focus-within .button-group__item:not(:focus-within),
+  .button-group .button-group__item:focus-within {
     filter: none;
     transform: none;
   }

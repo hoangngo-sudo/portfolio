@@ -170,6 +170,7 @@ const CHIP_TRANSITION = "var(--hover-transition)";
         onClick={(e) => {
           playTap();
           onClick?.(e);
+          (e.currentTarget as HTMLElement).blur();
         }}
         whileTap={reduced ? undefined : { scale: 0.96 }}
         transition={reduced ? { duration: 0 } : PRESS_SPRING}
@@ -198,6 +199,7 @@ const CHIP_TRANSITION = "var(--hover-transition)";
       onClick={(e) => {
         playTap();
         onClick?.(e as unknown as React.MouseEvent<HTMLAnchorElement>);
+        (e.currentTarget as HTMLElement).blur();
       }}
       whileTap={reduced ? undefined : { scale: 0.96 }}
       transition={reduced ? { duration: 0 } : PRESS_SPRING}

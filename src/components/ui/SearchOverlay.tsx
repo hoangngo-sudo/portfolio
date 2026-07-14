@@ -17,10 +17,21 @@ export function SearchOverlay() {
   const haptic = useWebHaptics();
   const playExpand = useSound(expand);
   const playCollapse = useSound(collapse);
+  const triggerRef = useRef<HTMLButtonElement>(null);
 
   const springTransition = shouldReduceMotion
     ? { duration: 0 }
     : { type: "spring" as const, stiffness: 600, damping: 20 };
+
+  const handleOpenChange = useCallback((nextOpen: boolean) => {
+    setOpen(nextOpen);
+    if (!nextOpen) {
+      // Radix returns focus to the trigger after dialog closes (accessibility).
+      // Use setTimeout to blur AFTER Radix finishes its focus management,
+      // so the sibling chips don't stay blurred from :focus-within.
+      setTimeout(() => triggerRef.current?.blur(), 50);
+    }
+  }, []);
 
   const results = useMemo(() => {
     if (!query.trim()) return [];
@@ -75,8 +86,9 @@ export function SearchOverlay() {
   );
 
   return (
-    <Dialog.Root open={open} onOpenChange={setOpen}>
+    <Dialog.Root open={open} onOpenChange={handleOpenChange}>
       <Dialog.Trigger
+        ref={triggerRef}
         render={({
           onAnimationStart: _a,
           onDragStart: _ds,
