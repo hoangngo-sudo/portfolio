@@ -17,7 +17,7 @@ export function TagPill({ tag, iconId, customIcon }: TagPillProps) {
   return (
     <span
       ref={ref}
-      className="inline-flex h-6.5 cursor-default items-center gap-1 rounded-md border-0 bg-dark-bg-alt px-1.5 py-0.5 text-xs font-medium text-text-muted dm-elevation-2 [@media(hover:hover)]:hover:bg-chip-hover-bg [@media(hover:hover)]:hover:text-text-primary [&_img]:pointer-events-none [&_img]:shrink-0"
+      className="inline-flex h-6.5 cursor-default items-center gap-1.5 rounded-md border-0 bg-dark-bg-alt px-1.5 py-0.5 text-xs font-medium leading-none text-text-muted dm-elevation-2 [@media(hover:hover)]:hover:bg-chip-hover-bg [@media(hover:hover)]:hover:text-text-primary [&_img]:pointer-events-none [&_img]:shrink-0"
       style={{ transition: "var(--hover-transition)" }}
     >
       {iconId ? (
