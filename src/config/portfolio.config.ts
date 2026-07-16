@@ -3,7 +3,7 @@ import type { PortfolioConfig } from "@/types/config";
 const config: PortfolioConfig = {
   meta: {
     name: "Hoang Ngo",
-    headline: "Hello, I am Hoang",
+    headline: "Xin chào, I am Hoang",
     description: "I am an aspiring web developer who enjoys building websites.",
     siteUrl: "https://hoaangngo.com",
     ogImage: "/og.png",
