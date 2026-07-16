@@ -4,7 +4,7 @@ import { useCallback, useState } from "react";
 import type { ContactConfig } from "@/types/config";
 import { Chip } from "@/components/ui/Chip";
 import { FlutedGlassBackground } from "@/components/ui/FlutedGlassBackground";
-import { IconEnvelopeFillDuo18 } from "nucleo-ui-fill-duo-18";
+import { IconEnvelopePenFillDuo18 } from "nucleo-ui-fill-duo-18";
 import { IconInstagram } from "nucleo-social-media";
 import { IconGithub } from "nucleo-social-media";
 import { IconLinkedin } from "nucleo-social-media";
@@ -32,7 +32,7 @@ function CheckIcon({ className }: { className?: string }) {
 }
 
 const iconMap: Record<string, React.FC<React.SVGProps<SVGSVGElement>>> = {
-  email: IconEnvelopeFillDuo18,
+  email: IconEnvelopePenFillDuo18,
   instagram: IconInstagram,
   linkedin: IconLinkedin,
   github: IconGithub,
@@ -99,7 +99,7 @@ export function ContactSection({ data }: Props) {
           className="pointer-events-none absolute bottom-0 left-[5vw] translate-y-1/8 select-none font-heading text-4xl font-bold tracking-tight leading-none text-text-primary"
           aria-hidden="true"
         >
-          God bless you.
+          Open To Work.
         </h6>
       </div>
     </section>
