@@ -39,6 +39,7 @@ yarn-error.log*
 .github/prompts
 .next
 docs
+plans
 
 # typescript
 *.tsbuildinfo
