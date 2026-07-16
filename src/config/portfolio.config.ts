@@ -86,10 +86,17 @@ const config: PortfolioConfig = {
       viewAllUrl: "https://github.com/hoangngo-sudo?tab=repositories",
       items: [
         {
+          title: "portfolio",
+            description: "A config-driven developer portfolio built with Next.js 16, Base UI, Tailwind CSS v4, and Motion.",
+          repo: "hoangngo-sudo/portfolio",
+          tags: ["TypeScript", "Next.js", "BaseUI", "TailwindCSS", "Motion"],
+          href: "https://github.com/hoangngo-sudo/portfolio",
+        },
+        {
           title: "drincatuic",
-            description: "Student retreat event page",
+            description: "Student retreat event page.",
           repo: "hoangngo-sudo/drincatuic",
-          tags: ["HTML", "CSS", "Javascript", "Supabase"],
+          tags: ["HTML", "CSS", "Javascript", "Webpack", "Supabase", "GSAP"],
           href: "https://github.com/hoangngo-sudo/drincatuic",
         },
         {
@@ -101,11 +108,11 @@ const config: PortfolioConfig = {
         },
         {
           title: "the-morytale",
-            description: "Narrative storytelling in an interactive application",
+            description: "Narrative storytelling in an interactive application.",
           repo: "hoangngo-sudo/the-morytale",
           tags: ["React", "TypeScript", "Node.js", "Express", "MongoDB", "Python"],
           href: "https://github.com/hoangngo-sudo/the-morytale",
-        },
+        }
       ],
     },
 
@@ -141,9 +148,16 @@ const config: PortfolioConfig = {
             { name: "HTML", icon: "html", href: "https://developer.mozilla.org/en-US/docs/Web/HTML" },
             { name: "CSS", icon: "css", href: "https://developer.mozilla.org/en-US/docs/Web/CSS" },
             { name: "JavaScript", icon: "javascript", href: "https://developer.mozilla.org/en-US/docs/Web/JavaScript" },
-            { name: "TypeScript", icon: "typescript", href: "https://www.typescriptlang.org" },
             { name: "SQLite", icon: "sqlite", href: "https://www.sqlite.org" },
             { name: "Bash", icon: "bash", href: "https://www.gnu.org/software/bash" },
+          ],
+        },
+        {
+          label: "Frontend",
+          items: [
+            { name: "TailwindCSS", icon: "tailwindcss", href: "https://tailwindcss.com" },
+            { name: "Motion", icon: "motion", href: "https://motion.dev" },
+            { name: "BaseUI", icon: "baseui", href: "https://base-ui.com" },
           ],
         },
         {
@@ -163,9 +177,8 @@ const config: PortfolioConfig = {
             { name: "Linux", icon: "linux", href: "https://www.linux.org" },
             { name: "Docker", icon: "docker", href: "https://www.docker.com" },
             { name: "VSCode", icon: "vscode", href: "https://code.visualstudio.com" },
-            { name: "Figma", icon: "figma", href: "https://www.figma.com" },
             { name: "IntelliJ", icon: "intellij", href: "https://www.jetbrains.com/idea" },
-            { name: "Motion", icon: "motion", href: "https://motion.dev" }
+            { name: "Figma", icon: "figma", href: "https://www.figma.com" }
           ],
         },
       ],

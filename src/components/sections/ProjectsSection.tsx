@@ -5,11 +5,8 @@ import {
   SectionHeading,
 } from "@/components/ui/SectionWrapper";
 import { IconArrowFromCornerBottomRightFillDuo18 } from "nucleo-ui-fill-duo-18";
-import SpotlightCard from "@/components/ui/SpotlightCard";
-import { ProjectCommitsWidget } from "@/components/ui/ProjectCommitsWidget";
+import { ProjectDragCarousel } from "@/components/ui/ProjectDragCarousel";
 import { GitHubHeatmap } from "@/components/ui/GitHubHeatmap";
-import { TagPill } from "@/components/ui/TagPill";
-import { getSkillIconId, getCustomIcon } from "@/lib/icons";
 import { fetchAllYearContributions, generateYearPlaceholderData, type YearContributionData } from "@/lib/github";
 import config from "@/config/portfolio.config";
 
@@ -47,39 +44,7 @@ export async function ProjectsSection({ data }: Props) {
         )}
       </div>
 
-      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-        {data.items.map((project) => (
-          <SpotlightCard
-            key={project.title}
-            as="a"
-            href={project.href || "#"}
-            target={project.href ? "_blank" : undefined}
-            rel={project.href ? "noopener noreferrer" : undefined}
-            className="group flex flex-col bg-card-bg p-5 dm-elevation-2"
-            smoothCorners={{ radius: 12, smoothing: 0.6 }}
-          >
-            {project.repo && <ProjectCommitsWidget repo={project.repo} />}
-            <h3 className="mb-1 text-balance text-base font-semibold text-text-primary">
-              {project.title}
-            </h3>
-            <p className="mb-3 flex-1 text-sm text-text-secondary">
-              {project.description}
-            </p>
-            {project.tags && project.tags.length > 0 && (
-              <div className="flex flex-wrap gap-2">
-                {project.tags.map((tag) => (
-                  <TagPill
-                    key={tag}
-                    tag={tag}
-                    iconId={getSkillIconId(tag)}
-                    customIcon={getCustomIcon(tag)}
-                  />
-                ))}
-              </div>
-            )}
-          </SpotlightCard>
-        ))}
-      </div>
+      <ProjectDragCarousel items={data.items} />
 
       {features.githubHeatmap && (
         <div className="mt-3 w-fit max-w-full rounded-xl bg-card-bg p-5 dm-elevation-2">

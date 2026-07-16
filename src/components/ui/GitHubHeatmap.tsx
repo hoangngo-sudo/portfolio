@@ -342,8 +342,8 @@ export function GitHubHeatmap({ years }: GitHubHeatmapProps) {
           </AnimatePresence>
         <div
           ref={scrollRef}
-          className="overflow-x-auto"
-          style={{ scrollbarWidth: "thin", scrollbarColor: "var(--accent) transparent" }}
+          className="overflow-x-auto scrollbar-hide"
+          style={{ scrollbarWidth: "none", scrollbarColor: "var(--accent) transparent" }}
           onScroll={updateEdges}
           onPointerMove={(e) => {
             if (e.pointerType === "touch") return;

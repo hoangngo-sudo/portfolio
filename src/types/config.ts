@@ -95,7 +95,7 @@ export interface SynopsisConfig {
   globe?: GlobeConfig;
 }
 
-interface ProjectItem {
+export interface ProjectItem {
   title: string;
   description: string;
   repo?: string; // GitHub "owner/slug", e.g. "hoangngo-sudo/drincatuic"

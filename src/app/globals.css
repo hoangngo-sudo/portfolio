@@ -110,6 +110,15 @@ html {
   border-radius: 999px;
 }
 
+/* Scrollbar hide utility */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
 /* Elevation 2 for dark mode */
 .dm-elevation-2 {
   box-shadow:
