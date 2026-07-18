@@ -41,6 +41,7 @@ flowchart TB
 - **Interactive 3D globe** `cobe` WebGL globe in the about section with drag rotation and haptic detents (picks up every ~15° like a scroll wheel)
 - **GitHub heatmap** Contribution graph with year navigation, `AnimateNumber` digit-flip tooltips, physical stagger entrance (distance-based spring ripple from top-left), and skillicons.dev GitHub brand icon; fetched from GitHub GraphQL API with ISR caching; placeholder fallback when no token is set
 - **Fuzzy search overlay** Cmd+K / Ctrl+K triggers Fuse.js-powered search across all sections with action links; tags indexed separately from display text
+- **Project drag carousel** Horizontal drag-to-scroll carousel with momentum pure pointer events, no animation library; cards are `<a>` links with native link drag suppression
 - **Project commit sparklines** Per-project GitHub commit activity for the last 12 weeks
 - **2 color themes** Black and Teal, switchable via chip-style text button with opacity crossfade and vertical wipe page transition (View Transitions API + clip-path, 350ms); flash-free hydration via anti-FOUC inline script
 - **Scroll progress bar** + **Back-to-top FAB** toggleable via feature flags
@@ -54,7 +55,7 @@ flowchart TB
 - **Synthesized audio** Dual-channel haptic+sound feedback on every interaction; ultra-subtle sine-wave tones from `@web-kits/audio` Minimal patch (9 sounds across 10 components); auto-respects `prefers-reduced-motion`
 - **Themed scrollbar** Thin accent-colored scrollbar consistent across all scroll containers
 - **Map pin avatars** SVG map pin markers on the globe with embedded photos and counter-rotation tilt during drag
-- **Motion-optimized** Full-project animation audit — 83% of 28 animations are S or A-tier; zero layout thrashing; standardized hover easing (ease-out-cubic) across Chip, ShowMoreButton, and TagPill for consistent micro-interaction feel; theme crossfade tuned to 350ms (within Emil's 400ms page-transition ceiling)
+- **Motion-optimized** Full-project animation audit — 83% of 28 animations are S or A-tier; zero layout thrashing; standardized hover easing (ease-out-cubic) across Chip, ShowMoreButton, and TagPill for consistent micro-interaction feel; theme crossfade tuned to 350ms (within Emil's 400ms page-transition ceiling principles); carousel momentum uses native browser `scrollTo`
 - **Accessible** Skip-to-content link, semantic HTML, keyboard navigation, `prefers-reduced-motion` support; dark-section overline contrast passes WCAG AA (4.58:1)
 - **SEO** Open Graph tags, JSON-LD Person schema, semantic heading hierarchy
 - **Performance** Static generation, Geist font family via `next/font` for zero-FOUT, Tailwind v4
@@ -233,9 +234,9 @@ Hero photos use `next/image` with `fill` layout for native lazy loading and zero
 │   │   ├── sections/
 │   │   │   ├── HeroSection.tsx                 # Photo gallery + headline + stagger entrance
 │   │   │   ├── SynopsisSection.tsx             # About + GitHub heatmap + globe
-│   │   │   ├── ProjectsSection.tsx             # SpotlightCard project cards (dark)
+│   │   │   ├── ProjectsSection.tsx             # SpotlightCard project cards
 │   │   │   ├── SkillsSection.tsx               # Categorized pill grid with skillicons.dev CDN
-│   │   │   ├── CoursesSection.tsx              # SpotlightCard coursework (dark)
+│   │   │   ├── CoursesSection.tsx              # SpotlightCard coursework
 │   │   │   ├── CourseShowMoreClient.tsx        # Client expand/collapse with staggered entrance
 │   │   │   └── ContactSection.tsx              # Social link Chips with react-icons
 │   │   └── ui/
@@ -243,7 +244,7 @@ Hero photos use `next/image` with `fill` layout for native lazy loading and zero
 │   │       ├── BackToTopFAB.tsx         # Keycap-styled floating action button
 │   │       ├── CardStack.tsx            # Mobile: swipeable photo card stack with 3D tilt
 │   │       ├── Chip.tsx                 # Tag / link chip (squircle corners + dm-elevation-2)
-│   │       ├── FlutedGlassBackground.tsx # Background image (ContactSection)
+│   │       ├── SkylineBackground.tsx # Background image for contact section
 │   │       ├── GitHubHeatmap.tsx        # Contribution graph (theme-aware SVG + AnimateNumber tooltip)
 │   │       ├── Globe3D.tsx              # cobe WebGL interactive globe with haptic drag detents
 │   │       ├── GlobeCard.tsx            # Clipped globe card wrapper (dynamic import + skeleton)
@@ -251,9 +252,11 @@ Hero photos use `next/image` with `fill` layout for native lazy loading and zero
 │   │       ├── Photo.tsx                # Single draggable photo with ArcTooltip
 │   │       ├── PhotoGallery.tsx         # Desktop: staggered spring photo fan-out
 │   │       ├── ProjectCommitsWidget.tsx # Per-project GitHub commit sparkline
+│   │       ├── ProjectDragCarousel.tsx  # Drag carousel with momentum
 │   │       ├── ScrollProgressBar.tsx    # Fixed top scroll indicator
 │   │       ├── SearchOverlay.tsx        # Cmd+K fuzzy search (Fuse.js + Base UI Dialog)
-│   │       ├── SectionWrapper.tsx       # Shared section layout (dark / light variants, no animation)
+│   │       ├── TagPill.tsx              # Theme-aware skill pill with skillicons.dev CDN icon
+│   │       ├── SectionWrapper.tsx       # Shared section layout
 │   │       ├── ShowMoreButton.tsx       # Expand/collapse toggle button
 │   │       ├── SpotlightCard.tsx        # Polymorphic card with cursor-following radial glow
 │   │       ├── StaggeredBlurText.tsx    # Staggered word-by-word blur entrance animation
@@ -263,7 +266,7 @@ Hero photos use `next/image` with `fill` layout for native lazy loading and zero
 │   ├── lib/
 │   |   ├── clock.ts               # Realtime clock helpers
 │   |   ├── color.ts               # Color manipulation utilities
-│   |   ├── github.ts              # GitHub GraphQL client (ISR cached)
+│   |   ├── github.ts              # GitHub GraphQL client
 │   |   ├── scroll.ts              # Spring-animated scroll utilities
 │   |   └── search.ts              # Fuse.js search index builder
 │   ├── types/
