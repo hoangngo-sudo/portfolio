@@ -1,6 +1,6 @@
 "use client";
 
-import { useLayoutEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import type { MouseEventHandler, ReactNode } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useSmoothCorners } from "@lisse/react";
@@ -49,7 +49,7 @@ function AnimatedIcon({ icon, iconKey, reduced }: { icon: ReactNode; iconKey?: s
  * key change triggers AnimatePresence enter/exit:
  *   exit     outgoing slides right, fades out, blurs
  *   enter    incoming slides in from left, fades in, un-blurs
- *   width    container morphs from old → new label width
+ *   width    container morphs via Motion layout FLIP (B-tier)
  *
  * All three animations share the same duration + easing so
  * the morph, slide, and crossfade feel like one motion.
@@ -64,23 +64,12 @@ const CROSSFADE = {
 
 /**
  * Crossfade + width morph between label values.
- * The container width animates in sync with the text crossfade
- * so the resize never feels disconnected from the text swap.
+ * The container width morphs via Motion's `layout` FLIP instead of
+ * a CSS width transition, upgrading the resize from D-tier (layout)
+ * to B-tier (one-time FLIP read).
  * Slide direction alternates: "Copied!" from left, email from right.
  */
 function AnimatedLabel({ label, reduced }: { label: string; reduced: boolean }) {
-  const [width, setWidth] = useState<number | null>(null);
-  const measureRef = useRef<HTMLSpanElement>(null);
-
-  // Measure the current label's intrinsic width and store it.
-  // The container uses this explicit pixel width (with a CSS
-  // transition) so it morphs smoothly instead of snapping.
-  useLayoutEffect(() => {
-    if (measureRef.current) {
-      setWidth(measureRef.current.scrollWidth);
-    }
-  }, [label]);
-
   const transition = reduced
     ? { duration: 0 }
     : { duration: CROSSFADE.duration, ease: CROSSFADE.ease };
@@ -90,25 +79,17 @@ function AnimatedLabel({ label, reduced }: { label: string; reduced: boolean }) 
   const dir = label === "Copied!" ? 1 : -1;
 
   return (
-    <span
+    <motion.span
+      layout={reduced ? false : "position"}
       style={{
         position: "relative",
         display: "inline-block",
         whiteSpace: "nowrap",
-        width: width ?? "auto",
-        transition: reduced
-          ? "none"
-          : `width ${CROSSFADE.duration}s cubic-bezier(${CROSSFADE.ease.join(",")})`,
       }}
     >
-      {/* Sizer + measurement: in flow for height, invisible.
-          Gives the container correct height and lets us measure
-          the current label's width via scrollWidth. */}
-      <span
-        ref={measureRef}
-        aria-hidden="true"
-        style={{ visibility: "hidden", display: "inline-block" }}
-      >
+      {/* Sizer: invisible, provides intrinsic width for container.
+          Motion `layout` detects the size delta and animates it. */}
+      <span aria-hidden="true" style={{ visibility: "hidden", display: "inline-block" }}>
         {label}
       </span>
       <AnimatePresence initial={false} mode="sync">
@@ -139,7 +120,7 @@ function AnimatedLabel({ label, reduced }: { label: string; reduced: boolean }) 
           {label}
         </motion.span>
       </AnimatePresence>
-    </span>
+    </motion.span>
   );
 }
 

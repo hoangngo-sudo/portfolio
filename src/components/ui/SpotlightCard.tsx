@@ -31,13 +31,11 @@ function SpotlightCardInner<T extends React.ElementType = "div">(
   const className = classNameProp ?? "";
   const Tag = (as ?? "div") as React.ElementType;
   const internalRef = useRef<HTMLElement>(null);
-  const overlayRef = useRef<HTMLDivElement>(null);
+  const glowRef = useRef<HTMLDivElement>(null);
   const rectRef = useRef<DOMRect | null>(null);
   const reducedMotionRef = useRef(false);
   const isTouchRef = useRef(false);
   const accentColorRef = useRef<string | null>(null);
-  // rAF handle, which ensures at most one pending write per frame
-  const rafRef = useRef<number | null>(null);
 
   const { colors } = useTheme();
 
@@ -54,22 +52,31 @@ function SpotlightCardInner<T extends React.ElementType = "div">(
     ? className.replace(/\brounded-\S+/g, "")
     : className;
 
+  // Derive the spotlight color from the theme accent.
+  // Recomputes on theme change via re-render from useTheme.
+  // (accentColorRef is populated for event handlers, not render.)
+  const resolvedColor =
+    spotlightColor ??
+    (() => {
+      const rgb = hexToRgb(colors.accent);
+      return rgb
+        ? `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.15)`
+        : "rgba(13, 148, 136, 0.15)";
+    })();
+
   // Cache prefers-reduced-motion + touch detection once on mount
   useEffect(() => {
     reducedMotionRef.current =
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     isTouchRef.current =
       "ontouchstart" in window || navigator.maxTouchPoints > 0;
-    return () => {
-      if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
-    };
   }, []);
 
   const handleMouseEnter = useCallback(() => {
     if (reducedMotionRef.current || isTouchRef.current) return;
     rectRef.current = rootRef.current?.getBoundingClientRect() ?? null;
 
-    // Derive color from theme accent if no explicit spotlightColor
+    // Cache the accent color for use outside React's render cycle
     if (!spotlightColor) {
       const rgb = hexToRgb(colors.accent);
       accentColorRef.current = rgb
@@ -77,15 +84,14 @@ function SpotlightCardInner<T extends React.ElementType = "div">(
         : "rgba(13, 148, 136, 0.15)";
     }
 
-    if (overlayRef.current) overlayRef.current.style.opacity = "1";
+    if (glowRef.current) glowRef.current.style.opacity = "1";
   }, [spotlightColor, colors.accent, rootRef]);
 
   const handleMouseLeave = useCallback(() => {
-    if (rafRef.current !== null) {
-      cancelAnimationFrame(rafRef.current);
-      rafRef.current = null;
+    if (glowRef.current) {
+      glowRef.current.style.transform = "";
+      glowRef.current.style.opacity = "0";
     }
-    if (overlayRef.current) overlayRef.current.style.opacity = "0";
     const el = rootRef.current;
     if (el) {
       el.style.removeProperty("--spot-x");
@@ -95,52 +101,36 @@ function SpotlightCardInner<T extends React.ElementType = "div">(
 
   const handleFocus = useCallback(() => {
     if (reducedMotionRef.current || isTouchRef.current) return;
-    // Derive color if not yet cached (keyboard-only user, no prior mouseenter)
-    if (!spotlightColor && !accentColorRef.current) {
-      const rgb = hexToRgb(colors.accent);
-      accentColorRef.current = rgb
-        ? `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.15)`
-        : "rgba(13, 148, 136, 0.15)";
-    }
-    if (overlayRef.current) {
-      const color = spotlightColor ?? accentColorRef.current ?? "rgba(13, 148, 136, 0.15)";
-      overlayRef.current.style.background =
-        `radial-gradient(circle at 50% 50%, ${color}, transparent ${spotlightSize}%)`;
-      overlayRef.current.style.opacity = "1";
-    }
-    // Expose centered cursor coords for children (e.g. ProjectImageReveal)
+    if (glowRef.current) glowRef.current.style.opacity = "1";
+    // Expose centered cursor coords for children
     const el = rootRef.current;
     const rect = el?.getBoundingClientRect();
     if (el && rect) {
       el.style.setProperty("--spot-x", `${rect.width / 2}px`);
       el.style.setProperty("--spot-y", `${rect.height / 2}px`);
     }
-  }, [spotlightColor, spotlightSize, colors.accent, rootRef]);
-
+  }, [rootRef]);
 
   const handleMouseMove = useCallback(
     (e: React.MouseEvent) => {
-      if (reducedMotionRef.current || isTouchRef.current || !overlayRef.current || !rectRef.current) return;
+      if (reducedMotionRef.current || isTouchRef.current || !glowRef.current || !rectRef.current) return;
       const x = e.clientX - rectRef.current.left;
       const y = e.clientY - rectRef.current.top;
+      const w = rectRef.current.width;
+      const h = rectRef.current.height;
 
-      // Batch all writes into one rAF, which caps to one repaint per vsync frame
-      if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
-      rafRef.current = requestAnimationFrame(() => {
-        rafRef.current = null;
-        if (!overlayRef.current) return;
-        const color = spotlightColor ?? accentColorRef.current ?? "rgba(13, 148, 136, 0.15)";
-        overlayRef.current.style.background =
-          `radial-gradient(circle at ${x}px ${y}px, ${color}, transparent ${spotlightSize}%)`;
-        // Expose cursor coords as CSS custom properties for children
-        const el = rootRef.current;
-        if (el) {
-          el.style.setProperty("--spot-x", `${x}px`);
-          el.style.setProperty("--spot-y", `${y}px`);
-        }
-      });
+      // Move glow element so its pre-rendered gradient center
+      // follows the cursor — compositor-only (S-tier).
+      glowRef.current.style.transform = `translate(${x - w / 2}px, ${y - h / 2}px)`;
+
+      // Expose cursor coords as CSS custom properties for children
+      const el = rootRef.current;
+      if (el) {
+        el.style.setProperty("--spot-x", `${x}px`);
+        el.style.setProperty("--spot-y", `${y}px`);
+      }
     },
-    [spotlightColor, spotlightSize, rootRef],
+    [rootRef],
   );
 
   return (
@@ -155,10 +145,20 @@ function SpotlightCardInner<T extends React.ElementType = "div">(
       onFocus={handleFocus}
       onBlur={handleMouseLeave}
     >
+      {/* Pre-rendered radial gradient moved via compositor transform.
+          Center offset so the gradient center aligns with the card center
+          at translate(0,0). 2× card size ensures coverage when moved. */}
       <div
-        ref={overlayRef}
+        ref={glowRef}
         aria-hidden
-        className="pointer-events-none absolute inset-0 z-0 opacity-0 transition-opacity duration-200"
+        className="pointer-events-none absolute z-0 opacity-0 transition-opacity duration-200 will-change-transform"
+        style={{
+          width: "200%",
+          height: "200%",
+          top: "-50%",
+          left: "-50%",
+          background: `radial-gradient(circle at center, ${resolvedColor}, transparent ${spotlightSize / 2}%)`,
+        }}
       />
       <div className="relative z-1">{children}</div>
     </Tag>

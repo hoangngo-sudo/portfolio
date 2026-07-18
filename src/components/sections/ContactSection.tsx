@@ -3,7 +3,7 @@
 import { useCallback, useState } from "react";
 import type { ContactConfig } from "@/types/config";
 import { Chip } from "@/components/ui/Chip";
-import { FlutedGlassBackground } from "@/components/ui/FlutedGlassBackground";
+import { SkylineBackground } from "@/components/ui/SkylineBackground";
 import { IconCircleCheckFillDuo18, IconEnvelopePenFillDuo18 } from "nucleo-ui-fill-duo-18";
 import { IconInstagram } from "nucleo-social-media";
 import { IconGithub } from "nucleo-social-media";
@@ -48,7 +48,7 @@ export function ContactSection({ data }: Props) {
       id="contact"
       className="sticky bottom-0 z-0 min-h-screen overflow-hidden bg-dark-bg text-text-primary"
     >
-      <FlutedGlassBackground />
+      <SkylineBackground />
 
       <div className="relative z-10 mx-auto flex min-h-screen w-full max-w-6xl flex-col justify-center">
         {/* Chips column */}
