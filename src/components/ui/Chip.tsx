@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useEffect, useState } from "react";
 import type { MouseEventHandler, ReactNode } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useSmoothCorners } from "@lisse/react";
@@ -24,9 +24,17 @@ interface ChipProps {
  * Icon crossfade with blur + scale + opacity spring.
  * Follows principle #7: scale 0.25→1, opacity 0→1, blur 4px→0px,
  * spring duration 0.3, bounce 0.
+ * First render is a plain element with no animation to avoid
+ * slide-in/scale-in on initial page load.
  */
 function AnimatedIcon({ icon, iconKey, reduced }: { icon: ReactNode; iconKey?: string; reduced: boolean }) {
+  const [ready, setReady] = useState(false);
+  useEffect(() => { setReady(true); }, []);
+
   if (!icon) return null;
+  if (!ready) {
+    return <span style={{ display: "inline-flex" }}>{icon}</span>;
+  }
   return (
     <AnimatePresence initial={false} mode="popLayout">
       <motion.span
@@ -68,8 +76,13 @@ const CROSSFADE = {
  * a CSS width transition, upgrading the resize from D-tier (layout)
  * to B-tier (one-time FLIP read).
  * Slide direction alternates: "Copied!" from left, email from right.
+ * First render is a plain element with no animation to avoid
+ * slide-in on initial page load.
  */
 function AnimatedLabel({ label, reduced }: { label: string; reduced: boolean }) {
+  const [ready, setReady] = useState(false);
+  useEffect(() => { setReady(true); }, []);
+
   const transition = reduced
     ? { duration: 0 }
     : { duration: CROSSFADE.duration, ease: CROSSFADE.ease };
@@ -77,6 +90,10 @@ function AnimatedLabel({ label, reduced }: { label: string; reduced: boolean }) 
   // Direction: "Copied!" enters from left / exits right.
   // Email enters from right / exits left (the opposite).
   const dir = label === "Copied!" ? 1 : -1;
+
+  if (!ready) {
+    return <span style={{ display: "inline-block", whiteSpace: "nowrap" }}>{label}</span>;
+  }
 
   return (
     <motion.span

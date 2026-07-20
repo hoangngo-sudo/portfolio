@@ -108,7 +108,7 @@ export function HeroSection() {
               stagger={0.03}
               duration={0.45}
               blurAmount={6}
-              yOffset={8}
+              yOffset={0}
             />
           </div>
         )}
@@ -122,7 +122,7 @@ export function HeroSection() {
           stagger={0.05}
           duration={0.55}
           blurAmount={10}
-          yOffset={14}
+          yOffset={0}
           className="mb-4 max-w-2xl text-center font-heading text-4xl font-bold tracking-tight text-white md:text-6xl"
         />
 

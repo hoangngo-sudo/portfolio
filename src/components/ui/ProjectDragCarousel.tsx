@@ -107,7 +107,10 @@ export function ProjectDragCarousel({ items }: Props) {
         cursor: "grab",
         touchAction: "pan-x",
         scrollbarWidth: "none",
-        scrollPaddingRight: "26px",
+        scrollPaddingRight: "calc(5vw + max(0px, (100vw - 1152px) / 2))",
+        scrollPaddingLeft: "calc(5vw + max(0px, (100vw - 1152px) / 2))",
+        paddingLeft: "calc(5vw + max(0px, (100vw - 1152px) / 2))",
+        paddingRight: "calc(5vw + max(0px, (100vw - 1152px) / 2))",
       }}
       onPointerDown={handlePointerDown}
       onPointerMove={handlePointerMove}

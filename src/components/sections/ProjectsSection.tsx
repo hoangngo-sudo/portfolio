@@ -1,9 +1,4 @@
 import type { ProjectsConfig } from "@/types/config";
-import {
-  SectionWrapper,
-  Overline,
-  SectionHeading,
-} from "@/components/ui/SectionWrapper";
 import { IconArrowFromCornerBottomRightFillDuo18 } from "nucleo-ui-fill-duo-18";
 import { ProjectDragCarousel } from "@/components/ui/ProjectDragCarousel";
 import { GitHubHeatmap } from "@/components/ui/GitHubHeatmap";
@@ -25,32 +20,45 @@ export async function ProjectsSection({ data }: Props) {
   }
 
   return (
-    <SectionWrapper id="projects" variant="dark">
-      <div className="flex items-baseline justify-between">
-        <div>
-          <Overline>{data.overline}</Overline>
-          <SectionHeading>{data.heading}</SectionHeading>
+    <section id="projects" className="bg-dark-bg text-text-primary">
+      {/* Title row — within padded container */}
+      <div className="mx-auto max-w-6xl px-[5%] pt-16 md:pt-20">
+        <div className="flex items-baseline justify-between">
+          <div>
+            <p className="mb-2 text-xs font-medium tracking-[2px] text-text-muted">
+              {data.overline}
+            </p>
+            <h2 className="mb-8 text-balance font-heading text-3xl font-bold tracking-tight text-text-primary md:text-4xl">
+              {data.heading}
+            </h2>
+          </div>
+          {data.viewAllUrl && (
+            <a
+              href={data.viewAllUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 text-sm text-accent hover:underline"
+            >
+              View all
+              <IconArrowFromCornerBottomRightFillDuo18 size={14} />
+            </a>
+          )}
         </div>
-        {data.viewAllUrl && (
-          <a
-            href={data.viewAllUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1 text-sm text-accent hover:underline"
-          >
-            View all
-            <IconArrowFromCornerBottomRightFillDuo18 size={14} /> 
-          </a>
-        )}
       </div>
 
-      <ProjectDragCarousel items={data.items} />
+      {/* Carousel — edge to edge, full viewport width */}
+      <div className="w-screen">
+        <ProjectDragCarousel items={data.items} />
+      </div>
 
-      {features.githubHeatmap && (
-        <div className="mt-3 w-fit max-w-full rounded-xl bg-card-bg p-5 dm-elevation-2">
-          <GitHubHeatmap years={yearData} />
-        </div>
-      )}
-    </SectionWrapper>
+      {/* GitHub heatmap — within padded container, with bottom padding */}
+      <div className="mx-auto max-w-6xl px-[5%] pb-16 md:pb-20">
+        {features.githubHeatmap && (
+          <div className="mt-3 w-fit max-w-full rounded-xl bg-card-bg p-5 dm-elevation-2">
+            <GitHubHeatmap years={yearData} />
+          </div>
+        )}
+      </div>
+    </section>
   );
 }

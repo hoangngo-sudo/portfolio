@@ -39,7 +39,7 @@ function SkeletonCommits() {
         <div className="h-2.5 w-20 rounded bg-white/[0.07]" />
       </div>
       {/* Rows */}
-      <div className="flex flex-col gap-2 animate-pulse" aria-hidden="true">
+      <div className="flex flex-col gap-2 skeleton-pulse" aria-hidden="true">
         {WIDTHS.map((w, i) => (
           <div key={i} className="flex items-center gap-2">
             <div className="h-2.5 w-10 shrink-0 rounded bg-white/5" />

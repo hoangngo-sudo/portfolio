@@ -32,6 +32,7 @@ import { pop } from "@/lib/audio/minimal";
 import Image from "next/image";
 import type { MobilePhoto } from "@/types/config";
 import { useSmoothCorners } from "@lisse/react";
+import { EASE_OUT_CUBIC } from "@/lib/motion-tokens";
 
 /* Settings: all spring params in one place */
 const SETTINGS = {
@@ -177,6 +178,8 @@ function StackCard({
   onPaginate,
 }: StackCardProps) {
   const liRef = useRef<HTMLLIElement>(null);
+  const [loaded, setLoaded] = useState(false);
+  const shouldReduceMotion = useReducedMotion();
   useSmoothCorners(liRef, { radius: 10, smoothing: 0.6 }, { autoEffects: false });
 
   const handleDragEnd = (_: unknown, { offset, velocity }: PanInfo) => {
@@ -202,7 +205,7 @@ function StackCard({
   return (
     <motion.li
       ref={liRef}
-      className="absolute inset-0 list-none overflow-hidden bg-black/5 drop-shadow-[1px_3px_5px_rgba(0,0,0,0.3)] will-change-[transform,opacity]"
+      className="absolute inset-0 list-none overflow-hidden drop-shadow-[1px_3px_5px_rgba(0,0,0,0.3)] will-change-[transform,opacity]"
       custom={position}
       variants={cardVariants}
       initial="exit"
@@ -213,14 +216,28 @@ function StackCard({
       onDragEnd={handleDragEnd}
       aria-label={`Photo ${position + 1} of ${totalImages}`}
     >
-      <Image
-        className="absolute inset-0 h-full w-full select-none touch-none object-cover"
-        src={image.src}
-        alt={`Portrait photo ${position + 1}`}
-        fill
-        sizes="(max-width: 1024px) 55vw, 220px"
-        onPointerDown={(e) => e.preventDefault()}
-      />
+      <div className="absolute inset-0">
+        {/* Skeleton placeholder — shown until image loads */}
+        <div
+          className={`absolute inset-0 skeleton-pulse ${loaded ? "opacity-0 pointer-events-none" : "opacity-100"}`}
+          style={{
+            backgroundColor: "rgba(255, 255, 255, 0.04)",
+            transition: shouldReduceMotion
+              ? "none"
+              : `opacity 0.35s ${EASE_OUT_CUBIC.join(",")}`,
+          }}
+          aria-hidden="true"
+        />
+        <Image
+          className="absolute inset-0 h-full w-full select-none touch-none object-cover"
+          src={image.src}
+          alt={`Portrait photo ${position + 1}`}
+          fill
+          sizes="(max-width: 1024px) 55vw, 220px"
+          onPointerDown={(e) => e.preventDefault()}
+          onLoad={() => setLoaded(true)}
+        />
+      </div>
     </motion.li>
   );
 }

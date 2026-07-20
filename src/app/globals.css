@@ -196,6 +196,22 @@ html {
   z-index: -1;
 }
 
+/* Skeleton loading pulse */
+@keyframes skeleton-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: .5; }
+}
+
+.skeleton-pulse {
+  animation: skeleton-pulse 1.5s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton-pulse {
+    animation: none;
+  }
+}
+
 @media (hover: hover) and (pointer: fine) {
   .rainbow-shell:hover::before {
     filter: blur(12px);
