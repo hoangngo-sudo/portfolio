@@ -217,7 +217,7 @@ function StackCard({
       aria-label={`Photo ${position + 1} of ${totalImages}`}
     >
       <div className="absolute inset-0">
-        {/* Skeleton placeholder — shown until image loads */}
+        {/* Skeleton placeholder shown until image loads */}
         <div
           className={`absolute inset-0 skeleton-pulse ${loaded ? "opacity-0 pointer-events-none" : "opacity-100"}`}
           style={{

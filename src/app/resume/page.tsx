@@ -88,7 +88,7 @@ export default function ResumePage() {
             </motion.div>
           </div>
 
-          {/* ~A4 ratio (210×297) — locked aspect ratio, scales down via box-border + % padding.
+          {/* ~A4 ratio (210×297). Locked aspect ratio, scales down via box-border + % padding.
                Fonts in the HTML CSS use min(pt, vw) to scale proportionally with the container. */}
           <style>{`@page { size: A4; margin: 0; }`}</style>
           <div

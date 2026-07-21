@@ -21,7 +21,7 @@ export async function ProjectsSection({ data }: Props) {
 
   return (
     <section id="projects" className="bg-dark-bg text-text-primary">
-      {/* Title row — within padded container */}
+      {/* Title row within padded container */}
       <div className="mx-auto max-w-6xl px-[5%] pt-16 md:pt-20">
         <div className="flex items-baseline justify-between">
           <div>
@@ -46,12 +46,12 @@ export async function ProjectsSection({ data }: Props) {
         </div>
       </div>
 
-      {/* Carousel — edge to edge, full viewport width */}
+      {/* Carousel: edge to edge, full viewport width */}
       <div className="w-screen">
         <ProjectDragCarousel items={data.items} />
       </div>
 
-      {/* GitHub heatmap — within padded container, with bottom padding */}
+      {/* GitHub heatmap within padded container, with bottom padding */}
       <div className="mx-auto max-w-6xl px-[5%] pb-16 md:pb-20">
         {features.githubHeatmap && (
           <div className="mt-3 w-fit max-w-full rounded-xl bg-card-bg p-5 dm-elevation-2">

@@ -76,6 +76,10 @@ function SpotlightCardInner<T extends React.ElementType = "div">(
     if (reducedMotionRef.current || isTouchRef.current) return;
     rectRef.current = rootRef.current?.getBoundingClientRect() ?? null;
 
+    // Reset glow position to center so each new hover starts clean.
+    // Invisible at this point because opacity is 0 and transitions in.
+    if (glowRef.current) glowRef.current.style.transform = "";
+
     // Cache the accent color for use outside React's render cycle
     if (!spotlightColor) {
       const rgb = hexToRgb(colors.accent);
@@ -89,7 +93,6 @@ function SpotlightCardInner<T extends React.ElementType = "div">(
 
   const handleMouseLeave = useCallback(() => {
     if (glowRef.current) {
-      glowRef.current.style.transform = "";
       glowRef.current.style.opacity = "0";
     }
     const el = rootRef.current;
@@ -120,7 +123,7 @@ function SpotlightCardInner<T extends React.ElementType = "div">(
       const h = rectRef.current.height;
 
       // Move glow element so its pre-rendered gradient center
-      // follows the cursor — compositor-only (S-tier).
+      // follows the cursor. Compositor-only (S-tier).
       glowRef.current.style.transform = `translate(${x - w / 2}px, ${y - h / 2}px)`;
 
       // Expose cursor coords as CSS custom properties for children
@@ -151,7 +154,7 @@ function SpotlightCardInner<T extends React.ElementType = "div">(
       <div
         ref={glowRef}
         aria-hidden
-        className="pointer-events-none absolute z-0 opacity-0 transition-opacity duration-200 will-change-transform"
+        className="pointer-events-none absolute z-0 opacity-0 transition-opacity duration-200 ease-out will-change-transform"
         style={{
           width: "200%",
           height: "200%",

@@ -29,7 +29,7 @@ const DAY_LABEL_WIDTH = 26;
 // Space reserved on top for month name labels
 const MONTH_LABEL_HEIGHT = 16;
 // Physical stagger: base delay per unit Euclidean distance from top-left origin.
-// 0.008s/unit gives ~0.42s max delay across a full 52-week year -- slow enough
+// 0.008s/unit gives ~0.42s max delay across a full 52-week year, slow enough
 // to see the ripple spread organically without feeling sluggish.
 const BASE_DELAY = 0.012;
 

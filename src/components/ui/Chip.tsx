@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useLayoutEffect, useState } from "react";
 import type { MouseEventHandler, ReactNode } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useSmoothCorners } from "@lisse/react";
@@ -21,9 +21,9 @@ interface ChipProps {
 }
 
 /**
- * Icon crossfade with blur + scale + opacity spring.
- * Follows principle #7: scale 0.25→1, opacity 0→1, blur 4px→0px,
- * spring duration 0.3, bounce 0.
+ * Icon crossfade with blur + scale + opacity.
+ * Shares the same duration and easing as AnimatedLabel so both
+ * resolve together as one unified motion.
  * First render is a plain element with no animation to avoid
  * slide-in/scale-in on initial page load.
  */
@@ -39,10 +39,10 @@ function AnimatedIcon({ icon, iconKey, reduced }: { icon: ReactNode; iconKey?: s
     <AnimatePresence initial={false} mode="popLayout">
       <motion.span
         key={iconKey}
-        initial={reduced ? false : { opacity: 0, scale: 0.25, filter: "blur(4px)" }}
+        initial={reduced ? false : { opacity: 0, scale: 0.5, filter: "blur(4px)" }}
         animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-        exit={reduced ? undefined : { opacity: 0, scale: 0.25, filter: "blur(4px)" }}
-        transition={reduced ? { duration: 0 } : { type: "spring", duration: 0.3, bounce: 0 }}
+        exit={reduced ? undefined : { opacity: 0, scale: 0.5, filter: "blur(4px)" }}
+        transition={reduced ? { duration: 0 } : { duration: CROSSFADE.duration, ease: CROSSFADE.ease }}
         style={{ display: "inline-flex" }}
       >
         {icon}
@@ -54,90 +54,128 @@ function AnimatedIcon({ icon, iconKey, reduced }: { icon: ReactNode; iconKey?: s
 /*
  * ANIMATION STORYBOARD
  *
- * key change triggers AnimatePresence enter/exit:
- *   exit     outgoing slides right, fades out, blurs
- *   enter    incoming slides in from left, fades in, un-blurs
- *   width    container morphs via Motion layout FLIP (B-tier)
+ * CSS animation-based crossfade :
+ *   exit     outgoing always slides right (+6px), fades out, blurs
+ *   enter    incoming slides in from direction of dir, fades in, un-blurs
+ *            "Copied!" from left (-6px), email from right (+6px)
+ *   width    container morphs via CSS transition on width
  *
- * All three animations share the same duration + easing so
- * the morph, slide, and crossfade feel like one motion.
+ * Uses CSS @keyframes instead of Motion AnimatePresence so the exit
+ * animation plays on mount.
+ * Keyframes defined in globals.css.
  */
 
 const CROSSFADE = {
   slide:     6,           // px horizontal offset
   blur:      "2px",       // match ThemeToggle
-  duration:  0.25,        // seconds — user-initiated per Emil's principles
-  ease:      [0, 0, 0.2, 1] as const, // ease-out — user-initiated per Emil's principles
+  duration:  0.25,        // seconds; user-initiated per Emil's principles
+  ease:      [0, 0, 0.2, 1] as const, // ease-out, matches EASE_OUT from motion-tokens
 };
 
 /**
- * Crossfade + width morph between label values.
- * The container width morphs via Motion's `layout` FLIP instead of
- * a CSS width transition, upgrading the resize from D-tier (layout)
- * to B-tier (one-time FLIP read).
- * Slide direction alternates: "Copied!" from left, email from right.
- * First render is a plain element with no animation to avoid
- * slide-in on initial page load.
+ * Crossfade between label values, ThemeToggle-style CSS animation.
+ * 
+ * On label change:
+ *   - The outgoing label mounts with a CSS animation (exit-right,
+ *     plays from opacity 1→0, translateX 0→6px).
+ *   - The incoming label mounts with a CSS animation (enter-from-left
+ *     or enter-from-right, plays from opacity 0→1, translateX -6/6px→0).
+ *   - The container width transitions via CSS `transition: width`.
+ * 
+ * The animated structure renders from the first render, but CSS animations
+ * are gated by `isLabelChange` (animKey > 0) so they only play on actual
+ * label swaps, not on initial page load.
  */
 function AnimatedLabel({ label, reduced }: { label: string; reduced: boolean }) {
-  const [ready, setReady] = useState(false);
-  useEffect(() => { setReady(true); }, []);
+  const [fadingLabel, setFadingLabel] = useState<string | null>(null);
+  const measureRef = useRef<HTMLSpanElement>(null);
+  const [width, setWidth] = useState<number | null>(null);
+  const prevLabelRef = useRef(label);
+  const animKeyRef = useRef(0);
 
-  const transition = reduced
-    ? { duration: 0 }
-    : { duration: CROSSFADE.duration, ease: CROSSFADE.ease };
+  // Measure the current label's natural width for container morph
+  useLayoutEffect(() => {
+    if (measureRef.current) {
+      setWidth(measureRef.current.scrollWidth);
+    }
+  }, [label]);
 
-  // Direction: "Copied!" enters from left / exits right.
-  // Email enters from right / exits left (the opposite).
-  const dir = label === "Copied!" ? 1 : -1;
+  // On label change: trigger crossfade
+  useEffect(() => {
+    if (label !== prevLabelRef.current) {
+      const old = prevLabelRef.current;
+      prevLabelRef.current = label;
+      animKeyRef.current++;
 
-  if (!ready) {
+      setFadingLabel(old);
+
+      const timer = setTimeout(() => setFadingLabel(null), 250);
+      return () => clearTimeout(timer);
+    }
+  }, [label]);
+
+  const dir = label === "Copied!" ? "left" : "right";
+  const animKey = animKeyRef.current;
+  const isLabelChange = animKey > 0;
+
+  if (reduced) {
     return <span style={{ display: "inline-block", whiteSpace: "nowrap" }}>{label}</span>;
   }
 
   return (
-    <motion.span
-      layout={reduced ? false : "position"}
+    <span
       style={{
         position: "relative",
         display: "inline-block",
         whiteSpace: "nowrap",
+        verticalAlign: "middle",
+        width: width ? `${width}px` : "auto",
+        transition: "width 250ms ease-out",
       }}
     >
-      {/* Sizer: invisible, provides intrinsic width for container.
-          Motion `layout` detects the size delta and animates it. */}
+      {/* Measurement span for width */}
+      <span ref={measureRef} aria-hidden="true" style={{ position: "absolute", visibility: "hidden", whiteSpace: "nowrap" }}>
+        {label}
+      </span>
+      {/* Sizer provides intrinsic height */}
       <span aria-hidden="true" style={{ visibility: "hidden", display: "inline-block" }}>
         {label}
       </span>
-      <AnimatePresence initial={false} mode="sync">
-        <motion.span
-          key={label}
-          initial={{
-            opacity: 0,
-            x: -CROSSFADE.slide * dir,
-            filter: `blur(${CROSSFADE.blur})`,
-          }}
-          animate={{
-            opacity: 1,
-            x: 0,
-            filter: "blur(0px)",
-          }}
-          exit={{
-            opacity: 0,
-            x: CROSSFADE.slide * dir,
-            filter: `blur(${CROSSFADE.blur})`,
-          }}
-          transition={transition}
+
+      {/* Fading-out previous label covers the current label, then reveals it */}
+      {fadingLabel !== null && (
+        <span
+          key={`out-${animKey}`}
           style={{
             position: "absolute",
             inset: 0,
-            display: "inline-block",
+            whiteSpace: "nowrap",
+            animation: isLabelChange
+              ? "label-exit-right 250ms cubic-bezier(0,0,0.2,1) forwards"
+              : "none",
           }}
         >
-          {label}
-        </motion.span>
-      </AnimatePresence>
-    </motion.span>
+          {fadingLabel}
+        </span>
+      )}
+
+      {/* Entering current label only animates on label changes,
+          not on initial mount. `isLabelChange` is true once animKey > 0,
+          which only happens after a label swap. */}
+      <span
+        key={`in-${animKey}`}
+        style={{
+          position: "absolute",
+          inset: 0,
+          whiteSpace: "nowrap",
+          animation: isLabelChange
+            ? `label-enter-from-${dir} 250ms cubic-bezier(0,0,0.2,1) forwards`
+            : "none",
+        }}
+      >
+        {label}
+      </span>
+    </span>
   );
 }
 
