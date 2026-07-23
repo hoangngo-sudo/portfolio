@@ -22,7 +22,7 @@ flowchart TB
     PROJECTS --> |REST| GHREST[("GitHub API<br/>Commit activity")]
     GHREST --> |ISR cached| COMMITS["ProjectCommitsWidget<br/>12-week sparkline"]
 
-    SYNOPSIS --> GLOBE["Globe3D<br/>cobe WebGL + haptic drag"]
+    SYNOPSIS --> GLOBE["Globe3D<br/>cobe WebGL + haptic drag + arcs"]
 
     USER --> |Toggle| THEME{"Black / Teal Theme"}
     THEME --> |localStorage| USER
@@ -38,12 +38,12 @@ flowchart TB
 
 - **Config-driven** Edit a single `portfolio.config.ts`
 - **Photo gallery hero** Desktop fanned layout with spring arc tooltip labels; mobile swipeable card stack; staggered entrance animations
-- **Interactive 3D globe** `cobe` WebGL globe in the about section with drag rotation and haptic detents (picks up every ~15° like a scroll wheel)
+- **Interactive 3D globe** `cobe` WebGL globe in the about section with drag rotation, haptic detents (picks up every ~15°), and arc curves between markers with theme-aware colors and distance labels
 - **GitHub heatmap** Contribution graph with year navigation, `AnimateNumber` digit-flip tooltips, physical stagger entrance (distance-based spring ripple from top-left), and skillicons.dev GitHub brand icon; fetched from GitHub GraphQL API with ISR caching; placeholder fallback when no token is set
 - **Fuzzy search overlay** Cmd+K / Ctrl+K triggers Fuse.js-powered search across all sections with action links; tags indexed separately from display text
 - **Project drag carousel** Horizontal drag-to-scroll carousel with momentum pure pointer events, no animation library; cards are `<a>` links with native link drag suppression
 - **Project commit sparklines** Per-project GitHub commit activity for the last 12 weeks
-- **2 color themes** Black and Teal, switchable via chip-style text button with opacity crossfade and vertical wipe page transition (View Transitions API + clip-path, 350ms); flash-free hydration via anti-FOUC inline script
+- **2 color themes** Black and Teal, switchable via chip-style text button with opacity+blur crossfade (250ms ease-out) and diagonal wipe page transition (View Transitions API + clip-path, 0.7s, direction-aware keyframes); haptic + audio feedback on toggle; flash-free hydration via anti-FOUC inline script
 - **Scroll progress bar** + **Back-to-top FAB** toggleable via feature flags
 - **Categorized skill pills** Tech stack displayed as a categorized grid of theme-aware pills with hover effects and skillicons.dev CDN icons; inline stack description paragraph with embedded pill buttons; squircle corners via `@lisse/react` smoothCorners
 - **Sticky footer contact** Pure CSS sticky reveal content sections scroll over with `z-10` while the Contact section sits at `z-0`, pinned to the viewport bottom; decorative "God bless you." branding text at the bottom edge
@@ -238,10 +238,10 @@ Hero photos use `next/image` with `fill` layout for native lazy loading and zero
 │   │   │   ├── SkillsSection.tsx               # Categorized pill grid with skillicons.dev CDN
 │   │   │   ├── CoursesSection.tsx              # SpotlightCard coursework
 │   │   │   ├── CourseShowMoreClient.tsx        # Client expand/collapse with staggered entrance
-│   │   │   └── ContactSection.tsx              # Social link Chips with react-icons
+│   │   │   └── ContactSection.tsx              # Social link Chips with nucleo icons
 │   │   └── ui/
 │   │       ├── ArcTooltip.tsx           # Spring-animated arc tooltip for photo labels
-│   │       ├── BackToTopFAB.tsx         # Keycap-styled floating action button
+│   │       ├── BackToTopFAB.tsx         # Floating action button (dm-elevation-2, spring press)
 │   │       ├── CardStack.tsx            # Mobile: swipeable photo card stack with 3D tilt
 │   │       ├── Chip.tsx                 # Tag / link chip (squircle corners + dm-elevation-2)
 │   │       ├── SkylineBackground.tsx # Background image for contact section
@@ -260,7 +260,7 @@ Hero photos use `next/image` with `fill` layout for native lazy loading and zero
 │   │       ├── ShowMoreButton.tsx       # Expand/collapse toggle button
 │   │       ├── SpotlightCard.tsx        # Polymorphic card with cursor-following radial glow
 │   │       ├── StaggeredBlurText.tsx    # Staggered word-by-word blur entrance animation
-│   │       └── ThemeToggle.tsx          # Theme switcher: chip-style text button + View Transitions API vertical wipe
+│   │       └── ThemeToggle.tsx          # Theme switcher: chip-style text button + View Transitions API diagonal wipe (0.7s)
 │   ├── config/
 │   │   └── portfolio.config.ts     # Single-file site configuration
 │   ├── lib/
