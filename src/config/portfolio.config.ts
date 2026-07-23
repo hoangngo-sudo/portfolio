@@ -73,9 +73,22 @@ const config: PortfolioConfig = {
           { lat: 10.8231, lng: 106.6297, src: "/photos/photo-1.jpg", label: "Ho Chi Minh City, Vietnam" },
           { lat: 41.8781, lng: -87.6298, src: "/photos/photo-1.jpg", label: "Chicago, Illinois" },
         ],
+        arcs: [
+          {
+            from: [10.8231, 106.6297],
+            to: [41.8781, -87.6298],
+            id: "hcmc-chicago",
+            label: "12,789 km",
+            labelLat: 45,
+            labelLng: 175,
+          },
+        ],
         atmosphereColor: "#0d9488",
         atmosphereIntensity: 15,
         autoRotateSpeed: 0.3,
+
+        arcWidth: 0.5,
+        arcHeight: 0.5,
       },
     },
 

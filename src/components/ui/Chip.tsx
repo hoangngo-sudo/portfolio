@@ -82,9 +82,8 @@ const CROSSFADE = {
  *     or enter-from-right, plays from opacity 0→1, translateX -6/6px→0).
  *   - The container width transitions via CSS `transition: width`.
  * 
- * The animated structure renders from the first render, but CSS animations
- * are gated by `isLabelChange` (animKey > 0) so they only play on actual
- * label swaps, not on initial page load.
+ * CSS animations are gated by `isLabelChange` (animKey > 0) so they only
+ * play on label swaps, not on initial page load.
  */
 function AnimatedLabel({ label, reduced }: { label: string; reduced: boolean }) {
   const [fadingLabel, setFadingLabel] = useState<string | null>(null);

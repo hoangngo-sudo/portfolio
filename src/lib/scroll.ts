@@ -3,7 +3,7 @@ import { animate, type AnimationPlaybackControls } from "motion";
 let activeScroll: AnimationPlaybackControls | null = null;
 
 /**
- * Smooth-scroll to a target Y position using framer-motion spring animation.
+ * Smooth-scroll to a target Y position using motion spring animation.
  * Temporarily disables CSS scroll-behavior to avoid conflicting with the
  * JS-driven animation.
  */
@@ -48,7 +48,7 @@ export function smoothScrollTo(targetY: number, options?: { duration?: number; b
 }
 
 /**
- * Smooth-scroll to a DOM element by ID using framer-motion spring animation.
+ * Smooth-scroll to a DOM element by ID using motion spring animation.
  *
  * For sticky elements (which always sit at a fixed viewport position),
  * we find the element's natural position in the document flow by

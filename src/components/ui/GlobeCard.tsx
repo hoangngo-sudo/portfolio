@@ -20,12 +20,12 @@ interface Props {
 }
 
 export function GlobeCard({ config }: Props) {
-  const { colors } = useTheme();
+  const { colors, theme } = useTheme();
 
   return (
     <div className="w-full cursor-default rounded-2xl bg-light-bg-alt elevation-2">
       <div className="flex flex-col overflow-hidden rounded-2xl">
-        {/* Text at top, which mirrors the reference card layout */}
+        {/* Text at top */}
         <div className="px-6 pt-6 pb-2">
           <h3 className="mt-1 text-xl font-bold text-ink-muted">
             {config.heading}
@@ -34,15 +34,18 @@ export function GlobeCard({ config }: Props) {
 
         {/*
          * Globe below the text, cropped at the bottom.
-         * The negative margin pushes the card's bottom edge UP into the globe,
-         * so overflow:hidden on the card clips the lower portion.
-         * This creates the "globe peeking out of the card" look from the reference.
+         * Negative margin pulls the card bottom up into the globe.
+         * overflow:hidden clips the rest.
          */}
         <div className="-mb-[40%] w-full">
           <Globe3D
             markers={config.markers ?? []}
+            arcs={config.arcs}
             atmosphereColor={colors.accent}
             autoRotateSpeed={config.autoRotateSpeed}
+            arcWidth={config.arcWidth}
+            arcHeight={config.arcHeight}
+            theme={theme}
           />
         </div>
       </div>

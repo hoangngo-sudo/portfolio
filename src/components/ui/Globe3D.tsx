@@ -8,7 +8,7 @@ import { useWebHaptics } from "web-haptics/react";
 import { useSound } from "@web-kits/audio/react";
 import { click, pop, hover } from "@/lib/audio/minimal";
 import { hexToRgb } from "@/lib/color";
-import type { GlobeMarker } from "@/types/config";
+import type { GlobeArc, GlobeMarker } from "@/types/config";
 
 const THETA = 0.2; // tilt (radians)
 // cobe internal: ee = 0.8 (globe radius)
@@ -18,15 +18,18 @@ function project(
   lat: number,
   lng: number,
   phi: number,
+  altitude: number = 0,
 ): { sx: number; sy: number; zView: number } {
   const latRad = (lat * Math.PI) / 180;
   const lngRad = (lng * Math.PI) / 180;
 
-  // cobe's 3D coords, already scaled by elevation
+  // cobe's 3D coords, scaled by elevation + optional altitude
+  // altitude lifts the point above the surface (e.g., for arc labels)
+  const r = ELEV + altitude;
   const cosr = Math.cos(latRad);
-  const t0 =  cosr * Math.cos(lngRad) * ELEV;
-  const t1 =  Math.sin(latRad)        * ELEV;
-  const t2 = -cosr * Math.sin(lngRad) * ELEV;
+  const t0 =  cosr * Math.cos(lngRad) * r;
+  const t1 =  Math.sin(latRad)        * r;
+  const t2 = -cosr * Math.sin(lngRad) * r;
 
   const cosPhi   = Math.cos(phi);
   const sinPhi   = Math.sin(phi);
@@ -53,18 +56,27 @@ function hexToGl(hex: string): [number, number, number] {
 
 interface Props {
   markers: GlobeMarker[];
+  arcs?: GlobeArc[];
   atmosphereColor?: string;
   autoRotateSpeed?: number;
+  arcWidth?: number;
+  arcHeight?: number;
+  theme?: "teal" | "black";
 }
 
 export function Globe3D({
   markers,
+  arcs,
   atmosphereColor = "#4da6ff",
   autoRotateSpeed = 0.3,
+  arcWidth,
+  arcHeight,
+  theme = "teal",
 }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const avatarRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const arcLabelRefs = useRef<(HTMLDivElement | null)[]>([]);
   const pinColor = `color-mix(in srgb, ${atmosphereColor} 60%, black)`;
   const phiRef = useRef(0);
   // Cache container dimensions read once (+ ResizeObserver), never in rAF
@@ -117,6 +129,32 @@ export function Globe3D({
       baseColor: [atmo[0] * 0.08 + 0.92, atmo[1] * 0.08 + 0.92, atmo[2] * 0.08 + 0.92],
       markerColor: [0.184, 0.384, 0.365],
       glowColor: [atmo[0] * 0.55 + 0.45, atmo[1] * 0.55 + 0.45, atmo[2] * 0.55 + 0.45],
+      arcs: arcs?.map((a) => ({
+        from: a.from,
+        to: a.to,
+        color: a.color,
+        id: a.id,
+      })),
+      arcColor: (theme === "black"
+        ? [0.4, 0.4, 0.4] as number[]
+        : [atmo[0] * 0.8 + 0.2, atmo[1] * 0.8 + 0.2, atmo[2] * 0.8 + 0.2]) as [number, number, number],
+      arcWidth: arcWidth ?? 0.5,
+      arcHeight: arcHeight ?? 0.3,
+      // Endpoint dots at each arc's from/to, rendered by cobe in the same
+      // projection pipeline as the arc (no misalignment with DOM pins).
+      markers: [
+        ...(arcs?.flatMap((a) => {
+          const fallback = theme === "black"
+            ? ([0.4, 0.4, 0.4] as number[])
+            : [atmo[0] * 0.8 + 0.2, atmo[1] * 0.8 + 0.2, atmo[2] * 0.8 + 0.2];
+          const c = a.color ?? (fallback as [number, number, number]);
+          return [
+            { location: a.from, size: 0.015, color: c },
+            { location: a.to, size: 0.015, color: c },
+          ];
+        }) ?? []),
+      ],
+      markerElevation: 0,
     });
 
     // Drag handlers
@@ -142,8 +180,8 @@ export function Globe3D({
       const dphi = (dx / wRef.current) * Math.PI * 1.2;
       phiRef.current += dphi;
       momentumRef.current = dphi;
-      // Accumulate tilt, counter-rotating so that dragging right makes the pin tilt left
-      // dphi is in radians; gain converts to degrees with a subtle range
+      // Accumulate tilt, counter-rotating. Dragging right tilts pin left.
+      // dphi in radians; gain converts to degrees.
       tiltRef.current -= dphi * 80; // rad→deg gain: ~25° max for a fast swipe
       // Fire "selection" at every ~15° detent, like a picker wheel
       hapticAccumRef.current += Math.abs(dphi);
@@ -224,6 +262,32 @@ export function Globe3D({
         el.style.pointerEvents = zView > 0 ? "auto" : "none";
       }
 
+      // Position arc labels (arc midpoint or explicit labelLat/labelLng).
+      // Same depth-based ease-out-cubic fade as the pin avatars.
+      if (arcs) {
+        const labelOffsetY = 0;
+        for (let i = 0; i < arcs.length; i++) {
+          const el = arcLabelRefs.current[i];
+          if (!el || !arcs[i].label) continue;
+          const arc = arcs[i];
+          const labelLat = arc.labelLat ?? (arc.from[0] + arc.to[0]) / 2;
+          const labelLng = arc.labelLng ?? (arc.from[1] + arc.to[1]) / 2;
+          const { sx, sy, zView } = project(labelLat, labelLng, phiRef.current);
+          // Same depth-based fade as markers: ease-out-cubic over ±0.2 horizon band
+          let opacity: number;
+          if (prefersReducedMotion) {
+            opacity = zView > 0 ? 1 : 0;
+          } else {
+            const FADE = 0.2;
+            const t = Math.max(0, Math.min(1, (zView + FADE) / (2 * FADE)));
+            opacity = 1 - Math.pow(1 - t, 3); // ease-out-cubic
+          }
+          el.style.transform = `translate(${sx * w}px, ${sy * h + labelOffsetY}px)`;
+          el.style.opacity = opacity < 0.005 ? "0" : opacity > 0.995 ? "1" : opacity.toFixed(3);
+          el.style.pointerEvents = zView > 0 ? "auto" : "none";
+        }
+      }
+
       rafId = requestAnimationFrame(frame);
     }
 
@@ -252,7 +316,7 @@ export function Globe3D({
       globe.destroy();
     };
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [atmosphereColor, autoRotateSpeed]);
+  }, [atmosphereColor, autoRotateSpeed, arcWidth, arcHeight]);
 
   return (
     <div ref={containerRef} className="relative w-full aspect-square touch-none select-none">
@@ -289,6 +353,22 @@ export function Globe3D({
           />
         </div>
       ))}
+      {arcs?.map((arc, i) =>
+        arc.label ? (
+          <div
+            key={`arc-${arc.id ?? i}`}
+            ref={(el) => { arcLabelRefs.current[i] = el; }}
+            className="pointer-events-none absolute left-0 top-0 z-10 whitespace-nowrap rounded-full px-2 py-0.5 text-xs opacity-0 backdrop-blur-sm"
+            style={{
+              willChange: "transform, opacity",
+              color: theme === "teal" ? "#0d5853" : "#ffffff",
+              backgroundColor: theme === "teal" ? "rgba(13, 88, 83, 0.12)" : "#666666",
+            }}
+          >
+            {arc.label}
+          </div>
+        ) : null
+      )}
     </div>
   );
 }

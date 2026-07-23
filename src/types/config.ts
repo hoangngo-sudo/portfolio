@@ -75,12 +75,26 @@ export interface GlobeMarker {
   label: string; // tooltip / aria-label
 }
 
+export interface GlobeArc {
+  from: [number, number];  // [lat, lng]—arc origin
+  to: [number, number];    // [lat, lng]—arc destination
+  color?: [number, number, number]; // RGB 0-1 (default uses arcColor)
+  id?: string;             // CSS anchor id (anchors at arc midpoint)
+  label?: string;          // label/tooltip shown at arc midpoint
+  labelLat?: number;       // explicit label latitude (default: arc midpoint)
+  labelLng?: number;       // explicit label longitude (default: arc midpoint)
+}
+
 export interface GlobeConfig {
   heading: string;
   markers?: GlobeMarker[];
+  arcs?: GlobeArc[];
   atmosphereColor?: string;      // default: "#4da6ff"
   atmosphereIntensity?: number;  // default: 20
   autoRotateSpeed?: number;      // default: 0.3
+  arcColor?: [number, number, number]; // default arc RGB color
+  arcWidth?: number;              // line thickness (default: 0.5)
+  arcHeight?: number;             // curve height above surface (default: 0.3)
 }
 
 export interface SynopsisConfig {
