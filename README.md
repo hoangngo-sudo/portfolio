@@ -1,6 +1,6 @@
 # *Portfolio Template* project
 
-A config-driven developer portfolio built with **Next.js 16**, **Base UI**, **Tailwind CSS v4**, and **Motion**. Ships a polished single-page layout with photo gallery hero, interactive 3D globe, GitHub contribution heatmap, and fuzzy search; all controlled from one config file.
+This is a portfolio I built with **Next.js 16**, **Base UI**, **Tailwind CSS v4**, and **Motion**. It has a single-page layout with a photo gallery hero, an interactive globe, a GitHub contribution heatmap, and fuzzy search. One file, `portfolio.config.ts`, controls all site content.
 
 ## Architecture
 
@@ -36,29 +36,29 @@ flowchart TB
 
 ## Features
 
-- **Config-driven** Edit a single `portfolio.config.ts`
-- **Photo gallery hero** Desktop fanned layout with spring arc tooltip labels; mobile swipeable card stack; staggered entrance animations
-- **Interactive 3D globe** `cobe` WebGL globe in the about section with drag rotation, haptic detents (picks up every ~15°), and arc curves between markers with theme-aware colors and distance labels
-- **GitHub heatmap** Contribution graph with year navigation, `AnimateNumber` digit-flip tooltips, physical stagger entrance (distance-based spring ripple from top-left), and skillicons.dev GitHub brand icon; fetched from GitHub GraphQL API with ISR caching; placeholder fallback when no token is set
-- **Fuzzy search overlay** Cmd+K / Ctrl+K triggers Fuse.js-powered search across all sections with action links; tags indexed separately from display text
-- **Project drag carousel** Horizontal drag-to-scroll carousel with momentum pure pointer events, no animation library; cards are `<a>` links with native link drag suppression
-- **Project commit sparklines** Per-project GitHub commit activity for the last 12 weeks
-- **2 color themes** Black and Teal, switchable via chip-style text button with opacity+blur crossfade (250ms ease-out) and diagonal wipe page transition (View Transitions API + clip-path, 0.7s, direction-aware keyframes); haptic + audio feedback on toggle; flash-free hydration via anti-FOUC inline script
-- **Scroll progress bar** + **Back-to-top FAB** toggleable via feature flags
-- **Categorized skill pills** Tech stack displayed as a categorized grid of theme-aware pills with hover effects and skillicons.dev CDN icons; inline stack description paragraph with embedded pill buttons; squircle corners via `@lisse/react` smoothCorners
-- **Sticky footer contact** Pure CSS sticky reveal content sections scroll over with `z-10` while the Contact section sits at `z-0`, pinned to the viewport bottom; decorative "God bless you." branding text at the bottom edge
-- **SpotlightCard** Project and coursework cards with a radial-gradient glow that follows the cursor, theme-aware accent color
-- **Shadow elevation** Two-tier depth system: `dm-elevation-2` for dark sections and 3-layer stacked shadow `elevation-2` for light sections
-- **Variant-aware typography** `SectionWrapper` provides a React context so `Overline` and `SectionHeading` automatically adapt their color to dark/light backgrounds, ensuring WCAG AA contrast compliance on every section
-- **Chip-style buttons** Squircle-corned (`@lisse/react`) interactive chips for nav, contact, and back-to-top; animated rainbow glow ring on search overlay trigger; colors adapt to the active theme
-- **Web haptics** Touch feedback on chips, drags, globe rotation and button taps
-- **Synthesized audio** Dual-channel haptic+sound feedback on every interaction; ultra-subtle sine-wave tones from `@web-kits/audio` Minimal patch (9 sounds across 10 components); auto-respects `prefers-reduced-motion`
-- **Themed scrollbar** Thin accent-colored scrollbar consistent across all scroll containers
-- **Map pin avatars** SVG map pin markers on the globe with embedded photos and counter-rotation tilt during drag
-- **Motion-optimized** Full-project animation audit — 83% of 28 animations are S or A-tier; zero layout thrashing; standardized hover easing (ease-out-cubic) across Chip, ShowMoreButton, and TagPill for consistent micro-interaction feel; theme crossfade tuned to 350ms (within Emil's 400ms page-transition ceiling principles); carousel momentum uses native browser `scrollTo`
-- **Accessible** Skip-to-content link, semantic HTML, keyboard navigation, `prefers-reduced-motion` support; dark-section overline contrast passes WCAG AA (4.58:1)
-- **SEO** Open Graph tags, JSON-LD Person schema, semantic heading hierarchy
-- **Performance** Static generation, Geist font family via `next/font` for zero-FOUT, Tailwind v4
+- **Config-driven**: One file, `portfolio.config.ts`, drives all site content.
+- **Photo gallery hero**: A desktop fanned layout shows spring arc tooltips on photos. A mobile swipeable card stack plays staggered entrance animations.
+- **Interactive 3D globe**: A `cobe` WebGL globe sits in the about section. It supports drag rotation, haptic detents every ~15°, arc curves between markers, and distance labels. The arc colors follow the active theme.
+- **GitHub heatmap**: A contribution graph shows year navigation, `AnimateNumber` digit-flip tooltips, and a distance-based spring ripple from the top-left. The GitHub GraphQL API feeds the data with ISR caching. A placeholder appears when you set no token.
+- **Fuzzy search overlay**: Press Cmd+K or Ctrl+K to open a Fuse.js search across all sections. Search returns action links. Tags index separately from display text.
+- **Project drag carousel**: A horizontal drag-to-scroll carousel uses momentum with pure pointer events. It uses no animation library. Cards are `<a>` links with native link drag suppression.
+- **Project commit sparklines**: Per-project GitHub commit activity shows the last 12 weeks.
+- **2 color themes**: Black and Teal themes switch through a chip-style text button. The switch uses an opacity and blur crossfade (250ms ease-out). It also uses a diagonal wipe transition (View Transitions API with clip-path, 0.7s, direction-aware keyframes). The toggle includes haptic and audio feedback. An anti-FOUC inline script prevents theme flash on load.
+- **Scroll progress bar + Back-to-top FAB**: Feature flags toggle the scroll progress bar and the back-to-top button.
+- **Categorized skill pills**: A categorized grid of theme-aware pills shows the tech stack. The pills use hover effects and skillicons.dev CDN icons. An inline stack description paragraph includes embedded pill buttons. `@lisse/react` smoothCorners makes squircle corners.
+- **Sticky footer contact**: Pure CSS sticky reveal lets content sections scroll over with `z-10`. The Contact section sits at `z-0`, pinned to the viewport bottom. Decorative "God bless you." text sits at the bottom edge.
+- **SpotlightCard**: A radial-gradient glow follows the cursor on project and coursework cards. The accent color adapts to the active theme.
+- **Shadow elevation**: A two-tier depth system uses `dm-elevation-2` for dark sections. Light sections use a 3-layer stacked shadow, `elevation-2`.
+- **Variant-aware typography**: `SectionWrapper` shares a React context. `Overline` and `SectionHeading` adapt their color to dark or light backgrounds. This keeps WCAG AA contrast on every section.
+- **Chip-style buttons**: Squircle-cornered (`@lisse/react`) interactive chips handle nav, contact, and back-to-top actions. An animated rainbow glow ring appears on the search overlay trigger. Colors adapt to the active theme.
+- **Web haptics**: Touch feedback works on chips, drags, globe rotation, and button taps.
+- **Synthesized audio**: Dual-channel haptic and sound feedback accompanies every interaction. Ultra-subtle sine-wave tones from `@web-kits/audio` Minimal patch (9 sounds across 10 components) make the audio. The system auto-respects `prefers-reduced-motion`.
+- **Themed scrollbar**: A thin accent-colored scrollbar stays consistent across all scroll containers.
+- **Map pin avatars**: SVG map pin markers on the globe embed photos. They counter-rotate and tilt during drag.
+- **Motion-optimized**: 83% of 28 animations are S or A-tier with zero layout thrashing. Standardized hover easing (ease-out-cubic) runs across Chip, ShowMoreButton, and TagPill. Theme crossfade tunes to 350ms, within the 400ms page-transition ceiling. Carousel momentum uses native browser `scrollTo`.
+- **Accessible**: A skip-to-content link, semantic HTML, keyboard navigation, and `prefers-reduced-motion` support improve accessibility. Dark-section overline contrast passes WCAG AA (4.58:1).
+- **SEO**: Open Graph tags, JSON-LD Person schema, and semantic heading hierarchy handle SEO.
+- **Performance**: Static generation, Geist font family via `next/font`, and Tailwind v4 deliver performance.
 
 ## Tech Stack
 
@@ -141,7 +141,7 @@ graph TD
 
 ## <a name="credits">Acknowledgment</a>
 
-This project would not be possible without the following open-source projects:
+These open-source projects made this project possible:
 
 - Haptic feedback from [web-haptics](https://haptics.lochie.me/)
 - UI sound synthesis from [@web-kits/audio](https://audio.raphaelsalaja.com/)
@@ -150,7 +150,7 @@ This project would not be possible without the following open-source projects:
 - Clipped WebGL globe card aesthetic from [COBE](https://cobe.vercel.app/)
 - Theme toggle effect from [theme-toggle.rdsx.dev](https://theme-toggle.rdsx.dev/) using View Transition API
 
-This project has been inspired by the following websites and designs:
+These websites and designs inspired this project:
 
 - [braydoncoyer.dev](https://www.braydoncoyer.dev/): hero section gallery images display with spring-animated photo fan-out
 - [anirudhkuppili.com](https://anirudhkuppili.com): layout structure, section hierarchy, color theming system, and overall visual language
@@ -198,7 +198,7 @@ To display real contribution data, create a `.env.local` file:
 GITHUB_TOKEN=ghp_your_personal_access_token
 ```
 
-The token needs the `read:user` scope. Without a token, a placeholder heatmap is displayed.
+The token needs the `read:user` scope. Without a token, the app shows a placeholder heatmap.
 
 ### Images
 
