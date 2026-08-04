@@ -63,7 +63,7 @@ const config: PortfolioConfig = {
       enabled: true,
       overline: "b. 2003",
       heading: "About me",
-      body: "My name is Hoang Ngo. I grew up in Ho Chi Minh City (HCMC), Vietnam, and now I am studying Computer Science at University of Illinois Chicago. I got into Computer Science because I am fascinated by the programming languages and have an interest in learning to build things on web.\n\nMost of my time goes into web development. I care a lot about how things feel. A good interface should feel like second nature, where you do not have to think about what to click next.\n\nBeyond the interface, I also care deeply about the backend side. A website that looks nice but breaks when you use it is not very useful.\n\nOutside of code, I read and study the bible daily to know more about Jesus, my savior. My faith in God keeps me grounded through all of the work I do.",
+      body: "I am Hoang Ngo. I grew up in Ho Chi Minh City, Vietnam. I now study Computer Science at the University of Illinois Chicago. I chose Computer Science because I like programming languages and I want to build web applications. I spend most of my time on web development. I care about how things feel. A good interface feels like second nature. You do not have to think about what to click next. I also care about the backend. A website that looks good but breaks during use is not useful. Outside code, I read and study the Bible daily to learn more about Jesus, my savior. My faith in God keeps me grounded in my work.",
       github: {
         username: "hoangngo-sudo",
       },
