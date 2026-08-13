@@ -45,12 +45,12 @@ flowchart TB
 - **Project commit sparklines**: Per-project GitHub commit activity shows the last 12 weeks.
 - **2 color themes**: Black and Teal themes switch through a chip-style text button. The switch uses an opacity and blur crossfade (250ms ease-out). It also uses a diagonal wipe transition (View Transitions API with clip-path, 0.7s, direction-aware keyframes). The toggle includes haptic and audio feedback. An anti-FOUC inline script prevents theme flash on load.
 - **Scroll progress bar + Back-to-top FAB**: Feature flags toggle the scroll progress bar and the back-to-top button.
-- **Categorized skill pills**: A categorized grid of theme-aware pills shows the tech stack. The pills use hover effects and skillicons.dev CDN icons. An inline stack description paragraph includes embedded pill buttons. `@lisse/react` smoothCorners makes squircle corners.
+- **Categorized skill pills**: A categorized grid of theme-aware pills shows the tech stack. The pills use hover effects and skillicons.dev CDN icons. An inline stack description paragraph includes embedded pill buttons with rounded corners.
 - **Sticky footer contact**: Pure CSS sticky reveal lets content sections scroll over with `z-10`. The Contact section sits at `z-0`, pinned to the viewport bottom. Decorative "God bless you." text sits at the bottom edge.
 - **SpotlightCard**: A radial-gradient glow follows the cursor on project and coursework cards. The accent color adapts to the active theme.
 - **Shadow elevation**: A two-tier depth system uses `dm-elevation-2` for dark sections. Light sections use a 3-layer stacked shadow, `elevation-2`.
 - **Variant-aware typography**: `SectionWrapper` shares a React context. `Overline` and `SectionHeading` adapt their color to dark or light backgrounds. This keeps WCAG AA contrast on every section.
-- **Chip-style buttons**: Squircle-cornered (`@lisse/react`) interactive chips handle nav, contact, and back-to-top actions. An animated rainbow glow ring appears on the search overlay trigger. Colors adapt to the active theme.
+- **Chip-style buttons**: Rounded interactive chips handle nav, contact, and back-to-top actions. An animated rainbow glow ring appears on the search overlay trigger. Colors adapt to the active theme.
 - **Web haptics**: Touch feedback works on chips, drags, globe rotation, and button taps.
 - **Synthesized audio**: Dual-channel haptic and sound feedback accompanies every interaction. Ultra-subtle sine-wave tones from `@web-kits/audio` Minimal patch (9 sounds across 10 components) make the audio. The system auto-respects `prefers-reduced-motion`.
 - **Themed scrollbar**: A thin accent-colored scrollbar stays consistent across all scroll containers.
@@ -132,7 +132,6 @@ graph TD
 | [web-haptics](https://haptics.lochie.me/) | Touch haptic feedback |
 | [@web-kits/audio](https://audio.raphaelsalaja.com/) | Declarative Web Audio synthesis for UI sound feedback |
 | [COBE](https://cobe.vercel.app/) | WebGL globe renderer |
-| [@lisse/react](https://www.npmjs.com/package/@lisse/react) | Figma-style squircle corners (Chip, ThemeToggle, SpotlightCard, CardStack) |
 | [nucleo-social-media](https://www.npmjs.com/package/nucleo-social-media) | Social media icon SVGs (used in ContactSection chips) |
 | [nucleo-ui-fill-duo-18](https://www.npmjs.com/package/nucleo-ui-fill-duo-18) | UI icon set for chip decorations |
 | [interface-kit](https://www.npmjs.com/package/interface-kit) | Dev-mode UI inspection panel (InterfaceKit, dev only) |
@@ -243,7 +242,7 @@ Hero photos use `next/image` with `fill` layout for native lazy loading and zero
 │   │       ├── ArcTooltip.tsx           # Spring-animated arc tooltip for photo labels
 │   │       ├── BackToTopFAB.tsx         # Floating action button (dm-elevation-2, spring press)
 │   │       ├── CardStack.tsx            # Mobile: swipeable photo card stack with 3D tilt
-│   │       ├── Chip.tsx                 # Tag / link chip (squircle corners + dm-elevation-2)
+│       │       ├── Chip.tsx                 # Tag / link chip (rounded corners + dm-elevation-2)
 │   │       ├── SkylineBackground.tsx # Background image for contact section
 │   │       ├── GitHubHeatmap.tsx        # Contribution graph (theme-aware SVG + AnimateNumber tooltip)
 │   │       ├── Globe3D.tsx              # cobe WebGL interactive globe with haptic drag detents
