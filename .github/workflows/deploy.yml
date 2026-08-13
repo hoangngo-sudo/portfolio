@@ -28,9 +28,13 @@ jobs:
           node-version: 22
           cache: pnpm
 
-      - run: pnpm install --frozen-lockfile
+      - name: Configure Motion registry auth
+        run: pnpm config set "//api.motion.dev/npm/:_authToken" "$MOTION_TOKEN"
         env:
           MOTION_TOKEN: ${{ secrets.MOTION_TOKEN }}
+
+      - run: pnpm install --frozen-lockfile
+        env:
           NUCLEO_LICENSE_KEY: ${{ secrets.NUCLEO_LICENSE_KEY }}
 
       - run: pnpm build
