@@ -87,7 +87,10 @@ export default function ResumePage() {
           {/* ~A4 ratio (210×297). Locked aspect ratio, scales down via box-border + % padding.
                Fonts in the HTML CSS use min(pt, vw) to scale proportionally with the container. */}
           <style>{`@page { size: A4; margin: 0; }`}</style>
-          <div
+          <motion.div
+            initial={reduced ? false : { y: "150vh", opacity: 0.001 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ type: "spring", duration: 0.5, bounce: 0.05 }}
             style={{ width: "min(793px, 90vw)", aspectRatio: "210 / 297" }}
             className="mx-auto box-border rounded-sm bg-white
               shadow-[0_1px_3px_rgba(0,0,0,0.12),0_4px_16px_rgba(0,0,0,0.08)]
