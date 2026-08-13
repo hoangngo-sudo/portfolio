@@ -33,8 +33,14 @@ jobs:
         env:
           MOTION_TOKEN: ${{ secrets.MOTION_TOKEN }}
 
+      - name: Configure aiforui registry auth
+        run: pnpm config set "//aiforui.dev/npm/:_authToken" "$AIFORUI_TOKEN"
+        env:
+          AIFORUI_TOKEN: ${{ secrets.AIFORUI_TOKEN }}
+
       - run: pnpm install --frozen-lockfile
         env:
+          AIFORUI_TOKEN: ${{ secrets.AIFORUI_TOKEN }}
           NUCLEO_LICENSE_KEY: ${{ secrets.NUCLEO_LICENSE_KEY }}
 
       - run: pnpm build
