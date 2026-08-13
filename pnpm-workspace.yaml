@@ -1,0 +1,4 @@
+allowBuilds:
+  nucleo-ui-fill-duo-18: true
+  sharp: true
+  unrs-resolver: true
