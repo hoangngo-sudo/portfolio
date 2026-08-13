@@ -165,16 +165,16 @@ git clone <your-repo-url> my-portfolio
 cd my-portfolio
 
 # Install
-npm install
+pnpm install
 
 # Configure edit with your info
 # src/config/portfolio.config.ts
 
 # Dev
-npm run dev
+pnpm dev
 
 # Build
-npm run build
+pnpm build
 ```
 
 ## Configuration
@@ -287,14 +287,14 @@ Hero photos use `next/image` with `fill` layout for native lazy loading and zero
 Deploy to Vercel:
 
 ```bash
-npx vercel
+pnpm dlx vercel
 ```
 
 Or build and serve statically:
 
 ```bash
-npm run build
-npm start
+pnpm build
+pnpm start
 ```
 
 ## License
