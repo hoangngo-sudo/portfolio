@@ -16,7 +16,7 @@ export default function Page() {
       {features.scrollProgress && <ScrollProgressBar />}
 
       <main id="main-content">
-        <div className="relative z-10 pb-[100vh]">
+        <div className="relative z-10">
           <HeroSection />
 
           {sections.synopsis?.enabled && (
@@ -35,6 +35,11 @@ export default function Page() {
             <CoursesSection data={sections.courses} />
           )}
         </div>
+
+        {/* Reserves the scroll space for the fixed contact reveal. Placed
+            OUTSIDE the z-10 wrapper so its box never covers the contact's
+            chips (padding on the wrapper intercepted clicks). */}
+        <div aria-hidden="true" className="h-screen" />
 
         {sections.contact?.enabled && (
           <ContactSection data={sections.contact} />
