@@ -46,11 +46,11 @@ export function ContactSection({ data }: Props) {
   return (
     <section
       id="contact"
-      className="sticky bottom-0 z-0 min-h-screen overflow-hidden bg-dark-bg text-text-primary"
+      className="fixed inset-0 z-0 overflow-hidden bg-dark-bg text-text-primary"
     >
       <SkylineBackground />
 
-      <div className="relative z-10 mx-auto flex min-h-screen w-full max-w-6xl flex-col justify-center">
+      <div className="relative z-10 mx-auto flex h-full w-full max-w-6xl flex-col justify-center">
         {/* Chips column */}
         <div className="button-group button-group--no-blur flex flex-col items-end gap-3 px-[5vw] pt-20">
           {data.links.map((link) => {
@@ -71,7 +71,6 @@ export function ContactSection({ data }: Props) {
                   }
                   iconKey={isEmail ? (copied ? "check" : "email") : undefined}
                   onClick={isEmail ? handleCopyEmail : () => haptic.trigger("light")}
-                  className="bg-dark-bg-alt dm-elevation-2 border-0"
                 />
               </div>
             );
@@ -79,12 +78,12 @@ export function ContactSection({ data }: Props) {
         </div>
 
         {/* Footer text */}
-        <h6
+        <div
           className="pointer-events-none absolute bottom-0 left-[5vw] translate-y-1/8 select-none font-heading text-4xl font-bold tracking-tight leading-none text-text-primary"
           aria-hidden="true"
         >
           Open To Work
-        </h6>
+        </div>
       </div>
     </section>
   );

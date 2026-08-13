@@ -96,7 +96,7 @@ const config: PortfolioConfig = {
       enabled: true,
       overline: "",
       heading: "Featured Projects",
-      viewAllUrl: "https://github.com/hoangngo-sudo?tab=repositories",
+      viewAllUrl: "https://github.com/hoangngo-sudo",
       items: [
         {
           title: "portfolio",
@@ -147,9 +147,9 @@ const config: PortfolioConfig = {
         { type: "text", content: ". " },
         { type: "text", content: "For database management, I use " },
         { type: "pill", name: "Supabase", icon: "supabase", href: "https://supabase.com" },
-        { type: "text", content: " (I am learning backend so bear with me of what I could do right now is using service *smiling face*). At last, but not least, I use " },
+        { type: "text", content: " (I am still learning the backend, so for now I use Supabase for data). Last but not least, I use " },
         { type: "pill", name: "VSCode", icon: "vscode", href: "https://code.visualstudio.com" },
-        { type: "text", content: " IDE with assisted from AI agent to create awesome projects." },
+        { type: "text", content: " IDE with help from AI agents to create awesome projects." },
       ],
       categories: [
         {

@@ -27,6 +27,7 @@
   --text-primary: #e8ecf2;
   --text-secondary: #c8d0dc;
   --text-muted: #6b7280;
+  --text-muted-dark: #8e97a6;
   --ink-primary: #111827;
   --ink-body: #1f2937;
   --ink-muted: #4b5563;
@@ -59,6 +60,7 @@
   --color-text-primary: var(--text-primary);
   --color-text-secondary: var(--text-secondary);
   --color-text-muted: var(--text-muted);
+  --color-text-muted-dark: var(--text-muted-dark);
   --color-ink-primary: var(--ink-primary);
   --color-ink-body: var(--ink-body);
   --color-ink-muted: var(--ink-muted);
@@ -135,6 +137,47 @@ html {
     0px 0px 0px 1px var(--shadow-color),
     0px 1px 1px -0.5px var(--shadow-color),
     0px 3px 3px -1.5px var(--shadow-color);
+}
+
+/* Natural-light button: shared text treatment — white, variable weight 575,
+   and a half-pixel letterpress text-shadow — plus a brightness hover/press.
+   The surface (background gradient + elevation shadow) lives in
+   .btn-natural-accent. The original Paper-blue surface was removed because
+   no component uses it. */
+.btn-natural {
+  --btn-natural-text-shadow: rgb(0 0 0 / 0.35);
+
+  color: #fff;
+  font-weight: 575;
+  text-shadow: 0 0.5px 0 var(--btn-natural-text-shadow);
+}
+
+/* Theme button surface: the old dark surface (dark-bg-alt) with the
+   dm-elevation-2 shadow stack, keeping the ambient top-light vertical
+   gradient and the letterpress text treatment from .btn-natural.
+   Shadow stack mirrors .dm-elevation-2 so it stays in the elevation system. */
+.btn-natural-accent {
+  --btn-natural-from: color-mix(in srgb, var(--dark-bg-alt) 85%, white);
+  --btn-natural-to: color-mix(in srgb, var(--dark-bg-alt) 93%, black);
+
+  background-color: var(--dark-bg-alt);
+  background-image: linear-gradient(180deg, var(--btn-natural-from) 0%, var(--btn-natural-to) 100%);
+  box-shadow:
+    inset 0 1px 0 0 var(--dm-hi-mid),
+    inset 0 0 0 1px var(--dm-ring-base),
+          0 0 0 1px rgba(0, 0, 0, 0.06),
+          0 1px 1px -0.5px var(--dm-drop),
+          0 3px 3px -1.5px var(--dm-drop);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .btn-natural:hover {
+    filter: brightness(1.08);
+  }
+}
+
+.btn-natural:active {
+  filter: brightness(0.96);
 }
 
 /* Search rainbow glow shell */
@@ -312,7 +355,7 @@ html {
 
 /* Shared hover transition. Use as inline style value or CSS variable */
 :root {
-  --hover-transition: background-color 150ms cubic-bezier(0.215, 0.61, 0.355, 1), color 150ms cubic-bezier(0.215, 0.61, 0.355, 1);
+  --hover-transition: background-color 150ms cubic-bezier(0.215, 0.61, 0.355, 1), color 150ms cubic-bezier(0.215, 0.61, 0.355, 1), filter 150ms cubic-bezier(0.215, 0.61, 0.355, 1);
 }
 
 /* Diagonal Wipe Theme Transition */

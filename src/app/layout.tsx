@@ -5,6 +5,7 @@ import config from "@/config/portfolio.config";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { ThemeScript } from "@/components/providers/ThemeScript";
 import { AudioProvider } from "@/components/providers/AudioProvider";
+import { LapseProvider } from "@/components/providers/LapseProvider";
 import { InterfaceKit } from "interface-kit/react";
 import "./globals.css";
 
@@ -93,6 +94,7 @@ export default function RootLayout({
           <AudioProvider>
             {children}
             {process.env.NODE_ENV === "development" && <InterfaceKit />}
+            {process.env.NODE_ENV === "development" && <LapseProvider />}
           </AudioProvider>
         </ThemeProvider>
       </body>

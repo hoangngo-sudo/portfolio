@@ -1,7 +1,6 @@
 "use client";
 
 import { useRef } from "react";
-import { useSmoothCorners } from "@lisse/react";
 import type { SkillsConfig, StackDescriptionPart } from "@/types/config";
 import {
   SectionWrapper,
@@ -15,8 +14,7 @@ function SkillPill({ name, icon, href, inline }: { name: string; icon?: string; 
   const iconId = icon ? getSkillIconId(icon) : null;
   const customIcon = icon ? getCustomIcon(icon) : null;
   const ref = useRef<HTMLAnchorElement>(null);
-  useSmoothCorners(ref, { radius: 6, smoothing: 0.6 }, { autoEffects: false });
-  const className = `${inline ? "mx-0.5 align-middle " : ""}inline-flex h-6.5 items-center gap-1.5 border-0 bg-light-bg-alt px-1.5 py-0.5 text-xs font-medium leading-none text-ink-muted elevation-2 [@media(hover:hover)]:hover:bg-chip-hover-bg [@media(hover:hover)]:hover:text-ink-body [&_img]:pointer-events-none [&_img]:shrink-0`;
+  const className = `${inline ? "mx-0.5 align-middle " : ""}inline-flex h-6.5 items-center gap-1.5 rounded-md border-0 bg-light-bg-alt px-1.5 py-0.5 text-xs font-medium leading-none text-ink-muted elevation-2 [@media(hover:hover)]:hover:bg-chip-hover-bg [@media(hover:hover)]:hover:text-ink-body [&_img]:pointer-events-none [&_img]:shrink-0`;
   const style = { transition: "background-color 150ms cubic-bezier(0.215,0.61,0.355,1), color 150ms cubic-bezier(0.215,0.61,0.355,1)" };
   const iconEl = iconId ? (
     // eslint-disable-next-line @next/next/no-img-element

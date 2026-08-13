@@ -41,7 +41,7 @@ export function SectionWrapper({
 export function Overline({ children }: { children: React.ReactNode }) {
   const variant = React.useContext(SectionVariantContext);
   const colorClass =
-    variant === "dark" ? "text-text-muted" : "text-ink-muted";
+    variant === "dark" ? "text-text-muted-dark" : "text-ink-muted";
   return (
     <p className={`mb-2 text-xs font-medium tracking-[2px] ${colorClass}`}>
       {children}

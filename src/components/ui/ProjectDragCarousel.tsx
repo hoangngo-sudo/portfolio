@@ -124,9 +124,8 @@ export function ProjectDragCarousel({ items }: Props) {
           href={project.href || "#"}
           target={project.href ? "_blank" : undefined}
           rel={project.href ? "noopener noreferrer" : undefined}
-          className="group flex w-75 shrink-0 flex-col bg-card-bg p-5 dm-elevation-2 transition-transform duration-150 ease-out active:scale-[0.97] md:w-80 lg:w-80"
+          className="group flex w-75 shrink-0 flex-col rounded-xl bg-card-bg p-5 dm-elevation-2 transition-transform duration-150 ease-out active:scale-[0.97] md:w-80 lg:w-80"
           style={{ scrollSnapAlign: "start" }}
-          smoothCorners={{ radius: 12, smoothing: 0.6 }}
         >
           {project.repo && <ProjectCommitsWidget repo={project.repo} />}
           <h3 className="mb-1 text-balance text-base font-semibold text-text-primary">

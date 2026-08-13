@@ -16,7 +16,7 @@ export default function Page() {
       {features.scrollProgress && <ScrollProgressBar />}
 
       <main id="main-content">
-        <div className="relative z-10">
+        <div className="relative z-10 pb-[100vh]">
           <HeroSection />
 
           {sections.synopsis?.enabled && (

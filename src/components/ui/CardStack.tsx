@@ -31,7 +31,6 @@ import { useSound } from "@web-kits/audio/react";
 import { pop } from "@/lib/audio/minimal";
 import Image from "next/image";
 import type { MobilePhoto } from "@/types/config";
-import { useSmoothCorners } from "@lisse/react";
 import { EASE_OUT_CUBIC } from "@/lib/motion-tokens";
 
 /* Settings: all spring params in one place */
@@ -180,7 +179,6 @@ function StackCard({
   const liRef = useRef<HTMLLIElement>(null);
   const [loaded, setLoaded] = useState(false);
   const shouldReduceMotion = useReducedMotion();
-  useSmoothCorners(liRef, { radius: 10, smoothing: 0.6 }, { autoEffects: false });
 
   const handleDragEnd = (_: unknown, { offset, velocity }: PanInfo) => {
     const swipe = swipePower(offset.x, velocity.x);
@@ -205,7 +203,7 @@ function StackCard({
   return (
     <motion.li
       ref={liRef}
-      className="absolute inset-0 list-none overflow-hidden drop-shadow-[1px_3px_5px_rgba(0,0,0,0.3)] will-change-[transform,opacity]"
+      className="absolute inset-0 list-none overflow-hidden rounded-[10px] drop-shadow-[1px_3px_5px_rgba(0,0,0,0.3)] will-change-[transform,opacity]"
       custom={position}
       variants={cardVariants}
       initial="exit"

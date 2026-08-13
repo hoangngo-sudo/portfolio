@@ -3,7 +3,6 @@
 import { useRef, useEffect, useLayoutEffect, useState } from "react";
 import type { MouseEventHandler, ReactNode } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { useSmoothCorners } from "@lisse/react";
 import { useSound } from "@web-kits/audio/react";
 import { tap } from "@/lib/audio/minimal";
 import { PRESS_SPRING } from "@/lib/motion-tokens";
@@ -128,6 +127,7 @@ function AnimatedLabel({ label, reduced }: { label: string; reduced: boolean }) 
         display: "inline-block",
         whiteSpace: "nowrap",
         verticalAlign: "middle",
+        overflow: "hidden",
         width: width ? `${width}px` : "auto",
         transition: "width 250ms ease-out",
       }}
@@ -184,13 +184,8 @@ export function Chip({ label, href, external, icon, iconKey, className = "", id,
   const playTap = useSound(tap);
   const reduced = useReducedMotion();
 
-  // Apply squircle corners on whichever element renders; the hook is a no-op
-  // when ref.current is null (the other branch).
-  useSmoothCorners(linkRef, { radius: 8, smoothing: 0.6 }, { autoEffects: false });
-  useSmoothCorners(spanRef, { radius: 8, smoothing: 0.6 }, { autoEffects: false });
-
   const baseClasses =
-    "inline-flex cursor-pointer items-center gap-2 bg-dark-bg-alt dm-elevation-2 px-4 py-2 text-sm font-medium text-text-primary focus-ring";
+    "inline-flex cursor-pointer items-center gap-2 rounded-lg btn-natural btn-natural-accent px-4 py-2 text-sm focus-ring";
 
 // ease-out-cubic, matches ShowMoreButton + TagPill for consistent hover easing
 const CHIP_TRANSITION = "var(--hover-transition)";

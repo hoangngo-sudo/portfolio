@@ -25,7 +25,7 @@ export async function ProjectsSection({ data }: Props) {
       <div className="mx-auto max-w-6xl px-[5%] pt-16 md:pt-20">
         <div className="flex items-baseline justify-between">
           <div>
-            <p className="mb-2 text-xs font-medium tracking-[2px] text-text-muted">
+            <p className="mb-2 text-xs font-medium tracking-[2px] text-text-muted-dark">
               {data.overline}
             </p>
             <h2 className="mb-8 text-balance font-heading text-3xl font-bold tracking-tight text-text-primary md:text-4xl">
@@ -47,7 +47,7 @@ export async function ProjectsSection({ data }: Props) {
       </div>
 
       {/* Carousel: edge to edge, full viewport width */}
-      <div className="w-screen">
+      <div className="w-full">
         <ProjectDragCarousel items={data.items} />
       </div>
 

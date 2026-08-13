@@ -104,7 +104,7 @@ export function SearchOverlay() {
                 haptic.trigger("medium");
                 setOpen(true);
               }}
-              className="inline-flex cursor-pointer items-center gap-2 rounded-full bg-dark-bg-alt dm-elevation-2 px-4 py-2 text-sm font-medium text-text-primary focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-dark-bg focus-visible:outline-none select-none"
+              className="inline-flex cursor-pointer items-center gap-2 rounded-full btn-natural btn-natural-accent px-4 py-2 text-sm focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-dark-bg focus-visible:outline-none select-none"
               whileTap={shouldReduceMotion ? undefined : { scale: 0.96 }}
               transition={springTransition}
             >
@@ -120,38 +120,48 @@ export function SearchOverlay() {
 
       <Dialog.Portal>
         <Dialog.Backdrop className="fixed inset-0 z-100 bg-black/60 backdrop-blur-sm" />
-        <Dialog.Popup className="fixed top-[15%] left-1/2 z-101 w-[calc(100vw-2rem)] max-w-lg -translate-x-1/2 rounded-xl border border-card-border bg-dark-bg-alt p-0 shadow-2xl">
+        <Dialog.Popup aria-label="Search" className="fixed top-[15%] left-1/2 z-101 w-[calc(100vw-2rem)] max-w-lg -translate-x-1/2 rounded-xl border border-card-border bg-dark-bg-alt p-0 shadow-2xl">
           <div className="flex items-center gap-3 border-b border-card-border px-4 py-3">
-            <IconMagnifierSparkle2FillDuo18 size={18} className="shrink-0 text-text-muted" />
+            <IconMagnifierSparkle2FillDuo18 size={18} className="shrink-0 text-text-muted-dark" />
             <input
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
+              aria-label="Search"
               placeholder="Search skills, projects, courses..."
-              className="flex-1 bg-transparent text-base text-text-primary outline-none placeholder:text-text-muted"
+              className="flex-1 bg-transparent text-base text-text-primary outline-none placeholder:text-text-muted-dark"
               autoFocus
             />
-            <Dialog.Close className="rounded px-2 py-1 text-xs text-text-muted transition-colors duration-150 ease-out hover:bg-card-hover hover:text-text-primary">
+            <Dialog.Close className="rounded px-2 py-1 text-xs text-text-muted-dark transition-colors duration-150 ease-out hover:bg-card-hover hover:text-text-primary">
               ESC
             </Dialog.Close>
           </div>
 
           <div className="max-h-[60vh] overflow-y-auto p-2">
             {query.trim() && results.length === 0 && (
-              <p className="px-3 py-6 text-center text-sm text-text-muted">
-                No results for &ldquo;{query}&rdquo;
-              </p>
+              <div className="px-3 py-6 text-center">
+                <p className="text-sm text-text-muted-dark">
+                  No results for &ldquo;{query}&rdquo;
+                </p>
+                <button
+                  type="button"
+                  onClick={() => setQuery("")}
+                  className="mt-2 text-sm text-accent underline-offset-4 hover:underline focus-visible:outline-none focus-visible:underline"
+                >
+                  Clear search
+                </button>
+              </div>
             )}
 
             {!query.trim() && (
-              <p className="px-3 py-6 text-center text-sm text-text-muted">
+              <p className="px-3 py-6 text-center text-sm text-text-muted-dark">
                 Start typing to search...
               </p>
             )}
 
             {Array.from(grouped.entries()).map(([section, items]) => (
               <div key={section} className="mb-2">
-                <p className="px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-text-muted">
+                <p className="px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-text-muted-dark">
                   {section}
                 </p>
                 {items.map((item, i) => (
@@ -167,7 +177,7 @@ export function SearchOverlay() {
                         {item.title}
                       </p>
                       {item.description && (
-                        <p className="truncate text-xs text-text-muted">
+                        <p className="truncate text-xs text-text-muted-dark">
                           {item.description}
                         </p>
                       )}

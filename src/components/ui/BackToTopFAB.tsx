@@ -7,9 +7,8 @@ import { smoothScrollTo } from "@/lib/scroll";
 import { useWebHaptics } from "web-haptics/react";
 import { useSound } from "@web-kits/audio/react";
 import { send } from "@/lib/audio/minimal";
-import { useSmoothCorners } from "@lisse/react";
 
-/** Inner component so useSmoothCorners runs after the button mounts into DOM */
+/** Back-to-top floating action button */
 function BackToTopButton({
   onClick,
   shouldReduceMotion,
@@ -22,7 +21,6 @@ function BackToTopButton({
   exitTransition: { type: "tween"; duration: number; ease: readonly [number, number, number, number] } | { duration: number };
 }) {
   const btnRef = useRef<HTMLButtonElement>(null);
-  useSmoothCorners(btnRef, { radius: 20, smoothing: 0.6 }, { autoEffects: false });
 
   return (
     <motion.button
@@ -34,7 +32,7 @@ function BackToTopButton({
       exit={{ opacity: 0, transition: exitTransition }}
       whileTap={shouldReduceMotion ? undefined : { scale: 0.96 }}
       transition={springTransition}
-      className="fixed right-6 bottom-[calc(1.5rem+env(safe-area-inset-bottom,0px))] z-50 cursor-pointer bg-dark-bg-alt dm-elevation-2 px-4 py-2 text-sm font-medium text-text-primary hover:opacity-100! focus-ring select-none"
+      className="fixed right-6 bottom-[calc(1.5rem+env(safe-area-inset-bottom,0px))] z-50 cursor-pointer rounded-[20px] btn-natural btn-natural-accent px-4 py-2 text-sm hover:opacity-100! focus-ring select-none"
     >
       Back to top
     </motion.button>

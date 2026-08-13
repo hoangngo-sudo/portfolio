@@ -76,8 +76,7 @@ export function CourseShowMoreClient({ data }: Props) {
       <SpotlightCard
         key={course.code}
         spotlightSize={60}
-        smoothCorners={{ radius: 12, smoothing: 0.6 }}
-        className="bg-card-bg p-4 dm-elevation-2"
+        className="rounded-xl bg-card-bg p-4 dm-elevation-2"
       >
         <p className="text-sm font-semibold text-text-primary">
           {course.code}{" "}
@@ -86,7 +85,7 @@ export function CourseShowMoreClient({ data }: Props) {
           </span>
         </p>
         {course.description && (
-          <p className="mt-1 text-xs text-text-muted">{course.description}</p>
+          <p className="mt-1 text-xs text-text-muted-dark">{course.description}</p>
         )}
       </SpotlightCard>
     ),
@@ -118,7 +117,7 @@ export function CourseShowMoreClient({ data }: Props) {
           return (
             <div key={category.label}>
               {category.label && (
-                <h3 className="mb-4 text-xs uppercase tracking-wider text-text-muted">
+                <h3 className="mb-4 text-xs uppercase tracking-wider text-text-muted-dark">
                   {category.label}
                 </h3>
               )}

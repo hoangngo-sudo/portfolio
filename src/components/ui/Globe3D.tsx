@@ -361,8 +361,8 @@ export function Globe3D({
             className="pointer-events-none absolute left-0 top-0 z-10 whitespace-nowrap rounded-full px-2 py-0.5 text-xs opacity-0 backdrop-blur-sm"
             style={{
               willChange: "transform, opacity",
-              color: theme === "teal" ? "#0d5853" : "#ffffff",
-              backgroundColor: theme === "teal" ? "rgba(13, 88, 83, 0.12)" : "#666666",
+              color: theme === "teal" ? "#0d5853" : "#6a6a6a",
+              backgroundColor: theme === "teal" ? "rgba(13, 88, 83, 0.12)" : "rgba(0, 0, 0, 0.12)",
             }}
           >
             {arc.label}

@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { motion, useReducedMotion, type Variants } from "motion/react";
-import { useSmoothCorners } from "@lisse/react";
 import { useWebHaptics } from "web-haptics/react";
 import { useSound } from "@web-kits/audio/react";
 import { tap } from "@/lib/audio/minimal";
@@ -29,9 +28,6 @@ export default function ResumePage() {
   const reduced = useReducedMotion();
   const haptic = useWebHaptics();
   const playTap = useSound(tap);
-
-  useSmoothCorners(backBtnRef, { radius: 8, smoothing: 0.6 }, { autoEffects: false });
-  useSmoothCorners(downloadBtnRef, { radius: 8, smoothing: 0.6 }, { autoEffects: false });
 
   useEffect(() => {
     let cancelled = false;
@@ -61,7 +57,7 @@ export default function ResumePage() {
       </motion.div>
 
       {error ? (
-        <p className="text-text-muted">
+        <p className="text-text-muted-dark">
           Could not load resume. Place <code className="text-accent">resume.docx</code> in the{" "}
           <code className="text-accent">public/</code> folder.
         </p>
@@ -78,8 +74,8 @@ export default function ResumePage() {
                 whileTap={reduced ? undefined : { scale: 0.96 }}
                 transition={reduced ? { duration: 0 } : PRESS_SPRING}
                 className="inline-flex cursor-pointer items-center gap-1.5 rounded-md
-                  bg-dark-bg-alt px-3 py-2 text-sm font-medium
-                  text-text-primary dm-elevation-2 touch-manipulation focus-ring"
+                  btn-natural btn-natural-accent px-3 py-2 text-sm
+                  touch-manipulation focus-ring"
                 style={{ transition: "background-color 150ms ease, color 150ms ease" }}
               >
                 <IconCircleArrowLeftFillDuo18 className="size-4" aria-hidden="true" />
@@ -110,8 +106,8 @@ export default function ResumePage() {
             transition={reduced ? { duration: 0 } : PRESS_SPRING}
             className="fixed bottom-8 left-1/2 z-20 -translate-x-1/2
               inline-flex cursor-pointer items-center gap-2 rounded-md
-              bg-dark-bg-alt dm-elevation-2 px-4 py-2 text-sm font-medium
-              text-text-primary touch-manipulation focus-ring"
+              btn-natural btn-natural-accent px-4 py-2 text-sm
+              touch-manipulation focus-ring"
             style={{ transition: "background-color 150ms ease, color 150ms ease" }}
           >
             <IconFileDownloadFillDuo18 className="size-4" aria-hidden="true" />

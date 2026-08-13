@@ -3,7 +3,6 @@
 import React, { useRef, useCallback, useEffect } from "react";
 import { useTheme } from "@/components/providers/ThemeProvider";
 import { hexToRgb } from "@/lib/color";
-import { useSmoothCorners, type SmoothCornerOptions } from "@lisse/react";
 
 type AsProp<T extends React.ElementType> = { as?: T };
 
@@ -11,7 +10,6 @@ type SpotlightCardProps<T extends React.ElementType = "div"> = AsProp<T> &
   Omit<React.ComponentPropsWithoutRef<T>, keyof AsProp<T> | "children"> & {
     spotlightColor?: string;
     spotlightSize?: number;
-    smoothCorners?: SmoothCornerOptions;
     children?: React.ReactNode;
   };
 
@@ -25,7 +23,6 @@ function SpotlightCardInner<T extends React.ElementType = "div">(
     className: classNameProp,
     spotlightColor,
     spotlightSize = 80,
-    smoothCorners,
     ...rest
   } = props as SpotlightCardProps<"div">;
   const className = classNameProp ?? "";
@@ -41,16 +38,6 @@ function SpotlightCardInner<T extends React.ElementType = "div">(
 
   // Resolve ref: forward ref takes priority, fallback to internal
   const rootRef = (ref as React.RefObject<HTMLElement>) ?? internalRef;
-
-  useSmoothCorners(
-    rootRef as React.RefObject<HTMLElement>,
-    smoothCorners ?? { radius: 0, smoothing: 0 },
-    { autoEffects: false },
-  );
-
-  const finalClassName = smoothCorners
-    ? className.replace(/\brounded-\S+/g, "")
-    : className;
 
   // Derive the spotlight color from the theme accent.
   // Recomputes on theme change via re-render from useTheme.
@@ -141,7 +128,7 @@ function SpotlightCardInner<T extends React.ElementType = "div">(
       {...rest}
       ref={rootRef}
       data-spotlight-card
-      className={`relative overflow-hidden ${finalClassName}`}
+      className={`relative overflow-hidden ${className}`}
       onMouseMove={handleMouseMove}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
