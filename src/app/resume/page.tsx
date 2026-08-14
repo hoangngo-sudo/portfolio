@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { motion, useReducedMotion, type Variants } from "motion/react";
 import { useWebHaptics } from "web-haptics/react";
@@ -23,7 +23,9 @@ const MotionLink = motion.create(Link);
 export default function ResumePage() {
   const backBtnRef = useRef<HTMLAnchorElement>(null);
   const downloadBtnRef = useRef<HTMLAnchorElement>(null);
+  const sheetRef = useRef<HTMLDivElement>(null);
   const [html, setHtml] = useState<string | null>(null);
+  const [startY, setStartY] = useState<number | null>(null);
   const [error, setError] = useState(false);
   const reduced = useReducedMotion();
   const haptic = useWebHaptics();
@@ -44,6 +46,15 @@ export default function ResumePage() {
     })();
     return () => { cancelled = true; };
   }, []);
+
+  // Measure the viewport once the sheet exists so its entrance starts just below
+  // the fold on every screen, instead of a fixed viewport fraction (which flashed
+  // on small/landscape devices where the sheet is taller than the viewport).
+  useLayoutEffect(() => {
+    if (html === null) return;
+    const top = sheetRef.current?.getBoundingClientRect().top ?? 0;
+    setStartY(window.innerHeight - top);
+  }, [html]);
 
   return (
     <section className="relative flex min-h-screen flex-col items-center bg-dark-bg px-[5%] pt-24 pb-32">
@@ -87,18 +98,21 @@ export default function ResumePage() {
           {/* ~A4 ratio (210×297). Locked aspect ratio, scales down via box-border + % padding.
                Fonts in the HTML CSS use min(pt, vw) to scale proportionally with the container. */}
           <style>{`@page { size: A4; margin: 0; }`}</style>
-          <motion.div
-            initial={reduced ? false : { y: "150vh", opacity: 0.001 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ type: "spring", duration: 0.5, bounce: 0.05 }}
-            style={{ width: "min(793px, 90vw)", aspectRatio: "210 / 297" }}
-            className="mx-auto box-border rounded-sm bg-white
-              shadow-[0_1px_3px_rgba(0,0,0,0.12),0_4px_16px_rgba(0,0,0,0.08)]
-              px-[16mm] py-[18mm]
-              max-sm:px-[10mm] max-sm:py-[12mm]
-              [container-type:inline-size]"
-            dangerouslySetInnerHTML={{ __html: html }}
-          />
+          {startY === null ? null : (
+            <motion.div
+              ref={sheetRef}
+              initial={reduced ? false : { y: startY, opacity: 0.001 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ type: "spring", duration: 0.5, bounce: 0.05 }}
+              style={{ width: "min(793px, 90vw)", aspectRatio: "210 / 297" }}
+              className="mx-auto box-border rounded-sm bg-white
+                shadow-[0_1px_3px_rgba(0,0,0,0.12),0_4px_16px_rgba(0,0,0,0.08)]
+                px-[16mm] py-[18mm]
+                max-sm:px-[10mm] max-sm:py-[12mm]
+                [container-type:inline-size]"
+              dangerouslySetInnerHTML={{ __html: html }}
+            />
+          )}
 
           <motion.a
             ref={downloadBtnRef}
