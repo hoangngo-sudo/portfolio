@@ -24,6 +24,7 @@ export default function ResumePage() {
   const backBtnRef = useRef<HTMLAnchorElement>(null);
   const downloadBtnRef = useRef<HTMLAnchorElement>(null);
   const sheetRef = useRef<HTMLDivElement>(null);
+  const backRowRef = useRef<HTMLDivElement>(null);
   const [html, setHtml] = useState<string | null>(null);
   const [startY, setStartY] = useState<number | null>(null);
   const [error, setError] = useState(false);
@@ -46,18 +47,15 @@ export default function ResumePage() {
     })();
     return () => { cancelled = true; };
   }, []);
-
-  // Measure the viewport once the sheet exists so its entrance starts just below
-  // the fold on every screen, instead of a fixed viewport fraction (which flashed
-  // on small/landscape devices where the sheet is taller than the viewport).
+  
   useLayoutEffect(() => {
     if (html === null) return;
-    const top = sheetRef.current?.getBoundingClientRect().top ?? 0;
+    const top = (backRowRef.current?.getBoundingClientRect().bottom ?? 0) + 16;
     setStartY(window.innerHeight - top);
   }, [html]);
 
   return (
-    <section className="relative flex min-h-screen flex-col items-center bg-dark-bg px-[5%] pt-24 pb-32">
+    <section className="relative flex min-h-screen flex-col items-center overflow-hidden bg-dark-bg px-[5%] pt-24 pb-32">
       <motion.div
         className="absolute right-4 top-4 z-30"
         variants={fadeIn}
@@ -75,7 +73,7 @@ export default function ResumePage() {
       ) : html === null ? null : (
         <>
           {/* Back button above the resume, left-aligned */}
-          <div className="mx-auto mb-4 flex w-[210mm] max-w-full items-center max-sm:w-[calc(100vw-10%)]">
+          <div ref={backRowRef} className="mx-auto mb-4 flex w-[210mm] max-w-full items-center max-sm:w-[calc(100vw-10%)]">
             <motion.div variants={fadeIn} initial="hidden" animate="visible">
               <MotionLink
                 ref={backBtnRef}
