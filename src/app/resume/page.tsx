@@ -108,7 +108,7 @@ export default function ResumePage() {
               className="mx-auto box-border rounded-sm bg-white
                 shadow-[0_1px_3px_rgba(0,0,0,0.12),0_4px_16px_rgba(0,0,0,0.08)]
                 px-[16mm] py-[18mm]
-                max-sm:px-[10mm] max-sm:py-[12mm]
+                max-sm:px-[7.619%] max-sm:py-[8.571%]
                 [container-type:inline-size]"
               dangerouslySetInnerHTML={{ __html: html }}
             />
