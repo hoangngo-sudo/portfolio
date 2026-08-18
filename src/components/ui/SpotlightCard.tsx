@@ -2,7 +2,7 @@
 
 import React, { useRef, useCallback, useEffect } from "react";
 import { useTheme } from "@/components/providers/ThemeProvider";
-import { hexToRgb } from "@/lib/color";
+import { colorToRgb } from "@/lib/color";
 
 type AsProp<T extends React.ElementType> = { as?: T };
 
@@ -45,7 +45,7 @@ function SpotlightCardInner<T extends React.ElementType = "div">(
   const resolvedColor =
     spotlightColor ??
     (() => {
-      const rgb = hexToRgb(colors.accent);
+      const rgb = colorToRgb(colors.accent);
       return rgb
         ? `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.15)`
         : "rgba(13, 148, 136, 0.15)";
@@ -69,7 +69,7 @@ function SpotlightCardInner<T extends React.ElementType = "div">(
 
     // Cache the accent color for use outside React's render cycle
     if (!spotlightColor) {
-      const rgb = hexToRgb(colors.accent);
+      const rgb = colorToRgb(colors.accent);
       accentColorRef.current = rgb
         ? `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.15)`
         : "rgba(13, 148, 136, 0.15)";

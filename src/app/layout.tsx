@@ -14,6 +14,7 @@ function colorsToProps(c: typeof config.themes.black): Record<string, string> {
     accent: c.accent,
     "accent-light": c.accentLight,
     "accent-pale": c.accentPale,
+    link: c.link,
     "dark-bg": c.darkBg,
     "dark-bg-alt": c.darkBgAlt,
     "light-bg": c.lightBg,
@@ -86,7 +87,7 @@ export default function RootLayout({
         {/* Skip to content link for accessibility */}
         <a
           href="#main-content"
-          className="fixed top-0 left-0 z-200 -translate-y-full bg-accent px-4 py-2 text-sm text-white motion-safe:transition-transform focus:translate-y-0"
+          className="fixed top-0 left-0 z-200 -translate-y-full bg-dark-bg-alt px-4 py-2 text-sm text-white motion-safe:transition-transform focus:translate-y-0"
         >
           Skip to content
         </a>

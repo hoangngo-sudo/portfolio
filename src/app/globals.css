@@ -15,28 +15,29 @@
 }
 
 :root {
-  --accent: #0d9488;
-  --accent-light: #14b8a6;
-  --accent-pale: #f0fdfa;
-  --dark-bg: #0f1a1a;
-  --dark-bg-alt: #162222;
-  --light-bg: #f8fdfb;
-  --light-bg-alt: #f0f7f6;
+  --accent: oklch(0.6 0.104 184.7);
+  --accent-light: oklch(0.704 0.123 182.5);
+  --accent-pale: oklch(0.984 0.014 180.7);
+  --link: oklch(0.511 0.086 186.4);
+  --dark-bg: oklch(0.207 0.016 196);
+  --dark-bg-alt: oklch(0.241 0.017 196.1);
+  --light-bg: oklch(0.99 0.006 170.5);
+  --light-bg-alt: oklch(0.971 0.008 186.9);
 
   /* Derived tokens */
-  --text-primary: #e8ecf2;
-  --text-secondary: #c8d0dc;
-  --text-muted: #6b7280;
-  --text-muted-dark: #8e97a6;
-  --ink-primary: #111827;
-  --ink-body: #1f2937;
-  --ink-muted: #4b5563;
+  --text-primary: oklch(0.942 0.009 258.3);
+  --text-secondary: oklch(0.855 0.019 258.4);
+  --text-muted: oklch(0.551 0.023 264.4);
+  --text-muted-dark: oklch(0.674 0.024 260.7);
+  --ink-primary: oklch(0.21 0.032 264.7);
+  --ink-body: oklch(0.278 0.03 256.8);
+  --ink-muted: oklch(0.446 0.026 256.8);
 
-  --card-bg: color-mix(in srgb, var(--accent) 6%, var(--dark-bg-alt));
-  --card-border: color-mix(in srgb, var(--accent) 10%, rgb(0 0 0 / 0.01));
-  --card-hover: color-mix(in srgb, var(--accent) 15%, rgb(0 0 0 / 0.01));
-  --chip-border: color-mix(in srgb, var(--accent) 25%, rgb(0 0 0 / 0.01));
-  --chip-hover-bg: color-mix(in srgb, var(--accent) 10%, rgb(0 0 0 / 0.01));
+  --card-bg: color-mix(in oklch, var(--accent) 6%, var(--dark-bg-alt));
+  --card-border: color-mix(in oklch, var(--accent) 10%, oklch(0 0 0 / 0.01));
+  --card-hover: color-mix(in oklch, var(--accent) 15%, oklch(0 0 0 / 0.01));
+  --chip-border: color-mix(in oklch, var(--accent) 25%, oklch(0 0 0 / 0.01));
+  --chip-hover-bg: color-mix(in oklch, var(--accent) 10%, oklch(0 0 0 / 0.01));
 
   /* Easing tokens */
   --expo-out: cubic-bezier(0.16, 1, 0.3, 1);
@@ -53,6 +54,7 @@
   --color-accent: var(--accent);
   --color-accent-light: var(--accent-light);
   --color-accent-pale: var(--accent-pale);
+  --color-link: var(--link);
   --color-dark-bg: var(--dark-bg);
   --color-dark-bg-alt: var(--dark-bg-alt);
   --color-light-bg: var(--light-bg);
@@ -74,9 +76,21 @@
   --font-mono: var(--font-geist-mono);
 }
 
+/* Increased contrast: widen the foreground/background lightness gap for the
+   muted tiers so text stays readable for users who request more contrast.
+   Light-surface muted goes darker (7.35:1), dark-surface muted goes lighter
+   (8.36:1). */
+@media (prefers-contrast: more) {
+  :root {
+    --text-muted: oklch(0.446 0.026 256.8);
+    --text-muted-dark: oklch(0.763 0.025 256.1);
+    --ink-muted: oklch(0.373 0.031 259.7);
+  }
+}
+
 /* Chip border brightens on dark backgrounds */
 .bg-dark-bg {
-  --chip-border: color-mix(in srgb, var(--accent) 25%, rgb(255 255 255 / 0.01));
+  --chip-border: color-mix(in oklch, var(--accent) 25%, oklch(1 0 0 / 0.01));
 }
 
 /* Base styles */
@@ -147,7 +161,7 @@ html {
 .btn-natural {
   --btn-natural-text-shadow: rgb(0 0 0 / 0.35);
 
-  color: #fff;
+  color: oklch(1 0 0);
   font-weight: 575;
   text-shadow: 0 0.5px 0 var(--btn-natural-text-shadow);
 }
@@ -157,8 +171,8 @@ html {
    gradient and the letterpress text treatment from .btn-natural.
    Shadow stack mirrors .dm-elevation-2 so it stays in the elevation system. */
 .btn-natural-accent {
-  --btn-natural-from: color-mix(in srgb, var(--dark-bg-alt) 85%, white);
-  --btn-natural-to: color-mix(in srgb, var(--dark-bg-alt) 93%, black);
+  --btn-natural-from: color-mix(in oklch, var(--dark-bg-alt) 85%, oklch(1 0 0));
+  --btn-natural-to: color-mix(in oklch, var(--dark-bg-alt) 93%, oklch(0 0 0));
 
   background-color: var(--dark-bg-alt);
   background-image: linear-gradient(180deg, var(--btn-natural-from) 0%, var(--btn-natural-to) 100%);

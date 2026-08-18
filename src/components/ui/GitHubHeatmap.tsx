@@ -1,7 +1,7 @@
 "use client";
 
 import type { YearContributionData } from "@/lib/github";
-import { hexToRgb } from "@/lib/color";
+import { colorToRgb } from "@/lib/color";
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
   AnimatePresence,
@@ -52,6 +52,9 @@ const DAY_LABEL_ROWS: { label: string; row: number }[] = [
   { label: "Fri", row: 5 },
 ];
 
+// Default matches the teal theme accent (deterministic SSR/hydration).
+const DEFAULT_ACCENT = "oklch(0.6 0.104 184.7)";
+
 interface TooltipData {
   date: string;
   count: number;
@@ -76,7 +79,7 @@ export function GitHubHeatmap({ years }: GitHubHeatmapProps) {
   // whatever <ThemeScript> applied before first paint.
   // Initial value is deterministic (teal default) to avoid hydration mismatch.
   // The effect reads the actual CSS value and updates asynchronously.
-  const [accentHex, setAccentHex] = useState<string>("#0d9488");
+  const [accentColor, setAccentColor] = useState<string>(DEFAULT_ACCENT);
 
   useEffect(() => {
     // Read the actual CSS variable value (may differ from default if user has
@@ -85,8 +88,8 @@ export function GitHubHeatmap({ years }: GitHubHeatmapProps) {
     const raw = getComputedStyle(document.documentElement)
       .getPropertyValue("--accent")
       .trim();
-    if (raw && raw !== "#0d9488") {
-      queueMicrotask(() => setAccentHex(raw));
+    if (raw && raw !== DEFAULT_ACCENT) {
+      queueMicrotask(() => setAccentColor(raw));
     }
 
     // Re-sync whenever the theme CSS variable changes at runtime
@@ -94,7 +97,7 @@ export function GitHubHeatmap({ years }: GitHubHeatmapProps) {
       const updated = getComputedStyle(document.documentElement)
         .getPropertyValue("--accent")
         .trim();
-      if (updated) setAccentHex(updated);
+      if (updated) setAccentColor(updated);
     });
     observer.observe(document.documentElement, { attributes: true, attributeFilter: ["style"] });
     return () => observer.disconnect();
@@ -135,7 +138,7 @@ export function GitHubHeatmap({ years }: GitHubHeatmapProps) {
   const springY = useSpring(rawY, springCfg);
 
   // 5-stop opacity scale from the theme accent CSS variable
-  const rgb = hexToRgb(accentHex);
+  const rgb = colorToRgb(accentColor);
   const shades = rgb
     ? [
         "rgba(255, 255, 255, 0.06)",                             // 0
@@ -144,7 +147,13 @@ export function GitHubHeatmap({ years }: GitHubHeatmapProps) {
         `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.70)`,             // 6-8
         `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 1.00)`,             // 9+
       ]
-    : ["#1a2e2e", "#134040", "#0a7070", "#0d9488", "#2dd4bf"];
+    : [
+        "oklch(0.284 0.026 195.8)",
+        "oklch(0.341 0.048 195.1)",
+        "oklch(0.495 0.082 194.8)",
+        "oklch(0.6 0.104 184.7)",
+        "oklch(0.785 0.133 181.9)",
+      ];
 
   function getShade(count: number): string {
     if (count === 0) return shades[0];
@@ -366,7 +375,7 @@ export function GitHubHeatmap({ years }: GitHubHeatmapProps) {
                 x={x}
                 y={MONTH_LABEL_HEIGHT - 5}
                 fontSize={10}
-                fill="var(--text-muted)"
+                fill="var(--text-muted-dark)"
                 fontFamily="inherit"
               >
                 {label}
@@ -380,7 +389,7 @@ export function GitHubHeatmap({ years }: GitHubHeatmapProps) {
                 x={0}
                 y={MONTH_LABEL_HEIGHT + row * CELL_STEP + CELL_SIZE - 1}
                 fontSize={10}
-                fill="var(--text-muted)"
+                fill="var(--text-muted-dark)"
                 fontFamily="inherit"
               >
                 {label}
@@ -439,7 +448,7 @@ export function GitHubHeatmap({ years }: GitHubHeatmapProps) {
         </div>
 
         {/* Footer: contribution total + legend */}
-        <div className="flex flex-col gap-1.5 text-xs sm:flex-row sm:items-center sm:justify-between sm:gap-0" style={{ color: "var(--text-muted)" }}>
+        <div className="flex flex-col gap-1.5 text-xs sm:flex-row sm:items-center sm:justify-between sm:gap-0" style={{ color: "var(--text-muted-dark)" }}>
           <span style={{ fontVariantNumeric: "tabular-nums" }}>
             <AnimateNumber
               transition={{

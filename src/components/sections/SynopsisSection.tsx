@@ -27,7 +27,7 @@ export function SynopsisSection({ data }: Props) {
                   href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-sm text-accent underline-offset-4 hover:underline"
+                  className="text-sm text-link underline-offset-4 hover:underline"
                 >
                   {link.label}
                 </a>

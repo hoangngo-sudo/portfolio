@@ -2,6 +2,7 @@ export interface ThemeColors {
   accent: string;
   accentLight: string;
   accentPale: string;
+  link: string;
   darkBg: string;
   darkBgAlt: string;
   lightBg: string;
@@ -89,7 +90,7 @@ export interface GlobeConfig {
   heading: string;
   markers?: GlobeMarker[];
   arcs?: GlobeArc[];
-  atmosphereColor?: string;      // default: "#4da6ff"
+  atmosphereColor?: string;      // default: "oklch(0.711 0.156 251)"
   atmosphereIntensity?: number;  // default: 20
   autoRotateSpeed?: number;      // default: 0.3
   arcColor?: [number, number, number]; // default arc RGB color

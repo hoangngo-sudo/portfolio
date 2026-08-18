@@ -27,6 +27,7 @@ function applyThemeToDOM(colors: ThemeColors) {
   s.setProperty("--accent", colors.accent);
   s.setProperty("--accent-light", colors.accentLight);
   s.setProperty("--accent-pale", colors.accentPale);
+  s.setProperty("--link", colors.link);
   s.setProperty("--dark-bg", colors.darkBg);
   s.setProperty("--dark-bg-alt", colors.darkBgAlt);
   s.setProperty("--light-bg", colors.lightBg);

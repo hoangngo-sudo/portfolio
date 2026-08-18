@@ -7,7 +7,7 @@ import { MapPinAvatar } from "@/components/ui/MapPinAvatar";
 import { useWebHaptics } from "web-haptics/react";
 import { useSound } from "@web-kits/audio/react";
 import { click, pop, hover } from "@/lib/audio/minimal";
-import { hexToRgb } from "@/lib/color";
+import { colorToRgb } from "@/lib/color";
 import type { GlobeArc, GlobeMarker } from "@/types/config";
 
 const THETA = 0.2; // tilt (radians)
@@ -48,8 +48,9 @@ function project(
   };
 }
 
-function hexToGl(hex: string): [number, number, number] {
-  const rgb = hexToRgb(hex);
+// Convert a hex or oklch color string to normalized RGB floats for cobe.
+function colorToGl(color: string): [number, number, number] {
+  const rgb = colorToRgb(color);
   if (!rgb) return [0, 0, 0];
   return [rgb.r / 255, rgb.g / 255, rgb.b / 255];
 }
@@ -67,7 +68,7 @@ interface Props {
 export function Globe3D({
   markers,
   arcs,
-  atmosphereColor = "#4da6ff",
+  atmosphereColor = "oklch(0.711 0.156 251)",
   autoRotateSpeed = 0.3,
   arcWidth,
   arcHeight,
@@ -77,7 +78,12 @@ export function Globe3D({
   const containerRef = useRef<HTMLDivElement>(null);
   const avatarRefs = useRef<(HTMLDivElement | null)[]>([]);
   const arcLabelRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const pinColor = `color-mix(in srgb, ${atmosphereColor} 60%, black)`;
+  const pinColor = theme === "teal"
+    ? "oklch(0.4 0.069 184.7)"
+    : "oklch(0.4 0 0)";
+  const pinColorGl: [number, number, number] = theme === "teal"
+    ? [0.001, 0.088, 0.073]
+    : [0.064, 0.064, 0.064];
   const phiRef = useRef(0);
   // Cache container dimensions read once (+ ResizeObserver), never in rAF
   const wRef = useRef(0);
@@ -108,7 +114,7 @@ export function Globe3D({
     const container = containerRef.current;
     if (!canvas || !container) return;
 
-    const atmo = hexToGl(atmosphereColor);
+    const atmo = colorToGl(atmosphereColor);
     const speed = autoRotateSpeed * 0.003;
     const el = container!;
 
@@ -127,7 +133,7 @@ export function Globe3D({
       mapBrightness: 7,
       mapBaseBrightness: 0.00,
       baseColor: [atmo[0] * 0.08 + 0.92, atmo[1] * 0.08 + 0.92, atmo[2] * 0.08 + 0.92],
-      markerColor: [0.184, 0.384, 0.365],
+      markerColor: pinColorGl,
       glowColor: [atmo[0] * 0.55 + 0.45, atmo[1] * 0.55 + 0.45, atmo[2] * 0.55 + 0.45],
       arcs: arcs?.map((a) => ({
         from: a.from,
@@ -142,12 +148,10 @@ export function Globe3D({
       arcHeight: arcHeight ?? 0.3,
       // Endpoint dots at each arc's from/to, rendered by cobe in the same
       // projection pipeline as the arc (no misalignment with DOM pins).
+      // Use pinColorGl (L=0.4) for equal prominence across themes.
       markers: [
         ...(arcs?.flatMap((a) => {
-          const fallback = theme === "black"
-            ? ([0.4, 0.4, 0.4] as number[])
-            : [atmo[0] * 0.8 + 0.2, atmo[1] * 0.8 + 0.2, atmo[2] * 0.8 + 0.2];
-          const c = a.color ?? (fallback as [number, number, number]);
+          const c = a.color ?? pinColorGl;
           return [
             { location: a.from, size: 0.015, color: c },
             { location: a.to, size: 0.015, color: c },
@@ -273,12 +277,15 @@ export function Globe3D({
           const labelLat = arc.labelLat ?? (arc.from[0] + arc.to[0]) / 2;
           const labelLng = arc.labelLng ?? (arc.from[1] + arc.to[1]) / 2;
           const { sx, sy, zView } = project(labelLat, labelLng, phiRef.current);
-          // Same depth-based fade as markers: ease-out-cubic over ±0.2 horizon band
+          // Arc labels are text: use a narrow ±0.05 horizon band so they're
+          // either legibly opaque or hidden, instead of lingering at partial
+          // opacity as the globe rotates (a ±0.2 band leaves labels ~50%
+          // faded at the horizon, which makes them hard to read).
           let opacity: number;
           if (prefersReducedMotion) {
             opacity = zView > 0 ? 1 : 0;
           } else {
-            const FADE = 0.2;
+            const FADE = 0.05;
             const t = Math.max(0, Math.min(1, (zView + FADE) / (2 * FADE)));
             opacity = 1 - Math.pow(1 - t, 3); // ease-out-cubic
           }
@@ -361,8 +368,8 @@ export function Globe3D({
             className="pointer-events-none absolute left-0 top-0 z-10 whitespace-nowrap rounded-full px-2 py-0.5 text-xs opacity-0 backdrop-blur-sm"
             style={{
               willChange: "transform, opacity",
-              color: theme === "teal" ? "#0d5853" : "#6a6a6a",
-              backgroundColor: theme === "teal" ? "rgba(13, 88, 83, 0.12)" : "rgba(0, 0, 0, 0.12)",
+              color: theme === "teal" ? "oklch(0.855 0.125 181.1)" : "oklch(0.87 0 0)",
+              backgroundColor: theme === "teal" ? "oklch(0.417 0.068 187.9 / 0.92)" : "oklch(0.256 0 0 / 0.92)",
             }}
           >
             {arc.label}
