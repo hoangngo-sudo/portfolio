@@ -53,7 +53,7 @@ const DAY_LABEL_ROWS: { label: string; row: number }[] = [
 ];
 
 // Default matches the teal theme accent (deterministic SSR/hydration).
-const DEFAULT_ACCENT = "oklch(0.6 0.104 184.7)";
+const DEFAULT_ACCENT = "oklch(0.481 0.08 180)";
 
 interface TooltipData {
   date: string;
@@ -148,11 +148,11 @@ export function GitHubHeatmap({ years }: GitHubHeatmapProps) {
         `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 1.00)`,             // 9+
       ]
     : [
-        "oklch(0.284 0.026 195.8)",
-        "oklch(0.341 0.048 195.1)",
-        "oklch(0.495 0.082 194.8)",
-        "oklch(0.6 0.104 184.7)",
-        "oklch(0.785 0.133 181.9)",
+        "oklch(0.27 0.045 180)",
+        "oklch(0.364 0.061 180)",
+        "oklch(0.481 0.08 180)",
+        "oklch(0.567 0.094 180)",
+        "oklch(0.671 0.112 180)",
       ];
 
   function getShade(count: number): string {

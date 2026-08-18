@@ -48,7 +48,7 @@ function SpotlightCardInner<T extends React.ElementType = "div">(
       const rgb = colorToRgb(colors.accent);
       return rgb
         ? `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.15)`
-        : "rgba(13, 148, 136, 0.15)";
+        : "rgba(23, 108, 96, 0.15)";
     })();
 
   // Cache prefers-reduced-motion + touch detection once on mount
@@ -72,7 +72,7 @@ function SpotlightCardInner<T extends React.ElementType = "div">(
       const rgb = colorToRgb(colors.accent);
       accentColorRef.current = rgb
         ? `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.15)`
-        : "rgba(13, 148, 136, 0.15)";
+        : "rgba(23, 108, 96, 0.15)";
     }
 
     if (glowRef.current) glowRef.current.style.opacity = "1";

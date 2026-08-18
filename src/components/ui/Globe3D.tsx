@@ -79,11 +79,11 @@ export function Globe3D({
   const avatarRefs = useRef<(HTMLDivElement | null)[]>([]);
   const arcLabelRefs = useRef<(HTMLDivElement | null)[]>([]);
   const pinColor = theme === "teal"
-    ? "oklch(0.4 0.069 184.7)"
+    ? "oklch(0.4 0.067 180)"
     : "oklch(0.4 0 0)";
   const pinColorGl: [number, number, number] = theme === "teal"
-    ? [0.001, 0.088, 0.073]
-    : [0.064, 0.064, 0.064];
+    ? [0.063, 0.325, 0.286]
+    : [0.063, 0.063, 0.063];
   const phiRef = useRef(0);
   // Cache container dimensions read once (+ ResizeObserver), never in rAF
   const wRef = useRef(0);
@@ -368,8 +368,8 @@ export function Globe3D({
             className="pointer-events-none absolute left-0 top-0 z-10 whitespace-nowrap rounded-full px-2 py-0.5 text-xs opacity-0 backdrop-blur-sm"
             style={{
               willChange: "transform, opacity",
-              color: theme === "teal" ? "oklch(0.855 0.125 181.1)" : "oklch(0.87 0 0)",
-              backgroundColor: theme === "teal" ? "oklch(0.417 0.068 187.9 / 0.92)" : "oklch(0.256 0 0 / 0.92)",
+              color: theme === "teal" ? "oklch(0.855 0.125 181.1)" : "oklch(0.863 0 0)",
+              backgroundColor: theme === "teal" ? "oklch(0.4 0.067 180 / 0.92)" : "oklch(0.254 0 0 / 0.92)",
             }}
           >
             {arc.label}
