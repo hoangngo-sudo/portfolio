@@ -8,7 +8,7 @@ import { useSound } from "@web-kits/audio/react";
 import { tap } from "@/lib/audio/minimal";
 import { IconFileDownloadFillDuo18, IconCircleArrowLeftFillDuo18 } from "nucleo-ui-fill-duo-18";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
-import { PRESS_SPRING, EASE_OUT_CUBIC } from "@/lib/motion-tokens";
+import { PRESS_SPRING, EASE_OUT_CUBIC, EASE_OUT } from "@/lib/motion-tokens";
 
 const fadeIn: Variants = {
   hidden: { opacity: 0 },
@@ -101,7 +101,10 @@ export default function ResumePage() {
               ref={sheetRef}
               initial={reduced ? false : { y: startY, opacity: 0.001 }}
               animate={{ y: 0, opacity: 1 }}
-              transition={{ type: "spring", duration: 0.5, bounce: 0.05 }}
+              transition={{
+                y: { duration: 0.45, ease: [0.16, 1, 0.3, 1] },
+                opacity: { duration: 0.2, ease: EASE_OUT },
+              }}
               style={{ width: "min(793px, 90vw)", aspectRatio: "210 / 297" }}
               className="mx-auto box-border rounded-sm bg-white
                 shadow-[0_1px_3px_rgba(0,0,0,0.12),0_4px_16px_rgba(0,0,0,0.08)]
