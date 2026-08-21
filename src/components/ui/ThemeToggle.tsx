@@ -30,21 +30,21 @@ export function ThemeToggle() {
   const playToggleOff = useSound(toggleOff);
   const btnRef = useRef<HTMLButtonElement>(null);
   const blackMeasureRef = useRef<HTMLSpanElement>(null);
-  const tealMeasureRef = useRef<HTMLSpanElement>(null);
+  const blueMeasureRef = useRef<HTMLSpanElement>(null);
   const lastClickRef = useRef<number>(0);
   const isTransitioning = useRef(false);
   const wipeRef = useRef(false);
   const [isShaking, setIsShaking] = useState(false);
-  const [wordWidths, setWordWidths] = useState<{ black: number; teal: number } | null>(null);
+  const [wordWidths, setWordWidths] = useState<{ black: number; blue: number } | null>(null);
 
   // Measure the natural text width of each word. We use dedicated
   // unconstrained measurement spans (absolute, no inset) so they
   // render at their intrinsic width rather than being stretched.
   useLayoutEffect(() => {
-    if (blackMeasureRef.current && tealMeasureRef.current) {
+    if (blackMeasureRef.current && blueMeasureRef.current) {
       setWordWidths({
         black: blackMeasureRef.current.scrollWidth,
-        teal: tealMeasureRef.current.scrollWidth,
+        blue: blueMeasureRef.current.scrollWidth,
       });
     }
   }, []);
@@ -70,10 +70,10 @@ export function ThemeToggle() {
     // Normal click → haptic + toggle
     haptic.trigger("medium");
 
-    const newTheme = theme === "black" ? "teal" : "black";
+    const newTheme = theme === "black" ? "blue" : "black";
 
-    // Play toggle sound: ascending for teal, descending for black
-    if (newTheme === "teal") playToggleOn();
+    // Play toggle sound: ascending for blue, descending for black
+    if (newTheme === "blue") playToggleOn();
     else playToggleOff();
 
     // Track transition window for double-click detection
@@ -113,7 +113,7 @@ export function ThemeToggle() {
       ref={btnRef}
       role="button"
       aria-pressed={theme === "black"}
-      aria-label={`Switch ${theme === "black" ? "to teal" : "to black"} theme`}
+      aria-label={`Switch ${theme === "black" ? "to blue" : "to black"} theme`}
       suppressHydrationWarning
       onClick={handleClick}
       whileTap={reduced ? undefined : { scale: 0.96 }}
@@ -130,7 +130,7 @@ export function ThemeToggle() {
         className="relative inline-block text-left"
         style={{
           width: wordWidths
-            ? wordWidths[theme === "black" ? "teal" : "black"]
+            ? wordWidths[theme === "black" ? "blue" : "black"]
             : "auto",
           transition: reduced ? "none" : "width 250ms ease-out",
         }}
@@ -138,27 +138,27 @@ export function ThemeToggle() {
         {/* Measurement-only: absolute but unconstrained (no inset), so
             scrollWidth returns the natural text width of each word. */}
         <span ref={blackMeasureRef} aria-hidden="true" className="absolute invisible whitespace-nowrap">Black</span>
-        <span ref={tealMeasureRef} aria-hidden="true" className="absolute invisible whitespace-nowrap">Teal</span>
+        <span ref={blueMeasureRef} aria-hidden="true" className="absolute invisible whitespace-nowrap">Blue</span>
         {/* Invisible in-flow sizer: matches the destination word so the
             container has proper height and a correct starting width. */}
         <span aria-hidden="true" className="invisible">
-          {theme === "black" ? "Teal" : "Black"}
+          {theme === "black" ? "Blue" : "Black"}
         </span>
-        {/* Layer 1: "Black", visible when offering to switch to black (current = teal) */}
+        {/* Layer 1: "Black", visible when offering to switch to black (current = blue) */}
         <span
           aria-hidden={theme === "black"}
           className="absolute inset-0"
           style={{
-            opacity: theme === "teal" ? 1 : 0,
-            filter: theme === "teal" ? "blur(0px)" : "blur(2px)",
+            opacity: theme === "blue" ? 1 : 0,
+            filter: theme === "blue" ? "blur(0px)" : "blur(2px)",
             transition: reduced ? "none" : "opacity 250ms ease-out, filter 250ms ease-out",
           }}
         >
           Black
         </span>
-        {/* Layer 2: "Teal", visible when offering to switch to teal (current = black) */}
+        {/* Layer 2: "Blue", visible when offering to switch to blue (current = black) */}
         <span
-          aria-hidden={theme === "teal"}
+          aria-hidden={theme === "blue"}
           className="absolute inset-0"
           style={{
             opacity: theme === "black" ? 1 : 0,
@@ -166,7 +166,7 @@ export function ThemeToggle() {
             transition: reduced ? "none" : "opacity 250ms ease-out, filter 250ms ease-out",
           }}
         >
-          Teal
+          Blue
         </span>
       </span>
     </motion.button>

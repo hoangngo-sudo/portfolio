@@ -15,14 +15,14 @@
 }
 
 :root {
-  --accent: oklch(0.481 0.08 180);
-  --accent-light: oklch(0.567 0.094 180);
-  --accent-pale: oklch(0.954 0.044 180);
-  --link: oklch(0.346 0.097 180);
-  --dark-bg: oklch(0.176 0.03 180);
-  --dark-bg-alt: oklch(0.27 0.078 180);
-  --light-bg: oklch(0.989 0.011 180);
-  --light-bg-alt: oklch(0.977 0.019 180);
+  --accent: oklch(0.72 0.09 252);
+  --accent-light: oklch(0.76 0.08 252);
+  --accent-pale: oklch(0.958 0.035 252);
+  --link: oklch(0.353 0.103 252);
+  --dark-bg: oklch(0.181 0.028 252);
+  --dark-bg-alt: oklch(0.277 0.077 252);
+  --light-bg: oklch(0.989 0.008 252);
+  --light-bg-alt: oklch(0.978 0.014 252);
 
   /* Derived tokens */
   --text-primary: oklch(0.942 0.009 258.3);
@@ -374,7 +374,7 @@ html {
 
 /* Diagonal Wipe Theme Transition */
 /* Uses View Transitions API with 45° clip-path polygon reveal.
-   Direction: black expands from top-right, teal expands from bottom-left.
+   Direction: black expands from top-right, blue expands from bottom-left.
    Gated by .diagonal-wipe-transition class on <html>. */
 html.diagonal-wipe-transition::view-transition-group(root) {
   animation-duration: 0.7s;
@@ -382,7 +382,7 @@ html.diagonal-wipe-transition::view-transition-group(root) {
 }
 
 html.diagonal-wipe-transition::view-transition-new(root) {
-  animation-name: reveal-teal;
+  animation-name: reveal-blue;
   animation-fill-mode: both;
 }
 
@@ -407,7 +407,7 @@ html[data-theme="black"].diagonal-wipe-transition::view-transition-new(root) {
   }
 }
 
-@keyframes reveal-teal {
+@keyframes reveal-blue {
   from {
     clip-path: polygon(171% 50%, 50% 171%, 50% 171%, 171% 50%);
   }

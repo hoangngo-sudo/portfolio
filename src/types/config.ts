@@ -35,8 +35,8 @@ export interface PortfolioConfig {
 
   themes: {
     black: ThemeColors;
-    teal: ThemeColors;
-    default: "black" | "teal";
+    blue: ThemeColors;
+    default: "black" | "blue";
   };
 
   nav: {

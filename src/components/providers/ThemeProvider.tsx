@@ -10,7 +10,7 @@ import {
 import config from "@/config/portfolio.config";
 import type { ThemeColors } from "@/types/config";
 
-type ThemeName = "black" | "teal";
+type ThemeName = "black" | "blue";
 
 interface ThemeContextValue {
   theme: ThemeName;
@@ -49,7 +49,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const stored = localStorage.getItem(STORAGE_KEY) as ThemeName | null;
     const resolved: ThemeName =
-      stored === "black" || stored === "teal" ? stored : config.themes.default;
+      stored === "black" || stored === "blue" ? stored : config.themes.default;
     // Defer to avoid the synchronous-setState-in-effect lint warning while
     // still correcting the state in the same microtask flush as the first paint.
     const raf = requestAnimationFrame(() => {

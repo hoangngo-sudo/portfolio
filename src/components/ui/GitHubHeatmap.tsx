@@ -52,8 +52,8 @@ const DAY_LABEL_ROWS: { label: string; row: number }[] = [
   { label: "Fri", row: 5 },
 ];
 
-// Default matches the teal theme accent (deterministic SSR/hydration).
-const DEFAULT_ACCENT = "oklch(0.481 0.08 180)";
+// Default matches the blue theme accent (deterministic SSR/hydration).
+const DEFAULT_ACCENT = "oklch(0.72 0.09 252)";
 
 interface TooltipData {
   date: string;
@@ -77,7 +77,7 @@ export function GitHubHeatmap({ years }: GitHubHeatmapProps) {
 
   // Read the accent colour directly from the CSS variable so we always match
   // whatever <ThemeScript> applied before first paint.
-  // Initial value is deterministic (teal default) to avoid hydration mismatch.
+  // Initial value is deterministic (blue default) to avoid hydration mismatch.
   // The effect reads the actual CSS value and updates asynchronously.
   const [accentColor, setAccentColor] = useState<string>(DEFAULT_ACCENT);
 
@@ -148,11 +148,11 @@ export function GitHubHeatmap({ years }: GitHubHeatmapProps) {
         `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 1.00)`,             // 9+
       ]
     : [
-        "oklch(0.27 0.045 180)",
-        "oklch(0.364 0.061 180)",
-        "oklch(0.481 0.08 180)",
-        "oklch(0.567 0.094 180)",
-        "oklch(0.671 0.112 180)",
+        "oklch(0.277 0.077 252)",
+        "oklch(0.374 0.131 252)",
+        "oklch(0.493 0.172 252)",
+        "oklch(0.72 0.09 252)",
+        "oklch(0.76 0.08 252)",
       ];
 
   function getShade(count: number): string {

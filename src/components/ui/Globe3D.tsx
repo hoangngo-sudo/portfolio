@@ -62,7 +62,7 @@ interface Props {
   autoRotateSpeed?: number;
   arcWidth?: number;
   arcHeight?: number;
-  theme?: "teal" | "black";
+  theme?: "blue" | "black";
 }
 
 export function Globe3D({
@@ -72,17 +72,17 @@ export function Globe3D({
   autoRotateSpeed = 0.3,
   arcWidth,
   arcHeight,
-  theme = "teal",
+  theme = "blue",
 }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const avatarRefs = useRef<(HTMLDivElement | null)[]>([]);
   const arcLabelRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const pinColor = theme === "teal"
-    ? "oklch(0.4 0.067 180)"
+  const pinColor = theme === "blue"
+    ? "oklch(0.4 0.05 252)"
     : "oklch(0.4 0 0)";
-  const pinColorGl: [number, number, number] = theme === "teal"
-    ? [0.063, 0.325, 0.286]
+  const pinColorGl: [number, number, number] = theme === "blue"
+    ? [0.204, 0.290, 0.384]
     : [0.063, 0.063, 0.063];
   const phiRef = useRef(0);
   // Cache container dimensions read once (+ ResizeObserver), never in rAF
@@ -368,8 +368,8 @@ export function Globe3D({
             className="pointer-events-none absolute left-0 top-0 z-10 whitespace-nowrap rounded-full px-2 py-0.5 text-xs opacity-0 backdrop-blur-sm"
             style={{
               willChange: "transform, opacity",
-              color: theme === "teal" ? "oklch(0.855 0.125 181.1)" : "oklch(0.863 0 0)",
-              backgroundColor: theme === "teal" ? "oklch(0.4 0.067 180 / 0.92)" : "oklch(0.254 0 0 / 0.92)",
+              color: theme === "blue" ? "oklch(0.921 0.063 252)" : "oklch(0.863 0 0)",
+              backgroundColor: theme === "blue" ? "oklch(0.4 0.05 252 / 0.92)" : "oklch(0.254 0 0 / 0.92)",
             }}
           >
             {arc.label}

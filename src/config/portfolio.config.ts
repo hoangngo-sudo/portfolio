@@ -11,8 +11,8 @@ const config: PortfolioConfig = {
 
   themes: {
     black: {
-      accent: "oklch(0.549 0 0)",
-      accentLight: "oklch(0.649 0 0)",
+      accent: "oklch(0.72 0 0)",
+      accentLight: "oklch(0.76 0 0)",
       accentPale: "oklch(0.961 0 0)",
       link: "oklch(0.375 0 0)",
       darkBg: "oklch(0.162 0 0)",
@@ -20,17 +20,17 @@ const config: PortfolioConfig = {
       lightBg: "oklch(0.993 0 0)",
       lightBgAlt: "oklch(0.982 0 0)",
     },
-    teal: {
-      accent: "oklch(0.481 0.08 180)",
-      accentLight: "oklch(0.567 0.094 180)",
-      accentPale: "oklch(0.954 0.044 180)",
-      link: "oklch(0.346 0.097 180)",
-      darkBg: "oklch(0.176 0.03 180)",
-      darkBgAlt: "oklch(0.27 0.078 180)",
-      lightBg: "oklch(0.989 0.011 180)",
-      lightBgAlt: "oklch(0.977 0.019 180)",
+    blue: {
+      accent: "oklch(0.72 0.09 252)",
+      accentLight: "oklch(0.76 0.08 252)",
+      accentPale: "oklch(0.958 0.035 252)",
+      link: "oklch(0.353 0.103 252)",
+      darkBg: "oklch(0.181 0.028 252)",
+      darkBgAlt: "oklch(0.277 0.077 252)",
+      lightBg: "oklch(0.989 0.008 252)",
+      lightBgAlt: "oklch(0.978 0.014 252)",
     },
-    default: "teal",
+    default: "blue",
   },
 
   nav: {
@@ -85,7 +85,7 @@ const config: PortfolioConfig = {
             labelLng: 175,
           },
         ],
-        atmosphereColor: "oklch(0.481 0.08 180)",
+        atmosphereColor: "oklch(0.72 0.09 252)",
         atmosphereIntensity: 15,
         autoRotateSpeed: 0.3,
 

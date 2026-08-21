@@ -22,7 +22,7 @@ function colorsToProps(c: typeof config.themes.black): Record<string, string> {
   };
 }
 
-const themeInitScript = `(function(){try{var themes=${JSON.stringify({ black: colorsToProps(config.themes.black), teal: colorsToProps(config.themes.teal) })};var t=localStorage.getItem('portfolio-theme')||'${config.themes.default}';var c=themes[t]||themes['${config.themes.default}'];var s=document.documentElement.style;for(var k in c){s.setProperty('--'+k,c[k])}}catch(e){}})()`;
+const themeInitScript = `(function(){try{var themes=${JSON.stringify({ black: colorsToProps(config.themes.black), blue: colorsToProps(config.themes.blue) })};var t=localStorage.getItem('portfolio-theme')||'${config.themes.default}';var c=themes[t]||themes['${config.themes.default}'];var s=document.documentElement.style;for(var k in c){s.setProperty('--'+k,c[k])}}catch(e){}})()`;
 
 export const viewport: Viewport = {
   viewportFit: "cover",
