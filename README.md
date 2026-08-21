@@ -24,7 +24,7 @@ flowchart TB
 
     SYNOPSIS --> GLOBE["Globe3D<br/>cobe WebGL + haptic drag + arcs"]
 
-    USER --> |Toggle| THEME{"Black / Teal Theme"}
+    USER --> |Toggle| THEME{"Black / Blue Theme"}
     THEME --> |localStorage| USER
 
     USER --> |Drag / Tap| HAPTICS["web-haptics<br/>Detent + light + medium"]
@@ -43,7 +43,7 @@ flowchart TB
 - **Fuzzy search overlay**: Press Cmd+K or Ctrl+K to open a Fuse.js search across all sections. Search returns action links. Tags index separately from display text.
 - **Project drag carousel**: A horizontal drag-to-scroll carousel uses momentum with pure pointer events. It uses no animation library. Cards are `<a>` links with native link drag suppression.
 - **Project commit sparklines**: Per-project GitHub commit activity shows the last 12 weeks.
-- **2 color themes**: Black and Teal themes switch through a chip-style text button. The switch uses an opacity and blur crossfade (250ms ease-out). It also uses a diagonal wipe transition (View Transitions API with clip-path, 0.7s, direction-aware keyframes). The toggle includes haptic and audio feedback. An anti-FOUC inline script prevents theme flash on load.
+- **2 color themes**: Black and Blue themes switch through a chip-style text button. The switch uses an opacity and blur crossfade (250ms ease-out). It also uses a diagonal wipe transition (View Transitions API with clip-path, 0.7s, direction-aware keyframes). The toggle includes haptic and audio feedback. An anti-FOUC inline script prevents theme flash on load.
 - **Scroll progress bar + Back-to-top FAB**: Feature flags toggle the scroll progress bar and the back-to-top button.
 - **Categorized skill pills**: A categorized grid of theme-aware pills shows the tech stack. The pills use hover effects and skillicons.dev CDN icons. An inline stack description paragraph includes embedded pill buttons with rounded corners.
 - **Sticky footer contact**: Pure CSS sticky reveal lets content sections scroll over with `z-10`. The Contact section sits at `z-0`, pinned to the viewport bottom. Decorative "God bless you." text sits at the bottom edge.
@@ -183,7 +183,7 @@ All content lives in [`src/config/portfolio.config.ts`](src/config/portfolio.con
 | Section | Description |
 |---|---|
 | `meta` | Name, title, headline, description, production URL (`siteUrl`), OG image |
-| `themes` | Black and Teal color definitions, default theme |
+| `themes` | Black and Blue color definitions, default theme |
 | `nav` | Navigation links (supports `external` and `download` flags) |
 | `hero` | Desktop photo positions + mobile photo list |
 | `sections.*` | Each section has `enabled: boolean` + content data (Contact: sticky footer outside content z-10 wrapper) |
