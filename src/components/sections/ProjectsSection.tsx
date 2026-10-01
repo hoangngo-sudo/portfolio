@@ -1,7 +1,7 @@
 import type { ProjectsConfig } from "@/types/config";
 import { IconArrowFromCornerBottomRightFillDuo18 } from "nucleo-ui-fill-duo-18";
 import { ProjectDragCarousel } from "@/components/ui/ProjectDragCarousel";
-import { GitHubHeatmap } from "@/components/ui/GitHubHeatmap";
+import { LiveGitHubHeatmap } from "@/components/ui/LiveGitHubHeatmap";
 import { fetchAllYearContributions, generateYearPlaceholderData, type YearContributionData } from "@/lib/github";
 import config from "@/config/portfolio.config";
 
@@ -55,7 +55,7 @@ export async function ProjectsSection({ data }: Props) {
       <div className="mx-auto max-w-6xl px-[5%] pb-16 md:pb-20">
         {features.githubHeatmap && (
           <div className="mt-3 w-fit max-w-full rounded-xl bg-card-bg p-5 dm-elevation-2">
-            <GitHubHeatmap years={yearData} />
+            <LiveGitHubHeatmap years={yearData} username={sections.synopsis?.github?.username} />
           </div>
         )}
       </div>
