@@ -65,7 +65,7 @@ const config: PortfolioConfig = {
       enabled: true,
       overline: "b. 2003",
       heading: "About me",
-      body: "I am Hoang Ngo. I grew up in Ho Chi Minh City, Vietnam, and now study Computer Science at the University of Illinois Chicago. I chose this field because I love programming languages and building web applications. Most of my time goes into web development. I care about how interfaces feel — a good one makes you not think about what to click next. I also care about the backend. A website that looks good but breaks on use is not useful, atleast to me. Outside code and schoolwork, I read and study the Bible daily to learn more about Jesus, my savior. My faith in God keeps me grounded in my work.",
+      body: "I am Hoang Ngo. I grew up in Ho Chi Minh City, Vietnam, and now study Computer Science at the University of Illinois Chicago. I chose this field because I love programming languages and building web applications. Most of my time goes into web development. I care about how interfaces feel — a good interface makes you not think about what to click next. I also care about the backend side. A website that has a good interface but breaks on use is not useful to me. Outside of code, I study the Bible daily to learn more about Jesus, my savior. My faith in God keeps me grounded in my work.",
       github: {
         username: "hoangngo-sudo",
       },
@@ -225,7 +225,7 @@ const config: PortfolioConfig = {
             { code: "CS441", name: "Engineering Distributed Objects For Cloud Computing", description: "Cloud architectures, distributed systems, and microservices" },
             { code: "CS421", name: "Natural Language Processing", description: "Text processing, language models, and NLP pipelines" },
             { code: "CS422", name: "User Interface Design and Programming", description: "UI/UX principles, prototyping, and interactive systems" },
-            { code: "CS480", name: "Database Systems", description: "Relational models, SQL, query optimization, and transactions" }
+            { code: "CS494", name: "Security Of And With GenAI-Based System", description: "Security attacks on GenAI systems, defensive architecture, and vulnerability analysis" }
           ],
         },
       ],
